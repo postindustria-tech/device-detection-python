@@ -6,5 +6,5 @@ setuptools.setup(
     author="51Degrees",
     python_requires='>=2.7',
     packages=["fiftyone_pipeline_devicedetection"],
-    requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine"]
+    install_requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine"]
 )
