@@ -62,13 +62,13 @@ else:
     # We create a FlowData object from the pipeline
     # this is used to add evidence to and then process
 
-    flowData1 = pipeline.createFlowData()
+    flowData1 = pipeline.create_flowdata()
 
     # Here we add a User-Agent of a desktop as evidence
 
     desktopUA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
 
-    flowData1.evidence.set("header.user-agent", desktopUA)
+    flowData1.evidence.add("header.user-agent", desktopUA)
 
     # Now we process the FlowData
 
@@ -80,25 +80,25 @@ else:
     # first we check if this has a meaningful result
 
     print("Is User-Agent " + desktopUA + " a mobile? ") 
-    if flowData1.device.ismobile.hasValue():
+    if flowData1.device.ismobile.has_value():
         print(flowData1.device.ismobile.value())
     else:
         # Output why the value isn't meaningful
-        print(flowData1.device.ismobile.noValueMessage)
+        print(flowData1.device.ismobile.no_value_message())
 
     # Now we do the same with a new User-Agent, this time from an iphone
     
-    flowData2 = pipeline.createFlowData()
+    flowData2 = pipeline.create_flowdata()
 
     iphoneUA = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
 
-    flowData2.evidence.set("header.user-agent", iphoneUA)
+    flowData2.evidence.add("header.user-agent", iphoneUA)
 
     flowData2.process()
 
     print("Is User-Agent " + iphoneUA + " a mobile device?: ") 
-    if flowData2.device.ismobile.hasValue():
+    if flowData2.device.ismobile.has_value():
         print(flowData2.device.ismobile.value())
     else:
         # Output why the value isn't meaningful
-        print(flowData2.device.ismobile.noValueMessage)
+        print(flowData2.device.ismobile.no_value_message())

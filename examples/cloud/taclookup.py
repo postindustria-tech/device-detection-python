@@ -78,10 +78,10 @@ else:
 
     # We create a FlowData object from the pipeline
     # this is used to add evidence to and then process
-    flowData = pipeline.createFlowData()
+    flowData = pipeline.create_flowdata()
 
     # After creating a flowdata instance, add the native model name as evidence.
-    flowData.evidence.set('query.tac', tac)
+    flowData.evidence.add('query.tac', tac)
 
     # Now we process the FlowData to get results
 
@@ -99,7 +99,7 @@ else:
         hardwareName = profile["hardwarename"]
         hardwareModel = profile["hardwaremodel"]
 
-        if (hardwareVendor.hasValue and hardwareName.hasValue and hardwareModel.hasValue):
+        if (hardwareVendor.has_value and hardwareName.has_value and hardwareModel.has_value):
             print(hardwareVendor.value() + " " + str(hardwareName.value()) +" "+ hardwareModel.value())
         else:
-            print(hardwareVendor.noValueMessage)
+            print(hardwareVendor.no_value_message())

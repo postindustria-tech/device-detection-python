@@ -35,4 +35,4 @@ class DeviceDetectionCloud(CloudEngine):
 
         super(DeviceDetectionCloud, self).__init__()
 
-        self.dataKey = "device"
+        self.datakey = "device"

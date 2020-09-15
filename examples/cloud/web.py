@@ -68,12 +68,12 @@ else:
     def jsonroute():
 
         # Create the flowData object for the JSON route
-        flowData = pipeline.createFlowData()
+        flowData = pipeline.create_flowdata()
 
         # Add any information from the request (headers, cookies and additional 
         # client side provided information)
 
-        flowData.evidence.setFromDict(webevidence(request))
+        flowData.evidence.addFromDict(webevidence(request))
 
         # Process the flowData
 
@@ -91,10 +91,10 @@ else:
 
         propertyValue = getattr(engineProperties, propertyKey)
 
-        if propertyValue.hasValue():
+        if propertyValue.has_value():
             return propertyValue.value()
         else:
-            return propertyValue.noValueMessage
+            return propertyValue.no_value_message()
 
     # In the main route we dynamically update the screen's device property display
     # using the above JSON route
@@ -103,12 +103,12 @@ else:
     def server():
 
         # Create the flowData object for the JSON route
-        flowData = pipeline.createFlowData()
+        flowData = pipeline.create_flowdata()
 
         # Add any information from the request (headers, cookies and additional 
         # client side provided information)
 
-        flowData.evidence.setFromDict(webevidence(request))
+        flowData.evidence.addFromDict(webevidence(request))
 
         # Process the flowData
 

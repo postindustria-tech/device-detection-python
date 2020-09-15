@@ -34,7 +34,7 @@ class HardwareProfileCloud(CloudEngine):
 
         super(HardwareProfileCloud, self).__init__()
 
-        self.dataKey = "hardware"
+        self.datakey = "hardware"
 
     def processInternal(self, flowData):
 

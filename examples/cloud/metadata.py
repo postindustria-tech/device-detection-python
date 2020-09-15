@@ -77,12 +77,12 @@ else:
     # the supported media properties against it
 
     # First we create a FlowData object from the pipeline
-    flowData = pipeline.createFlowData()
+    flowData = pipeline.create_flowdata()
 
     # Then we add the User-Agent we are interested in as evidence
     iphoneUA = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
 
-    flowData.evidence.set("header.user-agent", iphoneUA)
+    flowData.evidence.add("header.user-agent", iphoneUA)
 
     # Now we process the FlowData using the engines in the Pipeline
 
@@ -94,7 +94,7 @@ else:
 
     for supportedMediaProperty, supportedValue in mediaSupport.items():
         print("Does User-Agent " + iphoneUA + " support " + supportedMediaProperty + "?")
-        if supportedValue.hasValue():
+        if supportedValue.has_value():
             print(supportedValue.value())
         else:
-            print(supportedValue.noValueMessage)
+            print(supportedValue.no_value_message())
