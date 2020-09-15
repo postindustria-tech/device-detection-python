@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setuptools.setup(
-    name="fiftyone_pipeline_devicedetection",
+    name="fiftyone_devicedetection",
     version="4.0.0",
     author="51Degrees",
     url="http://51degrees.com/",
@@ -16,7 +16,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     python_requires='>=2.7',
-    packages=["fiftyone_pipeline_devicedetection"],
+    packages=["fiftyone_devicedetection"],
     install_requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine"],
     license="EUPL-1.2",
     classifiers=[

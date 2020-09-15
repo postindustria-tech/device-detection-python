@@ -29,7 +29,7 @@
 
 """
 
-from fiftyone_pipeline_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_pipeline_core.web import webevidence
 import json
 

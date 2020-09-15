@@ -39,7 +39,7 @@ true
 
 """
 
-from fiftyone_pipeline_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 
 # First create the device detection pipeline with the desired settings.
 

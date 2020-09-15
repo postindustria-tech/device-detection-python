@@ -42,7 +42,7 @@ Which devices are associated with the native model name 'SC-03L'?
 
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine
-from fiftyone_pipeline_devicedetection.hardwareprofile_cloud import HardwareProfileCloud
+from fiftyone_devicedetection.hardwareprofile_cloud import HardwareProfileCloud
 
 # You need to create a resource key at https://configure.51degrees.com
 # and paste it into the code, replacing !!YOUR_RESOURCE_KEY!! below.
