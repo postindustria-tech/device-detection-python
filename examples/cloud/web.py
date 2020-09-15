@@ -73,7 +73,7 @@ else:
         # Add any information from the request (headers, cookies and additional 
         # client side provided information)
 
-        flowData.evidence.addFromDict(webevidence(request))
+        flowData.evidence.add_from_dict(webevidence(request))
 
         # Process the flowData
 
@@ -108,7 +108,7 @@ else:
         # Add any information from the request (headers, cookies and additional 
         # client side provided information)
 
-        flowData.evidence.addFromDict(webevidence(request))
+        flowData.evidence.add_from_dict(webevidence(request))
 
         # Process the flowData
 

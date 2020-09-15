@@ -66,7 +66,7 @@ else:
 
     # Now we see what properties are available in the pipeline
 
-    properties = pipeline.getProperties()
+    properties = pipeline.get_properties()
 
     # Now we find out the details of the properties in the device engine
 
@@ -90,7 +90,7 @@ else:
 
     # To get all properties of a specific category, we can use the "getWhere" function
 
-    mediaSupport = flowData.getWhere("category", "Supported Media")
+    mediaSupport = flowData.get_where("category", "Supported Media")
 
     for supportedMediaProperty, supportedValue in mediaSupport.items():
         print("Does User-Agent " + iphoneUA + " support " + supportedMediaProperty + "?")
