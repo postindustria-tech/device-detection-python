@@ -27,9 +27,10 @@ from fiftyone_pipeline_core.aspectproperty_value import AspectPropertyValue
 
 import json
 
-
 class HardwareProfileCloud(CloudEngine):
-
+    """!
+    The hardware profile cloud engine
+    """
     def __init__(self):
 
         super(HardwareProfileCloud, self).__init__()

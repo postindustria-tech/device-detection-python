@@ -20,25 +20,23 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-"""
-
-@example cloud/nativeModelLookup.py
-
-@include{doc} example-native-model-lookup-cloud.txt
-
-Example output:
-
-```
-This example finds the details of devices from the 'native model name'.
-The native model name can be retrieved by code running on the device (For example, a mobile app).
-For Android devices, see https://developer.android.com/reference/android/os/Build#MODEL
-For iOS devices, see https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift
-----------------------------------------
-Which devices are associated with the native model name 'SC-03L'?
-        Samsung Galaxy S10 (SC-03L)
-```
-
-"""
+## @example cloud/nativemodellookup.py
+# 
+# @include{doc} example-native-model-lookup-cloud.txt
+# 
+# @include{doc} example-require-resourcekey.txt
+# 
+# Example output:
+# 
+# ```
+# This example finds the details of devices from the 'native model name'.
+# The native model name can be retrieved by code running on the device (For example, a mobile app).
+# For Android devices, see https://developer.android.com/reference/android/os/Build#MODEL
+# For iOS devices, see https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift
+# ----------------------------------------
+# Which devices are associated with the native model name 'SC-03L'?
+#         Samsung Galaxy S10 (SC-03L)
+# ```
 
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine
