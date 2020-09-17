@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name="fiftyone_devicedetection",
-    version="4.0.1",
+    version="4.0.3",
     author="51Degrees",
     url="http://51degrees.com/",
     description=("The 51Degrees Pipeline API is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines). "

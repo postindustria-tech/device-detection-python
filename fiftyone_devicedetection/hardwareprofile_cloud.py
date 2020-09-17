@@ -37,7 +37,7 @@ class HardwareProfileCloud(CloudEngine):
 
         self.datakey = "hardware"
 
-    def processInternal(self, flowData):
+    def process_internal(self, flowData):
 
         cloudData = flowData.get("cloud").get("cloud")
 
@@ -56,5 +56,5 @@ class HardwareProfileCloud(CloudEngine):
 
         data = AspectDataDictionary(self, {"profiles": devices})
 
-        flowData.setElementData(data)
+        flowData.set_element_data(data)
         
