@@ -20,24 +20,22 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-"""
-
-@example cloud/taclookup.py
-
-@include{doc} example-tac-lookup-cloud.txt
-
-Example output:
-
-```
-This example shows the details of devices associated with a given 'Type Allocation Code' or 'TAC'.
-More background information on TACs can be found through various online sources such as Wikipedia: https://en.wikipedia.org/wiki/Type_Allocation_Code
-----------------------------------------
-Which devices are associated with the tac: 35925406
-Apple ['iPhone 6'] A1586
-
-```
-
-"""
+## @example cloud/taclookup.py
+# 
+# @include{doc} example-tac-lookup-cloud.txt
+# 
+# @include{doc} example-require-resourcekey.txt
+# 
+# Example output:
+# 
+# ```
+# This example shows the details of devices associated with a given 'Type Allocation Code' or 'TAC'.
+# More background information on TACs can be found through various online sources such as Wikipedia: https://en.wikipedia.org/wiki/Type_Allocation_Code
+# ----------------------------------------
+# Which devices are associated with the tac: 35925406
+# Apple ['iPhone 6'] A1586
+# 
+# ```
 
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine

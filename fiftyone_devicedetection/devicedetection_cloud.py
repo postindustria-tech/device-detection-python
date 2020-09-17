@@ -22,15 +22,13 @@
 
 from fiftyone_pipeline_cloudrequestengine.cloudengine import CloudEngine
 
-
-"""
- The deviceDetction cloud engine requires the 51Degrees
- cloudRequestEngine to be placed in a pipeline before it.
- It takes that raw JSON response and parses it to extract the
- device part. It also uses this data to generate a list of properties
-"""
 class DeviceDetectionCloud(CloudEngine):
-
+    """!
+    The Device Detction cloud engine requires the 51Degrees
+    cloudRequestEngine to be placed in a pipeline before it.
+    It takes that raw JSON response and parses it to extract the
+    device part. It also uses this data to generate a list of properties
+    """
     def __init__(self):
 
         super(DeviceDetectionCloud, self).__init__()

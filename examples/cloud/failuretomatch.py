@@ -20,24 +20,21 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-"""
-@example cloud/failuretomatch.py
-
-@include{doc} example-failure-to-match-cloud.txt
-
-@include{doc} example-require-resourcekey.txt
-
-Expected output:
-
-```
-Is user agent '--' a mobile?
-The results contained a null profile for the component which the required property belongs to.
-
-Is user agent 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114' a mobile?
-true
-```
-
-"""
+## @example cloud/failuretomatch.py
+# 
+# @include{doc} example-failure-to-match-cloud.txt
+# 
+# @include{doc} example-require-resourcekey.txt
+# 
+# Expected output:
+# 
+# ```
+# Is user agent '--' a mobile?
+# The results contained a null profile for the component which the required property belongs to.
+# 
+# Is user agent 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114' a mobile?
+# true
+# ```
 
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 

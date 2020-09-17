@@ -20,24 +20,21 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-"""
-@example cloud/gettingStarted.py
-
-@include{doc} example-getting-started-cloud.txt
-
-@include{doc} example-require-resourcekey.txt
-
-Expected output:
-
-```
-Is user agent 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114' a mobile?
-true
-
-Is user agent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36' a mobile?
-false
-```
-
-"""
+## @example cloud/gettingstarted.py
+# 
+# @include{doc} example-getting-started-cloud.txt
+# 
+# @include{doc} example-require-resourcekey.txt
+# 
+# Expected output:
+# 
+# ```
+# Is user agent 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114' a mobile?
+# true
+# 
+# Is user agent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36' a mobile?
+# false
+# ```
 
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 
