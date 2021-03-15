@@ -2,54 +2,119 @@
 
 ![51Degrees](https://51degrees.com/DesktopModules/FiftyOne/Distributor/Logo.ashx?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=python-open-source "THE Fastest and Most Accurate Device Detection") **v4 Device Detection Python**
 
-[Pipeline Documentation](https://51degrees.com/documentation/4.1/index.html "Complete documentation") | [Available Properties](https://51degrees.com/resources/property-dictionary?utm_source=github&utm_medium=repository&utm_content=property_dictionary&utm_campaign=python-open-source "View all available properties and values")
+[Developer Documentation](https://51degrees.com/device-detection-python/index.html?utm_source=github&utm_medium=repository&utm_content=property_dictionary&utm_campaign=python-open-source "Developer Documentation") | [Available Properties](https://51degrees.com/resources/property-dictionary?utm_source=github&utm_medium=repository&utm_content=property_dictionary&utm_campaign=python-open-source "View all available properties and values")
 
 ## Introduction
+
 This project contains 51Degrees Device Detection engines that can be used with the Pipeline API.
 
-The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines) 
+The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)
+
+This git repository uses submodules, to clone the git repository run:
+
+```bash
+git clone --recurse-submodules https://github.com/51Degrees/device-detection-python.git
+```
+
+or if already cloned run the following to obtain all sub modules.:
+
+```bash
+git submodule update --init --recursive
+```
 
 ## Requirements
 
-* Python 2.7 or Python 3
+* Python 3.5+
 * The `flask` python library to run the web examples
+* Additional requirements are required for the on-premise Device-Detection Engine.
 
-## Installation and Examples
+## Folders
 
-### From PyPI
+* `fiftyone_devicedetection` - references both cloud and on-premise packages, contains generic Device-Detection Pipeline Builder.
+  * `examples` - examples for switching between cloud and on-premise.
+* `fiftyone_devicedetection_cloud` - cloud implementation of the engines.
+  * `examples` - examples for cloud device-detection.
+  * `tests` - tests for the cloud engine and examples.
+* `fiftyone_devicedetection_onpremise` - uses a native library which is built during setup to provide optimal performance and low latency device detections.
+  * `examples` - examples for on-premise device-detection.
+  * `tests` - tests for the on premise engine and examples.
+* `fiftyone_devicedetection_shared` - common components used by the cloud and on-premise packages.
 
-`pip install fiftyone_devicedetection`
+## Installation
 
-You can confirm this is working with the following micro-example.
+### PyPi
 
-* Create a resource key for free with the 51Degrees [configurator](https://configure.51degrees.com/np5M4nlF). This defines the properties you want to access.
-* On the 'implement' page of the configurator, copy the resource key and replace YOUR_RESOURCE_KEY in the example below. Save this as exampledd.py
-* Run the example with `python exampledd.py`
-* Feel free to try different user-agents and property values.
+To install all packages, run:
 
+```bash
+python -m pip install fiftyone-devicedetection
 ```
-from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
-pipeline = DeviceDetectionPipelineBuilder({"resourceKey": "YOUR_RESOURCE_KEY"}).build()
-fd = pipeline.create_flowdata()
-fd.evidence.add("header.user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")
-fd.process()
-print(fd.device.ismobile.value())
+
+The `fiftyone-devicedetection` package references both cloud and on-premise packages. If you do not want the on-premise engine or cannot meet the requirements for installing on-premise then install the cloud package on its own:
+
+```bash
+python -m pip install fiftyone-devicedetection-cloud
 ```
 
-For more in-depth examples, check out the [examples](https://51degrees.com/documentation/4.1/_examples__device_detection__index.html) page in the documentation.
+See the cloud package readme for more details specifics.
 
-### From GitHub
+### GitHub
 
-If you've cloned the GitHub repository, you will be able to run the examples directly:
+It is recommended to use Pipenv when build packages. Pipenv will ensure all the required packages for building and testing are available e.g. `cython` and `flask`.
 
-`python3 -m examples.cloud.gettingstarted`
+```bash
+python -m pip install pipenv
+pipenv install
+pipenv shell
+```
 
-To run the web example:
+To install packages for development run the following commands:
 
-#### Linux
+```bash
+python -m pip install -e fiftyone_devicedetection_shared/
+python -m pip install -e fiftyone_devicedetection_cloud/
+cd fiftyone_devicedetection_onpremise/
+python setup.py build_clib build_ext
+cd ../
+python -m pip install -e fiftyone_devicedetection_onpremise/
+python -m pip install -e fiftyone_devicedetection/
+```
 
-Execute `export FLASK_APP=` with the name of the web example file, then `flask run`.
+Alternatively, if you have make installed you can run the make file:
 
-#### Windows
+```bash
+make
+```
 
-Execute `$env:FLASK_APP = "x"` with the name of the example file, then `flask run`.
+```bash
+make install
+```
+
+other targets:
+
+* `cloud` - only setup packages required for cloud
+* `onpremise` - only setup packages required for onpremise
+* `test` - run package tests
+* `clean` - remove temporary files created when building extensions
+
+For convenience, there is also a powershell setup script called `setup.ps1`. To run it, you may need to update the execution policy to allow unsigned scripts to execute:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser Bypass
+
+.\setup.ps1
+```
+
+## Examples
+
+Then, to run an example, navigate into one of the module directories that contain an examples subfolder, e.g.
+
+```bash
+cd fiftyone_devicedetection/
+```
+
+Then run an example:
+
+```bash
+python -m examples.gettingstarted
+```
