@@ -24,6 +24,12 @@ from distutils import sysconfig
 from Cython.Distutils import build_ext
 import os
 
+# read the contents of your README file
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
+    long_description = f.read()
+	
 def get_version():
 
     version = None
@@ -220,10 +226,11 @@ clib = ('clib', {
 
 setup (cmdclass={'build_ext': NoSuffixBuilder},
         name = 'fiftyone_devicedetection_onpremise',
-        version = '4.2.0',
+        version = '4.2.1',
         author      = '51Degrees.com',
-        author_email='info@51degrees.com',
+        author_email='support@51degrees.com',
         description = """51Degrees Device Detection On-Premise Wrapper""",
+		long_description =long_description,
         license='EUPL-1.2',
         libraries=[cpplib, clib],
         ext_package = 'fiftyone_devicedetection_onpremise',

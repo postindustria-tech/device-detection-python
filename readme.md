@@ -26,7 +26,8 @@ git submodule update --init --recursive
 
 * Python 3.5+
 * The `flask` python library to run the web examples
-* Additional requirements are required for the on-premise Device-Detection Engine.
+* Git Large File System (LFS) for sub module device-detection-cxx\device-detection-data
+* Additional requirements are for the on-premise Device-Detection Engine.
 
 ## Folders
 

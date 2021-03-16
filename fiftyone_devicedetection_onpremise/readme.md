@@ -37,7 +37,7 @@ The extension requires that you have set up the required build tools for your pl
 
 ### From PyPi
 
-`pip install fiftyone-devicedetection-onpremise`
+`pip install fiftyone_devicedetection_onpremise`
 
 You can confirm this is working with the following micro-example.
 
@@ -45,12 +45,10 @@ You can confirm this is working with the following micro-example.
 * Feel free to try different user-agents and property values.
 
 ```python
-from fiftyone_devicedetection_onpremise.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
-
-pipeline = DeviceDetectionPipelineBuilder(
-  data_file_path = "fiftyone_devicefetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
+pipeline = DeviceDetectionOnPremisePipelineBuilder(
+  data_file_path = /path/to/hash/data/file, licence_keys = "", 
   ).build()
-
 fd = pipeline.create_flowdata()
 fd.evidence.add("header.user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")
 fd.process()

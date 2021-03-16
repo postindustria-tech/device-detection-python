@@ -18,8 +18,8 @@ You can confirm this is working with the following micro-example.
 * Feel free to try different user-agents and property values.
 
 ```python
-from fiftyone_devicedetection_cloud.devicedetection_cloud_pipelinebuilder import DeviceDetectionPipelineBuilder
-pipeline = DeviceDetectionPipelineBuilder({"resource_key": "YOUR_RESOURCE_KEY"}).build()
+from fiftyone_devicedetection_cloud.devicedetection_cloud_pipelinebuilder import DeviceDetectionCloudPipelineBuilder
+pipeline = DeviceDetectionCloudPipelineBuilder({"resource_key": "YOUR_RESOURCE_KEY"}).build()
 fd = pipeline.create_flowdata()
 fd.evidence.add("header.user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")
 fd.process()
