@@ -101,11 +101,11 @@ if sys.platform == "win32":
         '/DUNICODE',
         '/W4',
         '/WX',
-        '/wd"4127"',
-        '/wd"4456"',
-        '/wd"4701"',
-        '/wd"4703"',
-        '/wd"4706"'
+        '/wd4127',
+        '/wd4456',
+        '/wd4701',
+        '/wd4703',
+        '/wd4706'
     ])
     cflags.extend([
         '/D_CRT_SECURE_NO_WARNINGS',
@@ -220,7 +220,7 @@ clib = ('clib', {
 
 setup (cmdclass={'build_ext': NoSuffixBuilder},
         name = 'fiftyone_devicedetection_onpremise',
-        version = '4.2.2',
+        version = '4.2.3',
         author      = '51Degrees.com',
         author_email='support@51degrees.com',
         description = """51Degrees Device Detection On-Premise Wrapper""",
