@@ -220,7 +220,7 @@ clib = ('clib', {
 
 setup (cmdclass={'build_ext': NoSuffixBuilder},
         name = 'fiftyone_devicedetection_onpremise',
-        version = '4.2.3',
+        version = '4.2.4',
         author      = '51Degrees.com',
         author_email='support@51degrees.com',
         description = """51Degrees Device Detection On-Premise Wrapper""",
