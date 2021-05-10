@@ -111,11 +111,11 @@ Set-ExecutionPolicy -Scope CurrentUser Bypass
 Then, to run an example, navigate into one of the module directories that contain an examples subfolder, e.g.
 
 ```bash
-cd fiftyone_devicedetection/
+cd fiftyone_devicedetection_cloud/
 ```
 
 Then run an example:
 
 ```bash
-python -m examples.gettingstarted
+python -m examples.cloud.gettingstarted
 ```
