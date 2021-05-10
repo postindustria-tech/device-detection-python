@@ -5,19 +5,19 @@ class DeviceDetectionExampleTests(unittest.TestCase):
 
     def test_hash_getting_started(self):
         
-        import examples.gettingstarted
+        import examples.hash.gettingstarted
 
     def test_hash_failure_to_match(self):
         
-        import examples.failuretomatch
+        import examples.hash.failuretomatch
 
     def test_hash_match_metrics(self):
         
-        import examples.match_metrics
+        import examples.hash.match_metrics
 
     def test_hash_metadata(self):
         
-        import examples.metadata
+        import examples.hash.metadata
 
     def test_hash_offline_processing(self):
 
@@ -25,7 +25,7 @@ class DeviceDetectionExampleTests(unittest.TestCase):
 
         if "run_performance_tests" in os.environ:
 
-            import examples.offline_processing
+            import examples.hash.offline_processing
 
     def test_hash_performance(self):
 
@@ -33,6 +33,6 @@ class DeviceDetectionExampleTests(unittest.TestCase):
 
         if "run_performance_tests" in os.environ:
             
-            import examples.performance
+            import examples.hash.performance
 
 

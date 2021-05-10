@@ -69,9 +69,9 @@ python -m pip install -e .
 
 Then you will be able to run the examples directly:
 
-`python -m examples.gettingstarted`
+`python -m examples.hash.gettingstarted`
 
-To run the web example navigate into Examples folder:
+To run the web example navigate into examples/hash folder:
 
 #### Linux
 

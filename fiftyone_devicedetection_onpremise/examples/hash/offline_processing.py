@@ -20,6 +20,11 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
+## @example hash/offline_processing.py
+# 
+# @include{doc} example-offline-processing-hash.txt
+# 
+
 import csv
 import time
 import multiprocessing as mp
