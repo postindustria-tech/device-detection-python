@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name="fiftyone_devicedetection_shared",
-    version="4.2.5",
+    version="4.2.6",
 	author_email="support@51degrees.com",
     author="51Degrees",
     url="https://51degrees.com/",
