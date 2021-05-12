@@ -32,9 +32,9 @@ For more in-depth examples, check out the [examples](https://51degrees.com/devic
 
 If you've cloned the GitHub repository, you will be able to run the examples directly:
 
-`python -m examples.gettingstarted`
+`python -m examples.cloud.gettingstarted`
 
-To run the web example navigate into Examples folder:
+To run the web example navigate into examples/cloud folder:
 
 #### Linux
 
