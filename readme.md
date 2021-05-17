@@ -119,3 +119,13 @@ Then run an example:
 ```bash
 python -m examples.cloud.gettingstarted
 ```
+
+To run the web example navigate into Examples folder:
+
+#### Linux
+
+Execute `export FLASK_APP=web` where `web` is the example file, and start your application via `flask run`.
+
+#### Windows
+
+Execute `$env:FLASK_APP = "web"` where `web` is the example file, and start your application via `flask run`.

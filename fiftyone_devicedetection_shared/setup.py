@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name="fiftyone_devicedetection_shared",
-    version="4.2.6",
+    version="4.3.0",
 	author_email="support@51degrees.com",
     author="51Degrees",
     url="https://51degrees.com/",
@@ -18,7 +18,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.5',
     packages=["fiftyone_devicedetection_shared"],
-    install_requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine"],
+    install_requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine", "fiftyone_pipeline_engines_fiftyone"],
     license="EUPL-1.2",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

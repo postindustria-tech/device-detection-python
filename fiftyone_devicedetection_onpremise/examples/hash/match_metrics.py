@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example hash/matchmetrics.py
+## @example hash/match_metrics.py
 # 
 # @include{doc} example-match-metrics-hash.txt
 # 

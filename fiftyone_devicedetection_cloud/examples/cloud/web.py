@@ -22,13 +22,12 @@
 
 
 ## @example cloud/web.py
-# 
-# @include{doc} example-web-integration.txt
-# 
+#
 # @include{doc} example-require-resourcekey.txt
 
+from flask.helpers import make_response
 from fiftyone_devicedetection_cloud.devicedetection_cloud_pipelinebuilder import DeviceDetectionCloudPipelineBuilder
-from fiftyone_pipeline_core.web import webevidence
+from fiftyone_pipeline_core.web import *
 import json
 
 # First create the device detection pipeline with the desired settings.
@@ -176,4 +175,15 @@ else:
               </script>
         """
 
-        return output
+        # Create a response variable and add response object
+        response = make_response(output)
+
+        # Some browsers require that extra HTTP headers are explicitly
+        # requested. So set whatever headers are required by the browser in
+        # order to return the evidence needed by the pipeline.
+        # More info on this can be found at
+        # https://51degrees.com/blog/user-agent-client-hints
+
+        response = set_response_header(flowdata, response)
+
+        return response

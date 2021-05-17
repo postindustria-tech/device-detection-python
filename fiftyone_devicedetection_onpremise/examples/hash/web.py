@@ -23,17 +23,16 @@
 
 ## @example hash/web.py
 # 
-# @include{doc} example-web-integration.txt
-# 
-# @include{doc} example-require-resourcekey.txt
+# @include{doc} example-require-datafile.txt
 
+from flask.helpers import make_response
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
-from fiftyone_pipeline_core.web import webevidence
+from fiftyone_pipeline_core.web import *
 import json
 
 # First create the device detection pipeline with the desired settings.
 
-data_file = "../../fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = "../fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
 
 # Here we add some callback settings for the page to make a request with extra evidence from the client side, in this case the Flask /json route we will make below
 
@@ -47,6 +46,7 @@ pipeline = DeviceDetectionOnPremisePipelineBuilder(
     performance_profile = 'MaxPerformance', 
     update_on_start=False, 
     javascript_builder_settings=javascript_builder_settings).build()
+
 
 from flask import Flask, request
 
@@ -151,4 +151,16 @@ def server():
             </script>
     """
 
-    return output
+    # Create a response variable and add response object
+
+    response = make_response(output)
+
+	# Some browsers require that extra HTTP headers are explicitly
+    # requested. So set whatever headers are required by the browser in
+    # order to return the evidence needed by the pipeline.
+    # More info on this can be found at
+    # https://51degrees.com/blog/user-agent-client-hints
+
+    response = set_response_header(flowdata, response)
+
+    return response
