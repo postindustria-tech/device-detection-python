@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example cloud/metadata.py
+## @example hash/metadata.py
 # 
 # @include{doc} example-metadata-hash.txt
 # 
