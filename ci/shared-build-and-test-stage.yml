@@ -1,0 +1,175 @@
+# build and test stage template
+
+parameters:
+# Here is the description of the parameters.
+# stageName: Stage name
+# imageName: image on which stage needs to be run
+# architecture: OS architecture i.e. x86, x64
+- name: stageName
+- name: imageName
+- name: architecture
+
+stages:
+
+- stage: ${{ parameters.stageName }}
+  dependsOn: [Data]
+  
+  jobs: 
+  - job: 'Build_and_Test'
+    displayName: Build and Test
+
+    variables: 
+      - group: InternalKeys
+      # Package feed access token
+      - group: PackageFeedAccessToken
+      # Include shared variables
+      - template: shared-variables.yml
+      
+    strategy:
+      matrix:
+        Python 37:
+          pythonVersion: '3.7'
+        Python 38:
+          pythonVersion: '3.8'
+        Python 39:          
+          pythonVersion: '3.9'
+    
+    pool:
+      'vmImage': ${{ parameters.imageName }}
+        
+    steps:
+    - checkout: self
+      lfs: true
+      submodules: recursive      
+      
+    - task: UsePythonVersion@0
+      inputs:
+       versionSpec: $(pythonVersion)
+       architecture: ${{ parameters.architecture }}
+       addToPath: True
+      displayName: 'Use Python $(pythonVersion)'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Data Files'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'dataFiles'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - script: |   
+          mv $(System.ArtifactsDirectory)/dataFiles/51Degrees.csv  $(Build.SourcesDirectory)/fiftyone_devicedetection_cloud/tests
+      displayName: 'Move Data Files'
+
+    - script: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt
+        python -m pip install pylint
+        python -m pip install unittest-xml-reporting
+        python -m pip install coverage
+        python -m pip install certifi
+        python -m pip install requests
+        python -m pip install cachetools
+        python -m pip install chevron
+        python -m pip install jsmin
+      displayName: 'Install dependencies'
+
+    - task: PipAuthenticate@1
+      displayName: 'Pip Authenticate'
+      inputs:
+        # Provide list of feed names which you want to authenticate.
+        # Project scoped feeds must include the project name in addition to the feed name.
+        artifactFeeds: 'pipeline-insider'
+        
+    - script: |
+        python -m pip install fiftyone_pipeline_cloudrequestengine$(pipelineVersion)
+        python -m pip install fiftyone_pipeline_core$(pipelineVersion)
+        python -m pip install fiftyone_pipeline_engines$(pipelineVersion)
+        python -m pip install fiftyone_pipeline_engines_fiftyone$(pipelineVersion)
+      displayName: 'Install Pipeline Dependencies'
+
+    - script: |
+        cd ./fiftyone_devicedetection_onpremise
+        python setup.py build_clib build_ext --inplace
+      displayName: 'Build Python On-premise Extension'
+
+    - script: |
+        python -m pip install ./fiftyone_devicedetection_shared
+        python -m pip install ./fiftyone_devicedetection_cloud
+        python -m pip install ./fiftyone_devicedetection_onpremise
+        python -m pip install ./fiftyone_devicedetection
+      displayName: 'Install Device Detection Packages'
+
+    - bash: |
+        cd ./fiftyone_devicedetection_shared
+        pylint --rcfile=.pylintrc ./fiftyone_devicedetection_shared
+        if [ $? -ne 0 ]; then
+          echo "Failed to run pylint on fiftyone_devicedetection_shared."
+          exit 1
+        fi
+        
+        cd ../fiftyone_devicedetection_cloud
+        pylint --rcfile=.pylintrc ./fiftyone_devicedetection_cloud
+        if [ $? -ne 0 ]; then
+          echo "Failed to run pylint on fiftyone_devicedetection_cloud."
+          exit 1
+        fi
+        
+        cd ../fiftyone_devicedetection_onpremise
+        pylint --rcfile=.pylintrc ./fiftyone_devicedetection_onpremise
+        if [ $? -ne 0 ]; then
+          echo "Failed to run pylint on fiftyone_devicedetection_onpremise."
+          exit 1
+        fi
+        
+        cd ../fiftyone_devicedetection
+        pylint --rcfile=.pylintrc ./fiftyone_devicedetection
+        if [ $? -ne 0 ]; then
+          echo "Failed to run pylint on fiftyone_devicedetection."
+          exit 1
+        fi
+        
+      displayName: 'Analyze Python Code Using Pylint'
+
+    - bash: |
+        export resource_key="$(SuperResourceKey)"      
+        export run_performance_tests=true
+        export FOD_CLOUD_API_URL="$(FOD_CLOUD_API_URL)"
+        echo 'Exporting resource key for cloud tests, resource_key=$(SuperResourceKey)'
+        echo 'Exporting endpoint for cloud tests, FOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL)'
+        
+        cd ./fiftyone_devicedetection_cloud
+        coverage run -m xmlrunner discover -s tests -p test*.py -o test-results
+        if [ $? -ne 0 ]; then
+          echo "Failed to run test cases and coverage for fiftyone_devicedetection_cloud."
+          exit 1
+        fi
+        cp .coverage ../.coverage.cloud
+        
+        cd ../fiftyone_devicedetection_onpremise
+        coverage run -m xmlrunner discover -s tests -p test*.py -o test-results
+        if [ $? -ne 0 ]; then
+          echo "Failed to run test cases and coverage for fiftyone_devicedetection_onpremise."
+          exit 1
+        fi
+        cp .coverage ../.coverage.onpremise
+        cd ..
+        coverage combine 
+        coverage xml
+      displayName: 'Run Tests'
+
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '**/test-results/**'
+        testRunTitle: '${{ parameters.imageName }}-${{ parameters.architecture }}'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+        mergeTestResults: false
+        failTaskOnFailedTests: true
+
+    - task: PublishCodeCoverageResults@1
+      condition: succeeded()
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage.xml'

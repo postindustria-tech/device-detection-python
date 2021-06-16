@@ -33,6 +33,9 @@ mobile_ua = ("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) "
             "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile"
             "/11D167 Safari/9537.53")
 
+# TODO remove setheader properties from this list once UACH datafile is released.
+exclude_properties = ["setheaderbrowseraccept-ch", "setheaderplatformaccept-ch", "setheaderhardwareaccept-ch"]
+
 if "resource_key" in os.environ:
     resource_key = os.environ["resource_key"]
 else:
@@ -49,7 +52,7 @@ pipeline = PipelineBuilder() \
         .add(cloudRequestEngine) \
         .add(deviceDetectionCloudEngine) \
         .build()
-			
+            
 class PropertyTests(unittest.TestCase):
 
     def test_available_properties(self):
@@ -69,15 +72,18 @@ class PropertyTests(unittest.TestCase):
         #RUn test checks on all the properties available in header file
         for property in properties_list:
             property = property.lower()
-            if(property in dd_property_dict):
-                dd_property_value = dd_property_dict[property]
-                if(dd_property_value.has_value()):
-                    self.assertNotEqual(property + ".value should not be null", dd_property_value.value(), "noValue")
-                    self.assertIsNotNone(property + ".value should not be null", dd_property_value.value())
+            if(property not in exclude_properties):
+                if(property in dd_property_dict):
+                    dd_property_value = dd_property_dict[property]
+                    if(dd_property_value.has_value()):
+                        self.assertNotEqual(property + ".value should not be null", dd_property_value.value(), "noValue")
+                        self.assertIsNotNone(property + ".value should not be null", dd_property_value.value())
+                    else:
+                        self.assertIsNotNone(dd_property_value.no_value_message())
                 else:
-                    self.assertIsNotNone(dd_property_value.no_value_message())
+                    raise Exception("Property: " + property +" is not present in the results.")
             else:
-                raise Exception("Property: " + property +" is not present in the results.")
+                print("Property: " + property + " excluded from tests.\n");
 
     def test_value_types(self):
 
@@ -101,7 +107,7 @@ class PropertyTests(unittest.TestCase):
             # Engine properties
             property = propertymeta["name"].lower()
             expected_type = propertymeta["type"]
-            if(property in dd_property_dict):
+            if(property in dd_property_dict and property not in exclude_properties):
                 dd_property_value = dd_property_dict[property]
                 value = dd_property_value.value()
                 self.assertIsNotNone("Property: " + property +" is not present in the results.", dd_property_value)

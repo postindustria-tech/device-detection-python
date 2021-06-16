@@ -1,0 +1,17 @@
+# task to upload packages on specified feed.
+
+parameters:
+# Here is the description of the parameters.
+# publishEndpoint: feed where package needs to be uploaded.
+# packageName: package name
+- name: publishEndpoint
+- name: packageName
+
+steps:
+    
+- bash: |
+    twine upload -r ${{ parameters.publishEndpoint }} --config-file $(PYPIRC_PATH) dist/*  
+  workingDirectory: '$(PIPELINE.WORKSPACE)/build-pipeline/drop/${{ parameters.packageName }}/'
+  failOnStderr: true
+  displayName: 'Publish ${{ parameters.packageName }}'
+  condition: succeeded()

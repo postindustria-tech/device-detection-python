@@ -1,0 +1,34 @@
+# template that runs build andn test stage on multiple platforms.
+
+parameters:
+# Provide image versions to run the job on for windows, linux and mac.
+- name: windowsImage
+- name: linuxImage
+- name: macImage
+
+stages:
+- template: data-stage.yml
+
+- template: shared-build-and-test-stage.yml
+  parameters:
+    stageName: Windows_x64
+    imageName: ${{ parameters.windowsImage }}
+    architecture: 'x64'
+
+- template: shared-build-and-test-stage.yml
+  parameters:
+    stageName: Windows_x86
+    imageName: ${{ parameters.windowsImage }}
+    architecture: 'x86'
+    
+- template: shared-build-and-test-stage.yml
+  parameters:
+    stageName: Linux_x64
+    imageName: ${{ parameters.linuxImage }}
+    architecture: 'x64'    
+    
+- template: shared-build-and-test-stage.yml
+  parameters:
+    stageName: MacOS_x64
+    imageName: ${{ parameters.macImage }}
+    architecture: 'x64'

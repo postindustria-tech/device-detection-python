@@ -1,0 +1,53 @@
+# Template to install all the pre-requisites and to upload packages on specified feed.
+
+parameters:
+# publishEndpoint parameter takes the feed name, 
+# where package is to be uploaded.
+- name: publishEndpoint
+
+steps:
+# Autuntication step for internal feed only.
+- task: TwineAuthenticate@1
+  displayName: 'Twine Authenticate '
+  inputs:
+    artifactFeed: 'pipeline-insider'
+  condition: eq('${{ parameters.publishEndpoint }}', 'pipeline-insider')
+
+# Autuntication step for public feeds.
+- task: TwineAuthenticate@1
+  displayName: 'TestPyPI Twine Authenticate '
+  inputs:
+    pythonUploadServiceConnection: PyPITestAuthentication
+  condition: ne('${{ parameters.publishEndpoint }}', 'pipeline-insider')
+              
+- task: UsePythonVersion@0
+  displayName: 'Use Python $(pythonVersionDefault)'
+  inputs:
+    versionSpec: $(pythonVersionDefault)
+  
+- bash: |
+     python -m pip install --upgrade pip
+     pip install twine
+  failOnStderr: true
+  displayName: 'Install Twine'             
+
+# Upload packages
+- template: shared-upload-packages.yml
+  parameters:
+    publishEndpoint: ${{ parameters.publishEndpoint }}
+    packageName: 'fiftyone_devicedetection_shared'         
+
+- template: shared-upload-packages.yml
+  parameters:
+    publishEndpoint: ${{ parameters.publishEndpoint }}
+    packageName: 'fiftyone_devicedetection_cloud'
+  
+- template: shared-upload-packages.yml
+  parameters:
+    publishEndpoint: ${{ parameters.publishEndpoint }}
+    packageName: 'fiftyone_devicedetection_onpremise'
+  
+- template: shared-upload-packages.yml
+  parameters:
+    publishEndpoint: ${{ parameters.publishEndpoint }}
+    packageName: 'fiftyone_devicedetection'
