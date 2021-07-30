@@ -5,30 +5,39 @@ parameters:
 - name: windowsImage
 - name: linuxImage
 - name: macImage
+- name: runTests
+  type: string
+  default: 'On'
 
 stages:
 - template: data-stage.yml
+  parameters:
+    runTests: ${{ parameters.runTests }}
 
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: Windows_x64
     imageName: ${{ parameters.windowsImage }}
     architecture: 'x64'
+    runTests: ${{ parameters.runTests }}
 
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: Windows_x86
     imageName: ${{ parameters.windowsImage }}
     architecture: 'x86'
+    runTests: ${{ parameters.runTests }}
     
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: Linux_x64
     imageName: ${{ parameters.linuxImage }}
     architecture: 'x64'    
+    runTests: ${{ parameters.runTests }}
     
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: MacOS_x64
     imageName: ${{ parameters.macImage }}
     architecture: 'x64'
+    runTests: ${{ parameters.runTests }}

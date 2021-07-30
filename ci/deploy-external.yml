@@ -26,30 +26,9 @@ variables:
   value: 'refs/heads/master'
 
 stages:
-- stage: publish_internal
-  displayName: Publish Internal
-  jobs:
-  # Note - A 'deployment' job will automatically download the artifacts created by the triggering pipeline.
-  - deployment: deploy_internal
-    displayName: Deploy Internal
-    pool:
-      vmImage: $(linuxImage)
-      workspace:
-        clean: all
-    environment: packages-internal
-    strategy:
-      runOnce:
-        deploy:
-          steps:           
-
-          - template: shared-publish-packages.yml
-            parameters:
-              publishEndpoint: 'pipeline-insider'
-
                             
 - stage: publish_testpypi
   displayName: Publish to TestPyPI
-  dependsOn: []
   condition: eq(variables['build.sourceBranch'], variables['targetBranch'])
   jobs:
   - deployment: deploy_testpypi

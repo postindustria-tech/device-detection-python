@@ -8,6 +8,9 @@ parameters:
 - name: stageName
 - name: imageName
 - name: architecture
+- name: runTests
+  type: string
+  default: 'On'
 
 stages:
 
@@ -17,6 +20,7 @@ stages:
   jobs: 
   - job: 'Build_and_Test'
     displayName: Build and Test
+    condition: ne(${{ parameters.runTests }}, 'Off')
 
     variables: 
       - group: InternalKeys

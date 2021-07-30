@@ -1,3 +1,8 @@
+parameters:
+- name: runTests
+  type: string
+  default: 'On'
+
 stages:
 
 - stage: Data
@@ -5,6 +10,7 @@ stages:
   jobs:
   - job: Get_Data_Files
     displayName: Get Data Files
+    condition: ne(${{ parameters.runTests }}, 'Off')
 
     variables: 
     - group: InternalKeys
