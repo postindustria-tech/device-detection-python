@@ -66,6 +66,8 @@ class DeviceDetectionPipelineBuilder(PipelineBuilder):
 
         @type resource_key: string
         @param resource_key: the 51Degrees cloud resource key
+        @type cloud_request_origin: string
+        @param cloud_request_origin: the value to use for the Origin header when making requests to the cloud service
 
         On Premise Engine Settings
 

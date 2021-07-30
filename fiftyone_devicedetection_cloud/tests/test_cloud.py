@@ -33,6 +33,8 @@ if not "resource_key" in os.environ:
 
 mobile_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
 
+cloud_request_origin_test_params = [('', True), ('test.com', True), ('51Degrees.com', False)]
+
 class DeviceDetectionTests(unittest.TestCase):
 
     def test_pipeline_builder_cloud_engine_init(self):
@@ -157,3 +159,39 @@ class DeviceDetectionTests(unittest.TestCase):
 
         self.assertEqual(
             result, "Property notpresent not found in data for element device. This is because your resource key does not include access to this property. Properties that are included for this key under device are " + ', '.join(list(pipeline.get_element("device").get_properties().keys())) + ". For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resourcekeys.html")
+
+    def test_cloud_request_origin(self):
+        """!
+        Verify that making requests using a resource key that        
+        is limited to particular origins will fail or succeed
+        in the expected scenarios. 
+        This is an integration test that uses the live cloud service
+        so any problems with that service could affect the result
+        of this test.
+        """
+
+        for origin, expectedException in cloud_request_origin_test_params:
+
+            with self.subTest():
+
+                exception = False
+
+                try:
+                    pipeline = DeviceDetectionCloudPipelineBuilder(resource_key = "AQS5HKcyVj6B8wNG2Ug", cloud_request_origin = origin).build()
+
+                    fd = pipeline.create_flowdata()
+
+                    fd.evidence.add("header.user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114")
+
+                    fd.process()
+                    
+                except Exception as e:
+                    message = str(e)
+
+                    expectedMessage = "This resource key is not authorized for use with domain: '{}'.".format(origin)
+
+                    self.assertTrue(message.find(expectedMessage) >= 0, "Exception did not contain expected text ({})".format(message))
+
+                    exception = True
+
+                self.assertEqual(expectedException, exception)

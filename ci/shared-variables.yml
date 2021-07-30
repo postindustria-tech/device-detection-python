@@ -7,7 +7,7 @@ variables:
   value: 'macOS-10.14'
 # Pipeline Package Version
 - name: pipelineVersion
-  value: '==4.2.1'
+  value: '==4.3.1b2'
 # Python Version used to create packages
 - name: pythonVersionDefault
   value: '3.7'
