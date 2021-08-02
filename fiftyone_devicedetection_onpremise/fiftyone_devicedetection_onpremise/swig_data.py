@@ -125,7 +125,7 @@ class SwigData(AspectData):
                 
                 # Convert value to list if needed
                 if this_property["type"] == 'string[]':
-                    value = list(value)
+                    return AspectPropertyValue(value=list(value.getValue()))
 
                 return AspectPropertyValue(value=value.getValue())
             

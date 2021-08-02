@@ -23,7 +23,20 @@ from setuptools.command import develop
 from distutils import sysconfig
 from Cython.Distutils import build_ext
 import os
+import io
 
+# Read a text file and return the content as a string.
+def read(file_name):
+
+    """Read a text file and return the content as a string."""
+    try:
+        with io.open(
+            os.path.join(os.path.dirname(__file__), file_name), encoding="utf-8"
+        ) as f:
+            return f.read()
+    except:
+        return "" 
+        
 def get_version():
 
     version = None
@@ -118,9 +131,22 @@ if sys.platform == "win32":
         '/WX'
     ])
 
+if sys.platform == "linux":
+    extra_link_args.extend([
+        '-latomic'
+    ])
+
 if sys.platform == 'darwin':
+    # This is flaged in CPython
     extra_compile_args.extend([
-        '-DGCC_ENABLE_CPP_EXCEPTIONS=YES',
+        '-DGCC_ENABLE_CPP_EXCEPTIONS=YES'
+    ])
+    if sys.version_info[0] == 3 and sys.version_info[1] == 8:
+        extra_compile_args.extend([
+            '-Wno-deprecated-declarations'
+    ])
+    cflags.extend([
+        '-Wno-atomic-alignment'
     ])
 
 DeviceDetectionHashEngineModule = Extension('_DeviceDetectionHashEngineModule',
@@ -220,16 +246,17 @@ clib = ('clib', {
 
 setup (cmdclass={'build_ext': NoSuffixBuilder},
         name = 'fiftyone_devicedetection_onpremise',
-        version = '4.2.6',
+        version = read("version.txt"),
         author      = '51Degrees.com',
         author_email='support@51degrees.com',
-        description = """51Degrees Device Detection On-Premise Wrapper""",
-        long_description ="This project contains 51Degrees Device Detection engines that can be used with the Pipeline API.The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)",
+        description = """This project contains 51Degrees Device Detection OnPremise engine that can be used with the Pipeline API.The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)""",
+        long_description=read("readme.md"),
+        long_description_content_type='text/markdown',
         license='EUPL-1.2',
         libraries=[cpplib, clib],
         ext_package = 'fiftyone_devicedetection_onpremise',
         ext_modules = [DeviceDetectionHashEngineModule],
         py_modules = ['fiftyone_devicedetection_onpremise'],
         packages=["fiftyone_devicedetection_onpremise"],
-        install_requires=["fiftyone_devicedetection_shared"],
+        install_requires=["fiftyone_devicedetection_shared", "fiftyone_pipeline_engines_fiftyone"],
     )

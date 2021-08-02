@@ -19,6 +19,10 @@ class DeviceDetectionExampleTests(unittest.TestCase):
         
         import examples.hash.metadata
 
+    def test_hash_useragentclienthints(self):
+        
+        import examples.hash.useragentclienthints
+
     def test_hash_offline_processing(self):
 
         # Only run if environment variable set

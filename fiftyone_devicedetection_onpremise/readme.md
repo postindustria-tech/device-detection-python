@@ -23,6 +23,7 @@ This engine is a C++ library with a Python wrapper built using [SWIG](http://www
   * VS2015+
   * GCC 7.4+
   * Clang/LLVM 11.0.0+
+* The 'atomic' library on Linux platform for GCC
 * The `Cython` python library
 * The `flask` python library to run the web examples
 * Python3 Dev Package is also required to build extensions on Linux and MacOS  

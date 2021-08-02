@@ -661,9 +661,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         results = self.process_user_agent_list(pipeline)
 
-        self.assertEqual(results["mobile"], 14479)
-        self.assertEqual(results["not_mobile"], 5468)
-        self.assertEqual(results["unknown"], 53)
+        self.assertEqual(results["mobile"], 14434)
+        self.assertEqual(results["not_mobile"], 5529)
+        self.assertEqual(results["unknown"], 37)
 
     def test_benchmark_low_memory(self):
         """!
@@ -683,9 +683,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertEqual(results["mobile"], 14479)
-        self.assertEqual(results["not_mobile"], 5468)
-        self.assertEqual(results["unknown"], 53)
+        self.assertEqual(results["mobile"], 14434)
+        self.assertEqual(results["not_mobile"], 5529)
+        self.assertEqual(results["unknown"], 37)
 
     def test_benchmark_high_performance(self):
         """!
@@ -705,9 +705,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertEqual(results["mobile"], 14479)
-        self.assertEqual(results["not_mobile"], 5468)
-        self.assertEqual(results["unknown"], 53)
+        self.assertEqual(results["mobile"], 14434)
+        self.assertEqual(results["not_mobile"], 5529)
+        self.assertEqual(results["unknown"], 37)
 
 
     def test_benchmark_balanced(self):
@@ -728,9 +728,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
         
-        self.assertEqual(results["mobile"], 14479)
-        self.assertEqual(results["not_mobile"], 5468)
-        self.assertEqual(results["unknown"], 53)
+        self.assertEqual(results["mobile"], 14434)
+        self.assertEqual(results["not_mobile"], 5529)
+        self.assertEqual(results["unknown"], 37)
         
     # TODO : in memory initialisation doesn't currently work because
     # of lack of overloading in the swig engine constructor
@@ -747,6 +747,6 @@ class DeviceDetectionTests(unittest.TestCase):
     #         add_javascript_builder=False,
     #         restricted_properties=["ismobile"]).build()
 
-    #     self.assertEqual(results["mobile"], 14479)
-    #     self.assertEqual(results["not_mobile"], 5468)
-    #     self.assertEqual(results["unknown"], 53)
+    #     self.assertEqual(results["mobile"], 14434)
+    #     self.assertEqual(results["not_mobile"], 5529)
+    #     self.assertEqual(results["unknown"], 37)
