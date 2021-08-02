@@ -131,14 +131,22 @@ if sys.platform == "win32":
         '/WX'
     ])
 
+if sys.platform == "linux":
+    extra_link_args.extend([
+        '-latomic'
+    ])
+
 if sys.platform == 'darwin':
     # This is flaged in CPython
     extra_compile_args.extend([
-        '-DGCC_ENABLE_CPP_EXCEPTIONS=YES',
+        '-DGCC_ENABLE_CPP_EXCEPTIONS=YES'
     ])
     if sys.version_info[0] == 3 and sys.version_info[1] == 8:
         extra_compile_args.extend([
             '-Wno-deprecated-declarations'
+    ])
+    cflags.extend([
+        '-Wno-atomic-alignment'
     ])
 
 DeviceDetectionHashEngineModule = Extension('_DeviceDetectionHashEngineModule',
