@@ -6,19 +6,26 @@ parameters:
 - name: publishEndpoint
 
 steps:
-# Autuntication step for internal feed only.
+# Authentication step for internal feed only.
 - task: TwineAuthenticate@1
-  displayName: 'Twine Authenticate Internal Feed'
+  displayName: 'Twine Authenticate '
   inputs:
     artifactFeed: 'pipeline-insider'
   condition: eq('${{ parameters.publishEndpoint }}', 'pipeline-insider')
 
-# Autuntication step for public feeds.
+# Authentication step for TestPyPI feed.
 - task: TwineAuthenticate@1
-  displayName: 'Twine Authenticate External Feed'
+  displayName: 'TestPyPI Twine Authenticate '
   inputs:
     pythonUploadServiceConnection: PyPITestAuthentication
-  condition: ne('${{ parameters.publishEndpoint }}', 'pipeline-insider')
+  condition: eq('${{ parameters.publishEndpoint }}', 'testpypi')
+
+# Authentication step for PyPI feed.
+- task: TwineAuthenticate@1
+  displayName: 'PyPI Twine Authenticate '
+  inputs:
+    pythonUploadServiceConnection: PyPIAuthentication
+  condition: eq('${{ parameters.publishEndpoint }}', 'pypi')
               
 - task: UsePythonVersion@0
   displayName: 'Use Python $(pythonVersionDefault)'
