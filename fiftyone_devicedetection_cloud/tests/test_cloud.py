@@ -104,7 +104,7 @@ class DeviceDetectionTests(unittest.TestCase):
             result = str(e)
 
         self.assertEqual(
-            result, "Your resource key does not include access to any properties under notpresent. For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resourcekeys.html Available element data keys are: ['device']")
+            result, "Your resource key does not include access to any properties under notpresent. For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resource_keys.html Available element data keys are: ['device']")
 
     def test_engine_init_performance(self):
         """!
@@ -158,7 +158,7 @@ class DeviceDetectionTests(unittest.TestCase):
         self.maxDiff = None
 
         self.assertEqual(
-            result, "Property notpresent not found in data for element device. This is because your resource key does not include access to this property. Properties that are included for this key under device are " + ', '.join(list(pipeline.get_element("device").get_properties().keys())) + ". For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resourcekeys.html")
+            result, "Property notpresent not found in data for element device. This is because your resource key does not include access to this property. Properties that are included for this key under device are " + ', '.join(list(pipeline.get_element("device").get_properties().keys())) + ". For more details on resource keys, see our explainer: https://51degrees.com/documentation/_info__resource_keys.html")
 
     def test_cloud_request_origin(self):
         """!
