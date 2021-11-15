@@ -37,11 +37,16 @@ data_file = "fiftyone_devicedetection_onpremise/device-detection-cxx/device-dete
 
 mobile_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
 
+# User agents test percentages
+minMobilePercentage = 0.72
+maxUnknownPercentage = 0.002
+
 # User agents file
 
 with open('fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/20000 User Agents.csv', newline='') as file:
     reader = csv.reader(file)
     user_agents = list(reader)
+    no_user_agents = len(user_agents)
 
 
 class DeviceDetectionTests(unittest.TestCase):
@@ -661,9 +666,10 @@ class DeviceDetectionTests(unittest.TestCase):
 
         results = self.process_user_agent_list(pipeline)
 
-        self.assertEqual(results["mobile"], 14434)
-        self.assertEqual(results["not_mobile"], 5529)
-        self.assertEqual(results["unknown"], 37)
+        self.assertGreaterEqual(
+            results["mobile"] / no_user_agents, minMobilePercentage)
+        self.assertLessEqual(
+            results["unknown"] / no_user_agents, maxUnknownPercentage)
 
     def test_benchmark_low_memory(self):
         """!
@@ -683,9 +689,10 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertEqual(results["mobile"], 14434)
-        self.assertEqual(results["not_mobile"], 5529)
-        self.assertEqual(results["unknown"], 37)
+        self.assertGreaterEqual(
+            results["mobile"] / no_user_agents, minMobilePercentage)
+        self.assertLessEqual(
+            results["unknown"] / no_user_agents, maxUnknownPercentage)
 
     def test_benchmark_high_performance(self):
         """!
@@ -705,9 +712,10 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertEqual(results["mobile"], 14434)
-        self.assertEqual(results["not_mobile"], 5529)
-        self.assertEqual(results["unknown"], 37)
+        self.assertGreaterEqual(
+            results["mobile"] / no_user_agents, minMobilePercentage)
+        self.assertLessEqual(
+            results["unknown"] / no_user_agents, maxUnknownPercentage)
 
 
     def test_benchmark_balanced(self):
@@ -728,9 +736,10 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
         
-        self.assertEqual(results["mobile"], 14434)
-        self.assertEqual(results["not_mobile"], 5529)
-        self.assertEqual(results["unknown"], 37)
+        self.assertGreaterEqual(
+            results["mobile"] / no_user_agents, minMobilePercentage)
+        self.assertLessEqual(
+            results["unknown"] / no_user_agents, maxUnknownPercentage)
         
     # TODO : in memory initialisation doesn't currently work because
     # of lack of overloading in the swig engine constructor
@@ -747,6 +756,7 @@ class DeviceDetectionTests(unittest.TestCase):
     #         add_javascript_builder=False,
     #         restricted_properties=["ismobile"]).build()
 
-    #     self.assertEqual(results["mobile"], 14434)
-    #     self.assertEqual(results["not_mobile"], 5529)
-    #     self.assertEqual(results["unknown"], 37)
+    #     self.assertGreaterEqual(
+    #        minMobilePercentage, results["mobile"] / no_user_agents)
+    #     self.assertLessEqual(
+    #        maxUnknownPercentage, results["unknown"] / no_user_agents)
