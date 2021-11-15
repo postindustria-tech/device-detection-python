@@ -188,7 +188,7 @@ class DeviceDetectionTests(unittest.TestCase):
                 except Exception as e:
                     message = str(e)
 
-                    expectedMessage = "This resource key is not authorized for use with domain: '{}'.".format(origin)
+                    expectedMessage = "This Resource Key is not authorized for use with this domain: '{}'.".format(origin)
 
                     self.assertTrue(message.find(expectedMessage) >= 0, "Exception did not contain expected text ({})".format(message))
 
