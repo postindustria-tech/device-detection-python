@@ -92,6 +92,9 @@ class SwigData(AspectData):
         if key == 'drift':
             return AspectPropertyValue(value = self.swig_results.getDrift())
 
+        if key == 'iterations':
+            return AspectPropertyValue(value = self.swig_results.getIterations())
+            
         # End special properties
 
         this_property = self.flow_element.properties[key]

@@ -24,6 +24,8 @@ from __future__ import absolute_import
 import multiprocessing
 import os.path
 
+from .constants import *
+
 from fiftyone_pipeline_engines.engine import Engine
 from fiftyone_pipeline_engines.aspectdata_dictionary import AspectDataDictionary
 
@@ -273,35 +275,49 @@ class DeviceDetectionOnPremise(Engine):
           "name": 'DeviceId',
           "type": 'string',
           "category": 'Device metrics',
-          "description": 'Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.'
+          "description": DEVICE_ID_DESCRIPTION
         }
 
         self.properties["useragents"] = {
           "name": 'UserAgents',
           "type": 'string',
           "category": 'Device metrics',
-          "description": 'The matched User-Agents.'
+          "description": USER_AGENTS_DESCRIPTION
         }
 
         self.properties["difference"] = {
           "name": 'Difference',
           "type": 'int',
           "category": 'Device metrics',
-          "description": 'Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.'
+          "description": DIFFERENCE_DESCRIPTION
         }
 
         self.properties["matchednodes"] = {
             "name": 'MatchedNodes',
             "type": 'int',
             "category": 'Device metrics',
-            "description": 'Indicates the number of hash nodes matched within the evidence.'
+            "description": MATCHED_NODES_DESCRIPTION
         }
 
         self.properties["drift"] = {
             "name": 'Drift',
             "type": 'int',
             "category": 'Device metrics',
-            "description": 'Total difference in character positions where the substrings hashes were found away from where they were expected.'
+            "description": DRIFT_DESCRIPTION
+        }
+
+        self.properties["iterations"] = {
+            "name": 'Iterations',
+            "type": 'int',
+            "category": 'Device metrics',
+            "description": ITERATIONS_DESCRIPTION
+        }
+        
+        self.properties["method"] = {
+            "name": 'Method',
+            "type": 'string',
+            "category": 'Device metrics',
+            "description": METHOD_DESCRIPTION
         }
 
     def get_evidence_key_filter(self):
