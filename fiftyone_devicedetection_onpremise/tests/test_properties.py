@@ -25,6 +25,7 @@ import unittest
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise import DeviceDetectionOnPremise
 from fiftyone_devicedetection_shared.utils import *
+from fiftyone_devicedetection_onpremise import constants
 
 data_file = "./fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
 mobile_ua = ("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) "
@@ -66,7 +67,42 @@ class PropertyTests(unittest.TestCase):
                 self.assertIsNotNone(property + ".value should not be null", dd_property_value.value())
             else:
                 self.assertIsNotNone(property + ".noValueMessage should not be null", dd_property_value.no_value_message())
-    
+
+    def test_match_metrics_description(self):
+
+        """!
+        Tests whether the descriptions of all match metric properties are returned correctly.
+        """
+
+        flowData = pipeline.create_flowdata()
+        flowData.evidence.add("header.user-agent", mobile_ua)
+        flowData.process()
+
+        # Get list of all the properties in the engine
+        properties_list = deviceDetectionOnPremiseEngine.get_properties()
+
+        self.assertEqual(
+            properties_list['deviceid']['description'], constants.DEVICE_ID_DESCRIPTION,
+            properties_list['deviceid']['name'] + '.description does not match "' + constants.DEVICE_ID_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['useragents']['description'], constants.USER_AGENTS_DESCRIPTION,
+            properties_list['useragents']['name'] + '.description does not match "' + constants.USER_AGENTS_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['difference']['description'], constants.DIFFERENCE_DESCRIPTION,
+            properties_list['difference']['name'] + '.description does not match "' + constants.DIFFERENCE_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['drift']['description'], constants.DRIFT_DESCRIPTION,
+            properties_list['drift']['name'] + '.description does not match "' + constants.DRIFT_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['matchednodes']['description'], constants.MATCHED_NODES_DESCRIPTION,
+            properties_list['matchednodes']['name'] + '.description does not match "' + constants.MATCHED_NODES_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['iterations']['description'], constants.ITERATIONS_DESCRIPTION,
+            properties_list['iterations']['name'] + '.description does not match "' + constants.ITERATIONS_DESCRIPTION + '"')
+        self.assertEquals(
+            properties_list['method']['description'], constants.METHOD_DESCRIPTION,
+            properties_list['method']['name'] + '.description does not match "' + constants.METHOD_DESCRIPTION + '"')
+
     def test_value_types(self):
 
         """!
