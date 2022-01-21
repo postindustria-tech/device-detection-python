@@ -28,7 +28,10 @@ git submodule update --init --recursive
 * The `flask` python library to run the web examples
 * Git Large File System (LFS) for sub module device-detection-cxx\device-detection-data
 * Additional requirements are for the on-premise Device-Detection Engine.
-
+* On Windows
+  * Visual Studio 2019 or equivalent [C++ build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+    * Minimum Platform Toolset Version `v142`
+    * Minimum Windows SDK Version `10.0.18362.0`
 ## Folders
 
 * `fiftyone_devicedetection` - references both cloud and on-premise packages, contains generic Device-Detection Pipeline Builder.
