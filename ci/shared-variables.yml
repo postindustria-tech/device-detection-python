@@ -1,13 +1,7 @@
 variables:
-- name: windowsImage
-  value: 'vs2017-win2016'
-- name: linuxImage
-  value: 'ubuntu-18.04'
-- name: macImage
-  value: 'macOS-10.14'
 # Pipeline Package Version
 - name: pipelineVersion
-  value: '==4.3.2'
+  value: '==4.3.5'
 # Python Version used to create packages
 - name: pythonVersionDefault
   value: '3.7'

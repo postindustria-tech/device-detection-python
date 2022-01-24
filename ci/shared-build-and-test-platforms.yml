@@ -13,6 +13,7 @@ stages:
 - template: data-stage.yml
   parameters:
     runTests: ${{ parameters.runTests }}
+    linuxImage: ${{ parameters.linuxImage }}
 
 - template: shared-build-and-test-stage.yml
   parameters:
