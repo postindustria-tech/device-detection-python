@@ -822,6 +822,7 @@ INPUT                  = ../fiftyone_devicedetection \
                          ../fiftyone_devicedetection_cloud \
                          ../fiftyone_devicedetection_onpremise \
                          ../fiftyone_devicedetection_shared \
+                         ../fiftyone_devicedetection_examples \
                          ../readme.md
 
 # This tag can be used to specify the character encoding of the source files
@@ -896,9 +897,7 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../fiftyone_devicedetection/examples \
-                         ../fiftyone_devicedetection_cloud/examples \
-                         ../fiftyone_devicedetection_onpremise/examples \
+EXAMPLE_PATH           = ../fiftyone_devicedetection_examples \
                          ../../../src/snippets
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
@@ -1180,7 +1179,8 @@ HTML_EXTRA_FILES       = ../../../docs/images/icon-arrow-left-black.svg \
                          ../../../docs/images/icon-arrow-right-black.svg \
                          ../../../docs/images/icon-arrow-solid-right-mute.svg \
                          ../../../docs/images/icon-arrow-solid-right-orange.svg \
-                         ../../../docs/images/icon-search.svg
+                         ../../../docs/images/icon-search.svg \
+                         ../../../docs/search51.js
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
@@ -1596,7 +1596,7 @@ MATHJAX_CODEFILE       =
 # The default value is: YES.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-SEARCHENGINE           = YES
+SEARCHENGINE           = NO
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be
 # implemented using a web server instead of a web client using Javascript. There

@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example hash/failuretomatch.py
+## @example onpremise/failuretomatch.py
 # 
 # @include{doc} example-failure-to-match-hash.txt
 # 
@@ -36,10 +36,11 @@
 # ```
 
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
 # First create the device detection pipeline with the desired settings.
 
-data_file = "fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
 pipeline = DeviceDetectionOnPremisePipelineBuilder(
     data_file_path = data_file, 
