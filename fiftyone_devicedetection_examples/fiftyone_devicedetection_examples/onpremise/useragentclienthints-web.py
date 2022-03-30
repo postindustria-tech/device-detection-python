@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example hash/useragentclienthints-web.py
+## @example onpremise/useragentclienthints-web.py
 # 
 # @include{doc} example-web-integration-client-hints.txt
 # 
@@ -40,8 +40,9 @@
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_pipeline_core.web import *
 from flask.helpers import make_response
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
-data_file = "../fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
 # First create the device detection pipeline with the desired settings and include required UACH 
 # properties that follows the following format. 

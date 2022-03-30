@@ -481,7 +481,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
         fd = pipeline.create_flowdata()
 
-        fd.evidence.add("header.user-agent", "nothing")
+        fd.evidence.add("header.user-agent", "?£$%^&*")
 
         fd.process()
 

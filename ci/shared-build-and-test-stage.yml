@@ -102,6 +102,7 @@ stages:
         python -m pip install ./fiftyone_devicedetection_cloud
         python -m pip install ./fiftyone_devicedetection_onpremise
         python -m pip install ./fiftyone_devicedetection
+        python -m pip install ./fiftyone_devicedetection_examples
       displayName: 'Install Device Detection Packages'
 
     - bash: |
@@ -157,6 +158,15 @@ stages:
           exit 1
         fi
         cp .coverage ../.coverage.onpremise
+
+        cd ../fiftyone_devicedetection_examples
+        coverage run -m xmlrunner discover -s tests -p test*.py -o test-results
+        if [ $? -ne 0 ]; then
+          echo "Failed to run test cases and coverage for fiftyone_devicedetection_examples."
+          exit 1
+        fi
+        cp .coverage ../.coverage.examples
+
         cd ..
         coverage combine 
         coverage xml

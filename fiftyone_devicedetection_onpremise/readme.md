@@ -68,19 +68,9 @@ python setup.py build_clib build_ext
 python -m pip install -e .
 ```
 
-Then you will be able to run the examples directly:
+#### Examples
 
-`python -m examples.hash.gettingstarted`
-
-To run the web example navigate into examples/hash folder:
-
-#### Linux
-
-Execute `export FLASK_APP=web` where `web` is the example file, and start your application via `flask run`.
-
-#### Windows
-
-Execute `$env:FLASK_APP = "web"` where `web` is the example file, and start your application via `flask run`.
+If you've cloned the GitHub repository, you will be able to run the examples in the `fiftyone_devicedetection_examples` directory.
 
 ## Tests
 

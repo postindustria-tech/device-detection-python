@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example hash/performance.py
+## @example onpremise/performance.py
 # 
 # @include{doc} example-performance-hash.txt
 # 
@@ -31,8 +31,9 @@ import multiprocessing as mp
 
 # This example goes through a CSV of 20000 user agents and processes them, returning the time and information about the matches
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
-data_file = "fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
 pipeline = DeviceDetectionOnPremisePipelineBuilder(
         data_file_path=data_file, 

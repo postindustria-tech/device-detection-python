@@ -30,19 +30,9 @@ For more in-depth examples, check out the [examples](https://51degrees.com/devic
 
 ### From GitHub
 
-If you've cloned the GitHub repository, you will be able to run the examples directly:
+#### Examples
 
-`python -m examples.cloud.gettingstarted`
-
-To run the web example navigate into examples/cloud folder:
-
-#### Linux
-
-Execute `export FLASK_APP=web` where `web` is the example file, and start your application via `flask run`.
-
-#### Windows
-
-Execute `$env:FLASK_APP = "web"` where `web` is the example file, and start your application via `flask run`.
+If you've cloned the GitHub repository, you will be able to run the examples in the `fiftyone_devicedetection_examples` directory.
 
 ## Tests
 
@@ -50,18 +40,4 @@ To run the tests use:
 
 `python -m unittest discover -s tests -p test*.py -b`
 
-Cloud tests will only run with a valid 51Degrees resource key (see above) set as a resource_key operating system environment variable.
 
-For example, use following command to set resource_key on Linux:
-`export resource_key=MY-RESOURCE-KEY`
-
-On Microsoft Windows use:
-`$env:resource_key = "MY-RESOURCE-KEY"`
-
-As the performance and offline processing tests take longer than the others, there is another environment variable flag to run those:
-
-Linux:
-`export run_performance_tests=true`
-
-Microsoft Windows:
-`$env:run_performance_tests = "true"`

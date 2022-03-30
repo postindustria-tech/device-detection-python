@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************
 
-## @example hash/offline_processing.py
+## @example onpremise/offline_processing.py
 # 
 # @include{doc} example-offline-processing-hash.txt
 # 
@@ -28,7 +28,7 @@
 import csv
 import time
 import multiprocessing as mp
-
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 # This example goes through a CSV of 20000 user agents and processes them, 
 # saving whether each one is a mobile, not, or unknown to a csv file
 
@@ -36,7 +36,7 @@ from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilde
 
 # First we create the device detection pipeline with the desired settings.
 
-data_file = "fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
 pipeline = DeviceDetectionOnPremisePipelineBuilder(
     data_file_path=data_file,
@@ -74,7 +74,7 @@ def process_user_agent(user_agent):
 # First we read the contents of the 2000 user agents file
 # Converting it to a list
 
-with open('fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/20000 User Agents.csv', newline='') as file:
+with open(ExampleUtils.find_file('20000 User Agents.csv'), newline='') as file:
     reader = csv.reader(file)
     user_agents = list(reader)
 
