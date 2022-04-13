@@ -222,6 +222,7 @@ clib = ('clib', {
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/memory.c",
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/overrides.c",
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/pool.c",
+			"fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/process.c",
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/profile.c",
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/properties.c",
             "fiftyone_devicedetection_onpremise/device-detection-cxx/src/common-cxx/property.c",
