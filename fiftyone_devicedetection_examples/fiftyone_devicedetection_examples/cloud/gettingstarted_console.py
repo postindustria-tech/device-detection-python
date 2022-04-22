@@ -32,30 +32,29 @@
 # - fiftyone_devicedetection
 # 
 
-import logging
+import json5
+from pathlib import Path
 import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
-from fiftyone_devicedetection_examples.example_utils import ExampleUtils
+from fiftyone_pipeline_core.logger import Logger
+from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
+from ..example_utils import ExampleUtils
 
 class GettingStartedConsole():
-    def run(self, resource_key, logger):
+    def run(self, config, logger, output):
 
-        # In this example, we use the DeviceDetectionPipelineBuilder
-        # and configure it in code. For more information about
-        # pipelines in general see the documentation at
-        # http://51degrees.com/documentation/4.3/_concepts__configuration__builders__index.html        
-        pipeline = DeviceDetectionPipelineBuilder(
-            # Tell it that we want to use cloud and pass our resource key.
-            resource_key = resource_key,
-            # The origin header should be set in order to help the 
-            # cloud service know where the request is coming from.
-            cloud_request_origin = "51Degrees.example.com").build()
+        # In this example, we use the FiftyOnePipelineBuilder and configure it from a file.
+        # For more information about builders in general see the documentation at
+        # http://51degrees.com/documentation/_concepts__configuration__builders__index.html
+
+        # Create the pipeline using the service provider and the configured options.
+        pipeline = PipelineBuilder().add_logger(logger).build_from_configuration(config)
 
         # carry out some sample detections
         for values in self.EvidenceValues:
-            self.analyseEvidence(values, pipeline, logger)
+            self.analyseEvidence(values, pipeline, output)
 
-    def analyseEvidence(self, evidence, pipeline, logger):
+    def analyseEvidence(self, evidence, pipeline, output):
 
         # FlowData is a data structure that is used to convey
         # information required for detection and the results of the
@@ -73,7 +72,7 @@ class GettingStartedConsole():
         for key in evidence:
             message.append(f"\t{key}: {evidence[key]}\n")
         
-        logger.info("".join(message))
+        output("".join(message))
 
         # Add the evidence values to the flow data
         data.evidence.add_from_dict(evidence)
@@ -94,12 +93,12 @@ class GettingStartedConsole():
         # device properties. See the property dictionary at
         # https://51degrees.com/developers/property-dictionary
         # for details of all available properties.
-        self.outputValue("Mobile Device", device.ismobile, message);
-        self.outputValue("Platform Name", device.platformname, message);
-        self.outputValue("Platform Version", device.platformversion, message);
-        self.outputValue("Browser Name", device.browsername, message);
-        self.outputValue("Browser Version", device.browserversion, message);
-        logger.info("".join(message));
+        self.outputValue("Mobile Device", device.ismobile, message)
+        self.outputValue("Platform Name", device.platformname, message)
+        self.outputValue("Platform Version", device.platformversion, message)
+        self.outputValue("Browser Name", device.browsername, message)
+        self.outputValue("Browser Version", device.browserversion, message)
+        output("".join(message))
 
     def outputValue(self, name, value, message):
         # Individual result values have a wrapper called
@@ -147,23 +146,36 @@ def main(argv):
     resource_key = argv[0] if len(argv) > 0 else ExampleUtils.get_resource_key() 
     
     # Configure a logger to output to the console.
-    logger = logging.getLogger("Getting Started")
-    logger.setLevel(logging.INFO)
+    logger = Logger()
+    
+    # Load the configuration file
+    configFile = Path(__file__).resolve().parent.joinpath("gettingstarted_console.json").read_text()
+    config = json5.loads(configFile)
 
-    if (resource_key):
-        GettingStartedConsole().run(resource_key, logger)
-    else:
-        logger.error(
-            "No resource key specified in environment variable " +
-            f"'{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. The 51Degrees " +
-            "cloud service is accessed using a 'ResourceKey'. " +
-            "For more detail see " +
-            "http://51degrees.com/documentation/4.3/_info__resource_keys.html. " +
-            "A resource key with the properties required by this " +
-            "example can be created for free at " +
-            "https://configure.51degrees.com/g3gMZdPY. " +
-            "Once complete, populated the environment variable " +
+    # Get the resource key setting from the config file. 
+    resourceKeyFromConfig = ExampleUtils.get_resource_key_from_config(config)
+    configHasKey = resourceKeyFromConfig and resourceKeyFromConfig.startswith("!!") == False
+
+    # If no resource key is specified in the config file then override it with the key
+    # from the environment variable / command line. 
+    if configHasKey == False:
+        ExampleUtils.set_resource_key_in_config(config, resource_key)
+
+    # If we don't have a resource key then log an error.
+    if not ExampleUtils.get_resource_key_from_config(config):
+        logger.log("error",
+            "No resource key specified in the configuration file " +
+            "'gettingstarted_console.json' or the environment variable " +
+            f"'{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. The 51Degrees cloud " +
+            "service is accessed using a 'ResourceKey'. For more information " +
+            "see " +
+            "http://51degrees.com/documentation/_info__resource_keys.html. " +
+            "A resource key with the properties required by this example can be " +
+            "created for free at https://configure.51degrees.com/1QWJwHxl. " +
+            "Once complete, populate the config file or environment variable " +
             "mentioned at the start of this message with the key.")
+    else:
+        GettingStartedConsole().run(config, logger, print)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
