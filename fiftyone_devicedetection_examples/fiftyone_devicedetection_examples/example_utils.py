@@ -41,6 +41,36 @@ class ExampleUtils():
     ENDPOINT_ENV_VAR = "cloud_endpoint"
 
     @staticmethod
+    def get_resource_key_from_config(config):
+        key = ""
+        for element in config["PipelineOptions"]["Elements"]:
+            if element["elementName"] == "CloudRequestEngine":
+                key = element["elementParameters"]["settings"]["resource_key"]
+
+        return key
+
+    @staticmethod
+    def set_resource_key_in_config(config, key):
+        for element in config["PipelineOptions"]["Elements"]:
+            if element["elementName"] == "CloudRequestEngine":
+                element["elementParameters"]["settings"]["resource_key"] = key
+
+    @staticmethod
+    def get_data_file_from_config(config):
+        file = ""
+        for element in config["PipelineOptions"]["Elements"]:
+            if element["elementName"] == "DeviceDetectionOnPremise":
+                file = element["elementParameters"]["data_file_path"]
+
+        return file
+
+    @staticmethod
+    def set_data_file_in_config(config, file):
+        for element in config["PipelineOptions"]["Elements"]:
+            if element["elementName"] == "DeviceDetectionOnPremise":
+                element["elementParameters"]["data_file_path"] = file
+
+    @staticmethod
     def get_human_readable(device, property):
         try:
             value = getattr(device, property)
@@ -95,7 +125,7 @@ class ExampleUtils():
         if (len(files) == 0 and
             dir.parent != None and
             stop_event.is_set() == False):
-            ExampleUtils.__find_file(file_name, stop_event, result, dir.parent);
+            ExampleUtils.__find_file(file_name, stop_event, result, dir.parent)
         elif len(files) > 0:
             result[0] = str(files[0].absolute())
 
@@ -124,13 +154,15 @@ class ExampleUtils():
         if engine != None:
             data_file_date = ExampleUtils.get_data_file_date(engine)
 
-            logger.info("Using a " +
+            logger.log("info",
+                "Using a " +
                 f"'{ExampleUtils.get_data_file_tier(engine)}' data file created " +
                 f"'{data_file_date}' from location " +
-                f"'{engine.data_file_path}'");
+                f"'{engine.data_file_path}'")
 
         if ExampleUtils.data_file_is_old(engine):
-            logger.warning("This example is using a data file " +
+            logger.log("warning",
+                "This example is using a data file " +
                 f"that is more than '{ExampleUtils.DATA_FILE_AGE_WARNING}' days " +
                 "old. A more recent data file may be needed to " +
                 "correctly detect the latest devices, browsers, " +
@@ -142,7 +174,8 @@ class ExampleUtils():
                 "https://51degrees.com/pricing")
 
         if ExampleUtils.get_data_file_tier(engine) == "Lite":
-            logger.warning("This example is using the 'Lite' " +
+            logger.log("warning",
+                "This example is using the 'Lite' " +
                 "data file. This is used for illustration, and " +
                 "has limited accuracy and capabilities. Find " +
                 "out about the Enterprise data file on our " +

@@ -32,11 +32,10 @@
 # - fiftyone_devicedetection
 # 
 
-# todo rework pipeline.logging to match logging.
-import logging
 import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
+from fiftyone_pipeline_core.logger import Logger
 
 # In this example, by default, the 51degrees "Lite" file needs to be
 # somewhere in the project space, or you may specify another file as
@@ -46,10 +45,10 @@ from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 # limited accuracy and capabilities.
 # Find out about the Enterprise data file on our pricing page:
 # https://51degrees.com/pricing
-LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash";
+LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash"
 
 class GettingStartedConsole():
-    def run(self, data_file, logger):
+    def run(self, data_file, logger, output):
 
         # In this example, we use the DeviceDetectionPipelineBuilder
         # and configure it in code. For more information about
@@ -73,9 +72,9 @@ class GettingStartedConsole():
 
         # carry out some sample detections
         for values in self.EvidenceValues:
-            self.analyseEvidence(values, pipeline, logger)
+            self.analyseEvidence(values, pipeline, output)
 
-    def analyseEvidence(self, evidence, pipeline, logger):
+    def analyseEvidence(self, evidence, pipeline, output):
 
         # FlowData is a data structure that is used to convey
         # information required for detection and the results of the
@@ -93,7 +92,7 @@ class GettingStartedConsole():
         for key in evidence:
             message.append(f"\t{key}: {evidence[key]}\n")
         
-        logger.info("".join(message))
+        output("".join(message))
 
         # Add the evidence values to the flow data
         data.evidence.add_from_dict(evidence)
@@ -114,12 +113,12 @@ class GettingStartedConsole():
         # device properties. See the property dictionary at
         # https://51degrees.com/developers/property-dictionary
         # for details of all available properties.
-        self.outputValue("Mobile Device", device.ismobile, message);
-        self.outputValue("Platform Name", device.platformname, message);
-        self.outputValue("Platform Version", device.platformversion, message);
-        self.outputValue("Browser Name", device.browsername, message);
-        self.outputValue("Browser Version", device.browserversion, message);
-        logger.info("".join(message));
+        self.outputValue("Mobile Device", device.ismobile, message)
+        self.outputValue("Platform Name", device.platformname, message)
+        self.outputValue("Platform Version", device.platformversion, message)
+        self.outputValue("Browser Name", device.browsername, message)
+        self.outputValue("Browser Version", device.browserversion, message)
+        output("".join(message))
 
     def outputValue(self, name, value, message):
         # Individual result values have a wrapper called
@@ -167,13 +166,13 @@ def main(argv):
     data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
 
     # Configure a logger to output to the console.
-    logger = logging.getLogger("Getting Started")
-    logger.setLevel(logging.INFO)
+    logger = Logger()
 
     if (data_file != None):
-        GettingStartedConsole().run(data_file, logger)
+        GettingStartedConsole().run(data_file, logger, print)
     else:
-        logger.error("Failed to find a device detection " +
+        logger.log("error",
+            "Failed to find a device detection " +
             "data file. Make sure the device-detection-data " +
             "submodule has been updated by running " +
             "`git submodule update --recursive`.")

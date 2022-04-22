@@ -74,57 +74,24 @@
 #
 # ## App
 
-import logging
+import os
+from pathlib import Path
 import sys
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from flask.helpers import make_response
 from flask import Flask, request, render_template
-from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from fiftyone_pipeline_core.logger import Logger
+from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_core.web import *
 import json
-
-# In this example, by default, the 51degrees "Lite" file needs to be
-# somewhere in the project space.
-#
-# Note that the Lite data file is only used for illustration, and has
-# limited accuracy and capabilities.
-# Find out about the Enterprise data file on our pricing page:
-# https://51degrees.com/pricing
-LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash";
-
 
 class GettingStartedWeb():
     app = Flask(__name__)
 
-    def build(self, data_file):
+    def build(self, config, logger):
         # Here we add some callback settings for the page to make a request with extra evidence from the client side, in this case the Flask /json route we will make below
 
-        javascript_builder_settings = {
-            "endpoint": "/json",
-            "minify": True,
-            # The enable_cookies setting is needed if you want to work with results from client-side
-            # evidence on the server. For example, precise Apple models or screen dimensions.
-            # This will store the results of client-side detection scripts on the client as cookies.
-            # On subsequent requests, these cookies will be included in the payload and will be 
-            # used by the device detection API when it runs.
-            "enable_cookies": True
-        }
-
-        GettingStartedWeb.pipeline = DeviceDetectionPipelineBuilder(
-            data_file_path = data_file, 
-            # We use the low memory profile as its performance is
-            # sufficient for this example. See the documentation for
-            # more detail on this and other configuration options:
-            # http://51degrees.com/documentation/4.3/_device_detection__features__performance_options.html
-            # http://51degrees.com/documentation/4.3/_features__automatic_datafile_updates.html
-            # http://51degrees.com/documentation/4.3/_features__usage_sharing.html
-            performance_profile = "LowMemory",
-            # inhibit sharing usage for this test, usually this
-            # should be set "true"
-            auto_update = False,
-            licence_keys = "",
-            javascript_builder_settings = javascript_builder_settings).build()
-
+        GettingStartedWeb.pipeline = PipelineBuilder().add_logger(logger).build_from_configuration(config)
         return self
 
     def run(self):
@@ -190,22 +157,57 @@ class GettingStartedWeb():
 
         return response
 
+        
+    # Typically, something like this will not be necessary.
+    # The device detection API will accept an absolute or relative path for the data file.
+    # However, if a relative path is specified, it will only look in the current working 
+    # directory.
+    # In our examples, we have many different projects and we don't want to have a copy of 
+    # the data file for every single one.
+    # In order to handle this, we dynamically search the project directories for the data 
+    # file location and then override the configured setting with the absolute path if 
+    # necessary.
+    # In a real-world scenario, you can just put the data file in your working directory
+    # or use an absolute path in the configuration file.
+    @staticmethod
+    def build_config():
+
+        # Load the configuration file
+        configFile = Path(__file__).resolve().parent.joinpath("config.json").read_text()
+        config = json.loads(configFile)
+
+        dataFile = ExampleUtils.get_data_file_from_config(config)
+        foundDataFile = False
+        if not dataFile:
+            raise Exception("A data file must be specified in the config.json file.")
+        # The data file location provided in the configuration may be using an absolute or
+        # relative path. If it is relative then search for a matching file using the 
+        # ExampleUtils.find_file function.
+        elif os.path.isabs(dataFile) == False:
+            newPath = ExampleUtils.find_file(dataFile)
+            if newPath:
+                # Add an override for the absolute path to the data file.
+                ExampleUtils.set_data_file_in_config(config, newPath)
+                foundDataFile = True
+        else:
+            foundDataFile = os.path.exists(dataFile)
+
+        if foundDataFile == False:
+            raise Exception("Failed to find a device detection data file matching " +
+                f"'{dataFile}'. If using the lite file, then make sure the " +
+                "device-detection-data submodule has been updated by running " +
+                "`git submodule update --recursive`. Otherwise, ensure that the filename " +
+                "is correct in config.json.")
+
+        return config
+
 def main(argv):
-    # Use the supplied path for the data file or find the lite
-    # file that is included in the repository.
-    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
-
     # Configure a logger to output to the console.
-    logger = logging.getLogger("Getting Started")
-    logger.setLevel(logging.INFO)
+    logger = Logger()
 
-    if (data_file != None):
-        GettingStartedWeb().build(data_file).run()
-    else:
-        logger.error("Failed to find a device detection " +
-            "data file. Make sure the device-detection-data " +
-            "submodule has been updated by running " +
-            "`git submodule update --recursive`.")
+    config = GettingStartedWeb.build_config()
+
+    GettingStartedWeb().build(config, logger).run()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

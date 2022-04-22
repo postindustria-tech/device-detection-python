@@ -78,15 +78,15 @@ from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from flask import Flask, request, render_template
 from flask.helpers import make_response
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from fiftyone_pipeline_core.logger import Logger
 from fiftyone_pipeline_core.web import *
 import json
-import logging
 import sys
 
 class GettingStartedWeb():
     app = Flask(__name__)
 
-    def build(self, resource_key):
+    def build(self, resource_key, logger):
         # Here we add some callback settings for the page to make a request with extra evidence from the client side, in this case the Flask /json route we will make below
 
         javascript_builder_settings = {
@@ -101,8 +101,8 @@ class GettingStartedWeb():
         }
         GettingStartedWeb.pipeline = DeviceDetectionPipelineBuilder(
             resource_key = resource_key, 
-            javascript_builder_settings = javascript_builder_settings).build()
-
+            javascript_builder_settings = javascript_builder_settings).add_logger(logger).build()
+        
         return self
 
     def run(self):
@@ -174,14 +174,13 @@ def main(argv):
     resource_key = argv[0] if len(argv) > 0 else ExampleUtils.get_resource_key() 
     
     # Configure a logger to output to the console.
-    logger = logging.getLogger("Getting Started Web")
-    logger.setLevel(logging.INFO)
+    logger = Logger()
 
     if (resource_key):
-        GettingStartedWeb().build(resource_key).run()
+        GettingStartedWeb().build(resource_key, logger).run()
 
     else:
-        logger.error(
+        logger.log("error",
             "No resource key specified in environment variable " +
             f"'{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. The 51Degrees " +
             "cloud service is accessed using a 'ResourceKey'. " +

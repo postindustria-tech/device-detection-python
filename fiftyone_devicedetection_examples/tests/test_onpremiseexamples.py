@@ -1,6 +1,6 @@
-import logging
 import os
 import unittest
+from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.onpremise.gettingstarted_console import GettingStartedConsole
 
@@ -11,11 +11,11 @@ class DeviceDetectionExampleTests(unittest.TestCase):
     def setUp(self):
         self.data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
         self.user_agents_file = ExampleUtils.find_file("20000 User-Agents.csv")
-        self.logger = logging.getLogger("Hash Example Tests")
+        self.logger = Logger()
 
     def test_onpremise_getting_started_console(self):
         example = GettingStartedConsole()
-        example.run(self.data_file, self.logger)
+        example.run(self.data_file, self.logger, print)
 
     def test_onpremise_failure_to_match(self):
         
