@@ -26,7 +26,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     python_requires='>=3.5',
     packages=["fiftyone_devicedetection_examples"],
-    install_requires=["fiftyone_devicedetection", "flask", "flask-unittest", "json5"],
+    install_requires=["fiftyone_devicedetection", "flask", "flask-unittest", "json5", "pyyaml"],
     license="EUPL-1.2",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

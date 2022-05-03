@@ -3,6 +3,8 @@ import unittest
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.onpremise.gettingstarted_console import GettingStartedConsole
+from fiftyone_devicedetection_examples.onpremise.metadata_console import MetaDataConsole
+from fiftyone_devicedetection_examples.onpremise.offlineprocessing import OfflineProcessing
 
 class DeviceDetectionExampleTests(unittest.TestCase):
 
@@ -11,10 +13,15 @@ class DeviceDetectionExampleTests(unittest.TestCase):
     def setUp(self):
         self.data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
         self.user_agents_file = ExampleUtils.find_file("20000 User-Agents.csv")
+        self.evidence_file = ExampleUtils.find_file("20000 Evidence Records.yml")
         self.logger = Logger()
 
     def test_onpremise_getting_started_console(self):
         example = GettingStartedConsole()
+        example.run(self.data_file, self.logger, print)
+
+    def test_onpremise_metadata_console(self):
+        example = MetaDataConsole()
         example.run(self.data_file, self.logger, print)
 
     def test_onpremise_failure_to_match(self):
@@ -25,17 +32,17 @@ class DeviceDetectionExampleTests(unittest.TestCase):
         
         import fiftyone_devicedetection_examples.onpremise.match_metrics
 
-    def test_onpremise_metadata(self):
-        
-        import fiftyone_devicedetection_examples.onpremise.metadata
-
     def test_onpremise_offline_processing(self):
 
         # Only run if environment variable set
 
         if "run_performance_tests" in os.environ:
 
-            import fiftyone_devicedetection_examples.onpremise.offline_processing
+            example = OfflineProcessing()
+            with open(self.evidence_file, "r") as input:
+                with open("./offlineprocessing-output.yml", "w") as output:
+                    example.run(self.data_file, input, self.logger, output)
+            os.remove("./offlineprocessing-output.yml")
 
     def test_onpremise_performance(self):
 

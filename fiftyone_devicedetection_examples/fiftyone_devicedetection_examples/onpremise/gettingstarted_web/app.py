@@ -203,7 +203,7 @@ class GettingStartedWeb():
 
 def main(argv):
     # Configure a logger to output to the console.
-    logger = Logger()
+    logger = Logger(min_level="info")
 
     config = GettingStartedWeb.build_config()
 

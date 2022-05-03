@@ -174,7 +174,7 @@ def main(argv):
     resource_key = argv[0] if len(argv) > 0 else ExampleUtils.get_resource_key() 
     
     # Configure a logger to output to the console.
-    logger = Logger()
+    logger = Logger(min_level="info")
 
     if (resource_key):
         GettingStartedWeb().build(resource_key, logger).run()
