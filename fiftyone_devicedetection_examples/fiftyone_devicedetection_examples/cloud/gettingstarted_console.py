@@ -43,7 +43,7 @@ from ..example_utils import ExampleUtils
 class GettingStartedConsole():
     def run(self, config, logger, output):
 
-        # In this example, we use the FiftyOnePipelineBuilder and configure it from a file.
+        # In this example, we use the PipelineBuilder and configure it from a file.
         # For more information about builders in general see the documentation at
         # http://51degrees.com/documentation/_concepts__configuration__builders__index.html
 
@@ -146,7 +146,7 @@ def main(argv):
     resource_key = argv[0] if len(argv) > 0 else ExampleUtils.get_resource_key() 
     
     # Configure a logger to output to the console.
-    logger = Logger()
+    logger = Logger(min_level="info")
     
     # Load the configuration file
     configFile = Path(__file__).resolve().parent.joinpath("gettingstarted_console.json").read_text()

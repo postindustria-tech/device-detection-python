@@ -65,8 +65,10 @@ class GettingStartedConsole():
             performance_profile = "LowMemory",
             # inhibit sharing usage for this test, usually this
             # should be set "true"
+            usage_sharing = False,
+            # Inhibit auto-update of the data file for this example
             auto_update = False,
-            licence_keys = "").build()
+            licence_keys = "").add_logger(logger).build()
 
         ExampleUtils.check_data_file(pipeline, logger);
 
@@ -166,7 +168,7 @@ def main(argv):
     data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
 
     # Configure a logger to output to the console.
-    logger = Logger()
+    logger = Logger(min_level="info")
 
     if (data_file != None):
         GettingStartedConsole().run(data_file, logger, print)

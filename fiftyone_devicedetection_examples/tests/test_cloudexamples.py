@@ -4,6 +4,7 @@ from pathlib import Path
 import unittest
 from fiftyone_devicedetection_examples.cloud.nativemodellookup_console import NativeModelLookupConsole
 from fiftyone_devicedetection_examples.cloud.taclookup_console import TacLookupConsole
+from fiftyone_devicedetection_examples.cloud.metadata_console import MetaDataConsole
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.cloud.gettingstarted_console import GettingStartedConsole
@@ -36,3 +37,6 @@ class DeviceDetectionExampleTests(unittest.TestCase):
         config = json5.loads(configFile)
         ExampleUtils.set_resource_key_in_config(config, self.resource_key)
         example.run(config, self.logger, print)
+    def test_cloud_metadata_console(self):
+        example = MetaDataConsole()
+        example.run(self.resource_key, self.logger, print)
