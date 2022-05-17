@@ -16,22 +16,31 @@ This git repository uses submodules, to clone the git repository run:
 git clone --recurse-submodules https://github.com/51Degrees/device-detection-python.git
 ```
 
-or if already cloned run the following to obtain all sub modules.:
+or if already cloned run the following to obtain all sub modules:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-## Requirements
+## Dependencies
 
-* Python 3.5+
-* The `flask` python library to run the web examples
-* Git Large File System (LFS) for sub module device-detection-cxx\device-detection-data
-* Additional requirements are for the on-premise Device-Detection Engine.
-* On Windows
-  * Visual Studio 2019 or equivalent [C++ build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
-    * Minimum Platform Toolset Version `v142`
-    * Minimum Windows SDK Version `10.0.18362.0`
+For runtime dependencies, see our [dependencies](http://51degrees.com/documentation/_info__dependencies.html) page.
+
+### Data file
+
+In order to perform device detection on-premise, you will need to use a 51Degrees data file. (This is not required for cloud users) This repository includes a free, 'lite' file in the 'device-detection-data' sub-module that has a significantly reduced set of properties. To obtain a file with a more complete set of device properties see the [51Degrees website](https://51degrees.com/pricing). If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/):
+
+```
+sudo apt-get install git-lfs
+git lfs install
+```
+
+Then, navigate to 'fiftyone.devicedetection.onpremise/device-detection-cxx/device-detection-data' and execute:
+
+```
+git lfs pull
+```
+
 ## Folders
 
 * `fiftyone_devicedetection` - references both cloud and on-premise packages, contains generic Device-Detection Pipeline Builder.
@@ -61,12 +70,34 @@ install the cloud package on its own:
 ```bash
 python -m pip install fiftyone-devicedetection-cloud
 ```
+or
+```bash
+python -m pip install fiftyone-devicedetection-onpremise
+```
 
-See the cloud package readme for more details specifics.
+See the [cloud](fiftyone_devicedetection_cloud/readme.md) and 
+[onpremise](fiftyone_devicedetection_onpremise/readme.md) package readmes for more detail.
 
-### GitHub
+### Build from Source
 
-It is recommended to use Pipenv when build packages. Pipenv will ensure all the required packages 
+Device detection on-premise uses a native binary. (i.e. compiled from C code to target a specific 
+platform/architecture) This section explains how to build this binary.
+
+#### Pre-requisites
+
+- Install C build tools:
+  - Windows:
+    - You will need either Visual Studio 2019 or the [C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) installed.
+      - Minimum platform toolset version is `v142`
+      - Minimum Windows SDK version is `10.0.18362.0`
+  - Linux/MacOS:
+    - `sudo apt-get install g++ make libatomic1`
+- If you have not already done so, pull the git submodules that contain the native code:
+  - `git submodule update --init --recursive`
+
+#### Build steps
+
+It is recommended to use Pipenv when building packages. Pipenv will ensure all the required packages 
 for building and testing are available e.g. `cython` and `flask`.
 
 ```bash
@@ -75,7 +106,8 @@ pipenv install
 pipenv shell
 ```
 
-There are various methods to build and install the packages.
+We use `make` to manage the build process. There are several targets for the make process. 
+If unsure, you probably want to use the `install` target: 
 
 ```bash
 make install
@@ -88,8 +120,9 @@ other make targets:
 * `test` - run package tests
 * `clean` - remove temporary files created when building extensions
 
-For convenience, there is also a powershell setup script called `setup.ps1`. To run it, you may 
-need to update the execution policy to allow unsigned scripts to execute:
+Make can be installed on Windows. Alternatively, there is also a powershell setup script called 
+`setup.ps1`. To run it, you may need to update the execution policy to allow unsigned scripts to 
+execute:
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser Bypass
@@ -97,8 +130,9 @@ Set-ExecutionPolicy -Scope CurrentUser Bypass
 .\setup.ps1
 ```
 
-If you want to perform the steps manually, these are the commands to build the native on-premise
-library and install the packages.
+Finally, if the make or powershell scripts fail, or you want to perform the steps manually for 
+some other reason, these are the commands to build the native on-premise library and install 
+the packages.
 
 ```bash
 python -m pip install -e fiftyone_devicedetection_shared/
@@ -112,7 +146,7 @@ python -m pip install -e fiftyone_devicedetection/
 
 ## Examples
 
-Then, to run an example, navigate into the example module directory.
+To run an example, navigate into the example module directory.
 
 ```bash
 cd fiftyone_devicedetection_examples/
@@ -126,26 +160,26 @@ python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 
 #### Cloud
 
-| Example                                | Revamped           | Description |
-|----------------------------------------|--------------------|-------------|
-| gettingstarted_console                 | @tick              | How to use the 51Degrees Cloud service to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
-| gettingstarted_web                     | @tick              | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
-| taclookup                              |                    | How to get device details from a TAC (Type Allocation Code) using the 51Degrees cloud service. |
-| nativemodellookup                      |                    | How to get device details from a native model name using the 51Degrees cloud service. |
-| failuretomatch                         |                    | Demonstrate the features that are available when a match cannot be found. |
-| metadata                               |                    | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
-| useragentclienthints-web               |                    | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
+| Example                                | Description |
+|----------------------------------------|-------------|
+| gettingstarted_console                 | How to use the 51Degrees Cloud service to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
+| gettingstarted_web                     | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
+| taclookup                              | How to get device details from a TAC (Type Allocation Code) using the 51Degrees cloud service. |
+| nativemodellookup                      | How to get device details from a native model name using the 51Degrees cloud service. |
+| failuretomatch                         | Demonstrate the features that are available when a match cannot be found. |
+| metadata                               | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
+| useragentclienthints-web               | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
 
 #### On-Premise
 
-| Example                                | Revamped           | Description |
-|----------------------------------------|--------------------|-------------|
-| gettingstarted_console                 | @tick              | How to use the 51Degrees on-premise device detection API to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
-| gettingstarted_web                     | @tick              | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
-| failuretomatch                         |                    | Demonstrate the features that are available when a match cannot be found. |
-| match_metrics                          |                    | How to access the metrics that relate to the device detection algorithm. |
-| metadata                               |                    | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
-| offline_processing                     |                    | Example showing how to ingest a file containing data from web requests and perform detection against the entries. |
-| performance                            |                    | How to configure the various performance options and run a simple performance test. |
-| useragentclienthints-web               |                    | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
+| Example                                | Description |
+|----------------------------------------|-------------|
+| gettingstarted_console                 | How to use the 51Degrees on-premise device detection API to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
+| gettingstarted_web                     | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
+| failuretomatch                         | Demonstrate the features that are available when a match cannot be found. |
+| match_metrics                          | How to access the metrics that relate to the device detection algorithm. |
+| metadata                               | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
+| offline_processing                    | Example showing how to ingest a file containing data from web requests and perform detection against the entries. |
+| performance                           | How to configure the various performance options and run a simple performance test. |
+| useragentclienthints-web              | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
 
