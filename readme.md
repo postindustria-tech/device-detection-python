@@ -25,10 +25,28 @@ git submodule update --init --recursive
 ## Dependencies
 
 For runtime dependencies, see our [dependencies](http://51degrees.com/documentation/_info__dependencies.html) page.
+The [tested versions](https://51degrees.com/documentation/_info__tested_versions.html) page shows 
+the Python versions that we currently test against. The software may run fine against other versions, 
+but additional caution should be applied.
 
-### Data file
+### Data
 
-In order to perform device detection on-premise, you will need to use a 51Degrees data file. (This is not required for cloud users) This repository includes a free, 'lite' file in the 'device-detection-data' sub-module that has a significantly reduced set of properties. To obtain a file with a more complete set of device properties see the [51Degrees website](https://51degrees.com/pricing). If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/):
+The API can either use our cloud service to get its data or it can use a local (on-premise) copy of the data.
+
+#### Cloud
+
+You will require a [resource key](https://51degrees.com/documentation/_info__resource_keys.html)
+to use the Cloud API. You can create resource keys using our 
+[configurator](https://configure.51degrees.com/), see our 
+[documentation](https://51degrees.com/documentation/_concepts__configurator.html) on how to use this.
+
+#### On-Premise
+
+In order to perform device detection on-premise, you will need to use a 51Degrees data file. 
+This repository includes a free, 'lite' file in the 'device-detection-data' sub-module that has a 
+significantly reduced set of properties. To obtain a file with a more complete set of device 
+properties see the [51Degrees website](https://51degrees.com/pricing). If you want to use the lite 
+file, you will need to install [GitLFS](https://git-lfs.github.com/):
 
 ```
 sudo apt-get install git-lfs
@@ -158,7 +176,7 @@ Then run an example:
 python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 ```
 
-#### Cloud
+### Cloud
 
 | Example                                | Description |
 |----------------------------------------|-------------|
@@ -170,7 +188,7 @@ python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 | metadata                               | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
 | useragentclienthints-web               | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
 
-#### On-Premise
+### On-Premise
 
 | Example                                | Description |
 |----------------------------------------|-------------|
