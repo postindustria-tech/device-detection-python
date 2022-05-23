@@ -24,7 +24,7 @@
 # 
 # @include{doc} example-getting-started-onpremise.txt
 # 
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/hash/gettingstarted.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/gettingstarted_console.py). 
 # 
 # @include{doc} example-require-datafile.txt
 # 
