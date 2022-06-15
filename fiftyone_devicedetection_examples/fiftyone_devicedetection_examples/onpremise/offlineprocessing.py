@@ -48,14 +48,14 @@
 # 
 # Required PyPi Dependencies:
 # - fiftyone_devicedetection
-# - pyyaml
+# - ruamel
 
 from pathlib import Path
 import sys
-import yaml
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.logger import Logger
+from ruamel.yaml import YAML
 
 # In this example, by default, the 51degrees "Lite" file needs to be
 # somewhere in the project space, or you may specify another file as
@@ -112,28 +112,36 @@ class OfflineProcessing():
             licence_keys = "").add_logger(logger).build()
 
         records = 0
-        yaml_data = yaml.safe_load_all(evidence_yaml)
-        # Keep going as long as we have more document records.
-        for evidence in yaml_data:
-            # Output progress.
-            records = records + 1
-            if (records % 100 == 0):
-                logger.log("info", f"Processed {records} records")
+        yaml = YAML()
+        yaml_data = yaml.load_all(evidence_yaml)
+        
+        try:
+            # Keep going as long as we have more document records.
+            for evidence in yaml_data:
+                # Output progress.
+                records = records + 1
+                if (records % 100 == 0):
+                    logger.log("info", f"Processed {records} records")
 
-            # write the yaml document separator
-            print("---", file = output)
-            # Pass the record to the pipeline as evidence so that it can be analyzed
-            headers = {}
-            for key in evidence:
-                headers[f"header.{key}"] = evidence[key]
+                # write the yaml document separator
+                print("---", file = output)
+                # Pass the record to the pipeline as evidence so that it can be analyzed
+                headers = {}
+                for key in evidence:
+                    headers[f"header.{key}"] = evidence[key]
 
-            self.analyseEvidence(headers, pipeline, output)
+                self.analyseEvidence(headers, pipeline, output, yaml)
+        except BaseException as err:
+            # We can't read the evidence values, so cant write them to the output. Will just
+            # have to skip this entry.
+            logger.log("error", err)
+
         # write the yaml document end marker
         print("...", file = output)
 
         ExampleUtils.check_data_file(pipeline, logger)
 
-    def analyseEvidence(self, evidence, pipeline, output):
+    def analyseEvidence(self, evidence, pipeline, output, yaml):
         # FlowData is a data structure that is used to convey information required for
         # detection and the results of the detection through the pipeline.
         # Information required for detection is called "evidence" and usually consists
