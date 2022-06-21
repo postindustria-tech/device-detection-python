@@ -126,10 +126,14 @@ class DeviceDetectionOnPremise(Engine):
         if restricted_properties:
             for restricted_property in restricted_properties:
                 restricted_properties_vector.append(restricted_property)
+            # Add the metric properties to the restricted properties as they
+            # are always available
+            for property in self.get_metric_properties():
+                restricted_properties.append(property)
             self.set_restricted_properties(restricted_properties)
 
         properties_list = RequiredPropertiesConfigSwig(restricted_properties_vector)
-        
+
         #  Assemble configuration
 
         config = ConfigHashSwig()
@@ -264,61 +268,66 @@ class DeviceDetectionOnPremise(Engine):
                 "type": current_property.getType(),
                 "datafiles": list(current_property.getDataFilesWherePresent()),
                 "category": current_property.getCategory(),
-                "description": current_property.getDescription()
+                "description": current_property.getDescription(),
+                "component": self.get_component(current_property)
             }
         
         self.properties = properties
 
         # Special properties
+        for key, property in self.get_metric_properties().items():
+            self.properties[key] = property
 
-        self.properties["deviceid"] = {
+    def get_metric_properties(self):
+        return { "deviceid": {
           "name": 'DeviceId',
           "type": 'string',
           "category": 'Device metrics',
-          "description": DEVICE_ID_DESCRIPTION
-        }
-
-        self.properties["useragents"] = {
+          "description": DEVICE_ID_DESCRIPTION,
+          "component": "Match Metrics"
+        },
+        "useragents": {
           "name": 'UserAgents',
           "type": 'string',
           "category": 'Device metrics',
-          "description": USER_AGENTS_DESCRIPTION
-        }
-
-        self.properties["difference"] = {
+          "description": USER_AGENTS_DESCRIPTION,
+          "component": "Match Metrics"
+        },
+        "difference": {
           "name": 'Difference',
           "type": 'int',
           "category": 'Device metrics',
-          "description": DIFFERENCE_DESCRIPTION
-        }
-
-        self.properties["matchednodes"] = {
+          "description": DIFFERENCE_DESCRIPTION,
+          "component": "Match Metrics"
+        },
+        "matchednodes": {
             "name": 'MatchedNodes',
             "type": 'int',
             "category": 'Device metrics',
-            "description": MATCHED_NODES_DESCRIPTION
-        }
-
-        self.properties["drift"] = {
+            "description": MATCHED_NODES_DESCRIPTION,
+            "component": "Match Metrics"
+        },
+        "drift": {
             "name": 'Drift',
             "type": 'int',
             "category": 'Device metrics',
-            "description": DRIFT_DESCRIPTION
-        }
-
-        self.properties["iterations"] = {
+            "description": DRIFT_DESCRIPTION,
+            "component": "Match Metrics"
+        },
+        "iterations": {
             "name": 'Iterations',
             "type": 'int',
             "category": 'Device metrics',
-            "description": ITERATIONS_DESCRIPTION
-        }
-        
-        self.properties["method"] = {
+            "description": ITERATIONS_DESCRIPTION,
+            "component": "Match Metrics"
+        },
+        "method": {
             "name": 'Method',
             "type": 'string',
             "category": 'Device metrics',
-            "description": METHOD_DESCRIPTION
-        }
+            "description": METHOD_DESCRIPTION,
+            "component": "Match Metrics"
+        }}
 
     def get_evidence_key_filter(self):
         """!
@@ -365,3 +374,6 @@ class DeviceDetectionOnPremise(Engine):
         data = SwigData(self, result)
 
         flow_data.set_element_data(data)
+
+    def get_component(self, property):
+        return self.engine.getMetaData().getComponentForProperty(property).getName()

@@ -78,7 +78,10 @@ class SwigData(AspectData):
             return AspectPropertyValue(value = self.swig_results.getDeviceId())
 
         if key == 'useragents':
-            return AspectPropertyValue(value = self.swig_results.getUserAgents())
+            useragents = []
+            for i in range(self.swig_results.getUserAgents()):
+                useragents.append(self.swig_results.getUserAgent(i))
+            return AspectPropertyValue(value = useragents)
 
         if key == 'difference':
             return AspectPropertyValue(value = self.swig_results.getDifference())

@@ -20,6 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
 
+import string
 import unittest
 import os
 import time
@@ -501,7 +502,8 @@ class DeviceDetectionTests(unittest.TestCase):
 
         fd.process()
 
-        self.assertEqual(fd.device.useragents.value(), 1)
+        self.assertIsInstance(fd.device.useragents.value(), list)
+        self.assertEqual(len(fd.device.useragents.value()), 1)
 
     def test_value_types(self):
         """!
