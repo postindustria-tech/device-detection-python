@@ -30,6 +30,7 @@ from fiftyone_devicedetection_examples.cloud.metadata_console import MetaDataCon
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.cloud.gettingstarted_console import GettingStartedConsole
+from fiftyone_devicedetection_examples.cloud.configurator_console import ConfiguratorConsole
 
 class DeviceDetectionExampleTests(unittest.TestCase):
 
@@ -61,4 +62,7 @@ class DeviceDetectionExampleTests(unittest.TestCase):
         example.run(config, self.logger, print)
     def test_cloud_metadata_console(self):
         example = MetaDataConsole()
+        example.run(self.resource_key, self.logger, print)
+    def test_cloud_configurator_console(self):
+        example = ConfiguratorConsole()
         example.run(self.resource_key, self.logger, print)
