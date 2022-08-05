@@ -110,7 +110,8 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
         @param create_temp_copy: whether to copy datafile to temporary location when updating
         @type data_file_update_base_url: string
         @param data_file_update_base_url: base url for the datafile update service
-
+        @param data_file_update_service: service for the pipeline to use for auto updates instead of the default
+        @type data_file_update_service: DataFileUpdateService
         """
         if settings is None:
             settings = {}

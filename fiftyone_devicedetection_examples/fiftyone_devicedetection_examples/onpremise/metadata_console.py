@@ -47,20 +47,12 @@ from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetec
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_pipeline_core.basiclist_evidence_keyfilter import BasicListEvidenceKeyFilter
 from ..example_utils import ExampleUtils
+from fiftyone_devicedetection_shared.example_constants import EVIDENCE_VALUES
+from fiftyone_devicedetection_shared.example_constants import LITE_DATAFILE_NAME
 
 bgRed = "\u001b[41m"
 fgWhite = "\u001b[37;1m"
 colReset = "\u001b[0m"
-
-# In this example, by default, the 51degrees "Lite" file needs to be
-# somewhere in the project space, or you may specify another file as
-# a command line parameter.
-#
-# Note that the Lite data file is only used for illustration, and has
-# limited accuracy and capabilities.
-# Find out about the Enterprise data file on our pricing page:
-# https://51degrees.com/pricing
-LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash"
 
 class MetaDataConsole():
     def run(self, data_file, logger, output):
@@ -119,9 +111,15 @@ class MetaDataConsole():
                 f"[Category: {property['category']}] ({property['type']})")
 
 def main(argv):
-    # Use the supplied path for the data file or find the lite
-    # file that is included in the repository.
-    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
+    # In this example, by default, the 51degrees "Lite" file needs to be
+    # somewhere in the project space, or you may specify another file as
+    # a command line parameter.
+    #
+    # Note that the Lite data file is only used for illustration, and has
+    # limited accuracy and capabilities.
+    # Find out about the Enterprise data file on our pricing page:
+    # https://51degrees.com/pricing
+    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_DATAFILE_NAME)
     
     # Configure a logger to output to the console.
     logger = Logger(min_level="info")

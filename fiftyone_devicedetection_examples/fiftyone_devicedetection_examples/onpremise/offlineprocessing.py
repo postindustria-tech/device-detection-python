@@ -55,21 +55,9 @@ import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.logger import Logger
+from fiftyone_devicedetection_shared.example_constants import LITE_DATAFILE_NAME
+from fiftyone_devicedetection_shared.example_constants import EVIDENCE_FILE_NAME
 from ruamel.yaml import YAML
-
-# In this example, by default, the 51degrees "Lite" file needs to be
-# somewhere in the project space, or you may specify another file as
-# a command line parameter.
-#
-# Note that the Lite data file is only used for illustration, and has
-# limited accuracy and capabilities.
-# Find out about the Enterprise data file on our pricing page:
-# https://51degrees.com/pricing
-LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash"
-
-# This file contains the 20,000 most commonly seen combinations of header values 
-# that are relevant to device detection. For example, User-Agent and UA-CH headers.
-EVIDENCE = "20000 Evidence Records.yml"
 
 class OfflineProcessing():
     def run(self, data_file, evidence_yaml, logger, output):
@@ -182,11 +170,18 @@ class OfflineProcessing():
         yaml.dump(values, output)
 
 def main(argv):
-    # Use the supplied path for the data file or find the lite
-    # file that is included in the repository.
-    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
-    # Do the same for the yaml evidence file.
-    evidence_file = argv[1] if len(argv) > 1 else ExampleUtils.find_file(EVIDENCE)
+    # In this example, by default, the 51degrees "Lite" file needs to be
+    # somewhere in the project space, or you may specify another file as
+    # a command line parameter.
+    #
+    # Note that the Lite data file is only used for illustration, and has
+    # limited accuracy and capabilities.
+    # Find out about the Enterprise data file on our pricing page:
+    # https://51degrees.com/pricing
+    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_DATAFILE_NAME)
+    # This file contains the 20,000 most commonly seen combinations of header values 
+    # that are relevant to device detection. For example, User-Agent and UA-CH headers.
+    evidence_file = argv[1] if len(argv) > 1 else ExampleUtils.find_file(EVIDENCE_FILE_NAME)
     # Finally, get the location for the output file. Use the same location as the
     # evidence if a path is not supplied on the command line.
     output_file = argv[2] if len(argv) > 2 else Path.joinpath(Path(evidence_file).absolute().parent, "offline-processing-output.yml")
