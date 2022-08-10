@@ -137,11 +137,13 @@ stages:
       displayName: 'Analyze Python Code Using Pylint'
 
     - bash: |
-        export resource_key="$(SuperResourceKey)"      
+        export resource_key="$(SuperResourceKey)"
         export run_performance_tests=true
         export FOD_CLOUD_API_URL="$(FOD_CLOUD_API_URL)"
+        export license_key="$(DeviceDetectionLicenseKey)"
         echo 'Exporting resource key for cloud tests, resource_key=$(SuperResourceKey)'
         echo 'Exporting endpoint for cloud tests, FOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL)'
+        echo 'Exporting license key for on-premise tests, license_key=$(DeviceDetectionLicenseKey)'
         
         cd ./fiftyone_devicedetection_cloud
         coverage run -m xmlrunner discover -s tests -p test*.py -o test-results

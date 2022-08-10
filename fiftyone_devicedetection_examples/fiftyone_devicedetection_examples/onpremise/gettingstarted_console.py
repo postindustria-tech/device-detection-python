@@ -36,16 +36,8 @@ import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.logger import Logger
-
-# In this example, by default, the 51degrees "Lite" file needs to be
-# somewhere in the project space, or you may specify another file as
-# a command line parameter.
-#
-# Note that the Lite data file is only used for illustration, and has
-# limited accuracy and capabilities.
-# Find out about the Enterprise data file on our pricing page:
-# https://51degrees.com/pricing
-LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash"
+from fiftyone_devicedetection_shared.example_constants import EVIDENCE_VALUES
+from fiftyone_devicedetection_shared.example_constants import LITE_DATAFILE_NAME
 
 class GettingStartedConsole():
     def run(self, data_file, logger, output):
@@ -73,7 +65,7 @@ class GettingStartedConsole():
         ExampleUtils.check_data_file(pipeline, logger);
 
         # carry out some sample detections
-        for values in self.EvidenceValues:
+        for values in EVIDENCE_VALUES:
             self.analyseEvidence(values, pipeline, output)
 
     def analyseEvidence(self, evidence, pipeline, output):
@@ -134,38 +126,17 @@ class GettingStartedConsole():
             f"\t{name}: {value.value()}\n" if value.has_value()
             else f"\t{name}: {value.no_value_message()}\n")
 
-
-    # This collection contains the various input values that will 
-    # be passed to the device detection algorithm.
-    EvidenceValues = [
-        # A User-Agent from a mobile device.
-        { "header.user-agent":
-            "Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-G960U) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "SamsungBrowser/10.1 Chrome/71.0.3578.99 Mobile Safari/537.36" },
-        # A User-Agent from a desktop device.
-        { "header.user-agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/78.0.3904.108 Safari/537.36" },
-        # Evidence values from a windows 11 device using a browser
-        # that supports User-Agent Client Hints.
-        { "header.user-agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/98.0.4758.102 Safari/537.36",
-            "header.sec-ch-ua-mobile": "?0",
-        "header.sec-ch-ua":
-            "\" Not A; Brand\";v=\"99\", \"Chromium\";v=\"98\", "
-            "\"Google Chrome\";v=\"98\"",
-            "header.sec-ch-ua-platform": "\"Windows\"",
-            "header.sec-ch-ua-platform-version": "\"14.0.0\"" }
-    ]
-
 def main(argv):
-    # Use the supplied path for the data file or find the lite
-    # file that is included in the repository.
-    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_V_4_1_HASH)
+
+    # In this example, by default, the 51degrees "Lite" file needs to be
+    # somewhere in the project space, or you may specify another file as
+    # a command line parameter.
+    #
+    # Note that the Lite data file is only used for illustration, and has
+    # limited accuracy and capabilities.
+    # Find out about the Enterprise data file on our pricing page:
+    # https://51degrees.com/pricing
+    data_file = argv[0] if len(argv) > 0 else ExampleUtils.find_file(LITE_DATAFILE_NAME)
 
     # Configure a logger to output to the console.
     logger = Logger(min_level="info")

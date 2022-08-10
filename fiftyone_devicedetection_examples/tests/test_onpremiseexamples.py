@@ -22,12 +22,15 @@
 
 import os
 import unittest
+from fiftyone_devicedetection_shared.key_utils import KeyUtils
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.onpremise.gettingstarted_console import GettingStartedConsole
 from fiftyone_devicedetection_examples.onpremise.metadata_console import MetaDataConsole
 from fiftyone_devicedetection_examples.onpremise.offlineprocessing import OfflineProcessing
 from fiftyone_devicedetection_examples.onpremise.match_metrics import MatchMetricsConsole
+from fiftyone_devicedetection_examples.onpremise.datafileupdate_console import DataFileUpdateConsole
+from fiftyone_devicedetection_examples.onpremise.datafileupdate_console import UPDATE_EXAMPLE_LICENSE_KEY_NAME
 
 class DeviceDetectionExampleTests(unittest.TestCase):
 
@@ -54,6 +57,11 @@ class DeviceDetectionExampleTests(unittest.TestCase):
     def test_onpremise_match_metrics(self):
         example = MatchMetricsConsole()
         example.run(self.data_file, False, self.logger, print)
+
+    def test_onpremise_datafileupdate_console(self):
+        example = DataFileUpdateConsole()
+        license_key = KeyUtils.get_named_key(UPDATE_EXAMPLE_LICENSE_KEY_NAME)
+        example.run(self.data_file, license_key, False, self.logger, print)
 
     def test_onpremise_offline_processing(self):
 
