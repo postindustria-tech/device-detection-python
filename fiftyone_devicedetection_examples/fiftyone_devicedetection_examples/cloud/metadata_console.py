@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
 
-## @example cloud/gettingstarted_console.py
+## @example cloud/metadata_console.py
 #
 # The cloud service exposes meta data that can provide additional information about the various 
 # properties that might be returned.

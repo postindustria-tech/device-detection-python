@@ -20,7 +20,7 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
 
-## @example onpremise/gettingstarted_console.py
+## @example onpremise/metadata_console.py
 #
 # The device detection data file contains meta data that can provide additional information
 # about the various records in the data model.
