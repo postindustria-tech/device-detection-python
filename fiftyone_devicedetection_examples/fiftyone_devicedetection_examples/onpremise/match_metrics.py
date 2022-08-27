@@ -21,7 +21,8 @@
 # ********************************************************************* 
 
 
-# @example onpremise/match_metrics.python
+## @example onpremise/match_metrics.py
+#
 # The example illustrates the various metrics that can be obtained about the device detection
 # process, for example, the degree of certainty about the result. Running the example outputs
 # those properties and values.
