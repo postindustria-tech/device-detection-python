@@ -29,6 +29,18 @@
             {
                 "elementName": "SetHeaderElement",
                 "elementPath": "fiftyone_pipeline_core.setheaderelement"
+            },
+            {
+                "elementName": "ShareUsage",
+                "elementPath": "fiftyone_pipeline_engines_fiftyone.share_usage",
+                "elementParameters": {
+                    "share_percentage": 100,
+                    "interval": 1200,
+                    "requested_package_size": 50,
+                    "cookie": "",
+                    "query_whitelist": [],
+                    "header_blacklist": []
+                }
             }
         ]
     }
