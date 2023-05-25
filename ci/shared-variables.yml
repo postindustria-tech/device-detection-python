@@ -1,7 +1,0 @@
-variables:
-# Pipeline Package Version
-- name: pipelineVersion
-  value: '==4.4.5'
-# Python Version used to create packages
-- name: pythonVersionDefault
-  value: '3.7'

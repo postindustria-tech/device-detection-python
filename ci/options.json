@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "Ubuntu_Python_3.11",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.11",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  }
+]
