@@ -23,6 +23,7 @@
 import sys
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+# pylint: disable=E0402
 from ..example_utils import ExampleUtils
 
 # This example is displayed at the end of the [Configurator](https://configure.51degrees.com/)

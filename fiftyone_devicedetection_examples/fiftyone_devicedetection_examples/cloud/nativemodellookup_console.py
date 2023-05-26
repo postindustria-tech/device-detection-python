@@ -38,6 +38,7 @@
 #
 
 import sys
+# pylint: disable=E0402
 from ..example_utils import ExampleUtils
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder

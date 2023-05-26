@@ -62,7 +62,7 @@ class GettingStartedConsole():
             auto_update = False,
             licence_keys = "").add_logger(logger).build()
 
-        ExampleUtils.check_data_file(pipeline, logger);
+        ExampleUtils.check_data_file(pipeline, logger)
 
         # carry out some sample detections
         for values in EVIDENCE_VALUES:

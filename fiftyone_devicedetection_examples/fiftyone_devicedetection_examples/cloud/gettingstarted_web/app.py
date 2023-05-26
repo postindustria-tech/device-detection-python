@@ -113,7 +113,7 @@ class GettingStartedWeb():
     # a JSON encoded property database using any additional evidence provided by the client 
 
     @app.route('/json', methods=['POST'])
-    def jsonroute():
+    def jsonroute(self):
 
         # Create the flowdata object for the JSON route
         flowdata = GettingStartedWeb.pipeline.create_flowdata()
@@ -135,7 +135,7 @@ class GettingStartedWeb():
     # using the above JSON route
 
     @app.route('/')
-    def server():
+    def server(self):
 
         # Create the flowdata object for the JSON route
         flowdata = GettingStartedWeb.pipeline.create_flowdata()
