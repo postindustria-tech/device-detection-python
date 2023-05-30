@@ -6,6 +6,11 @@ param (
     [string]$DeviceDetectionUrl
 )
 
+if ($env:GITHUB_JOB -eq "PreBuild") {
+    Write-Output "Skipping assets fetching"
+    exit 0
+}
+
 $ErrorActionPreference = 'Stop'
 
 $assets = New-Item -ItemType Directory -Path assets -Force

@@ -281,5 +281,5 @@ setup (cmdclass={'build_ext': NoSuffixBuilder},
         ext_modules = [DeviceDetectionHashEngineModule],
         py_modules = ['fiftyone_devicedetection_onpremise'],
         packages=["fiftyone_devicedetection_onpremise"],
-        install_requires=["fiftyone_devicedetection_shared", "fiftyone_pipeline_engines_fiftyone"],
+        install_requires=["fiftyone_devicedetection_shared", "fiftyone_pipeline_engines_fiftyone", "Cython"],
     )
