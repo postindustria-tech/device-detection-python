@@ -34,6 +34,7 @@ foreach ($file in $urls.Keys) {
 }
 
 # Tests mutate this file, so we copy it
+Write-Output "Copying 'TAC-HashV41.hash' to '$deviceDetectionData/Enterprise-HashV41.hash'"
 Copy-Item -Path $assets/TAC-HashV41.hash -Destination $deviceDetectionData/Enterprise-HashV41.hash
 
 # We can just symlink these
@@ -42,5 +43,6 @@ New-Item -ItemType SymbolicLink -Force -Target "$assets/20000 Evidence Records.y
 New-Item -ItemType SymbolicLink -Force -Target "$assets/20000 User Agents.csv" -Path "$deviceDetectionData/20000 User Agents.csv"
 
 # This one needs extraction (10GB file inside, can't cache it uncompressed)
+Write-Output "Extracting '51Degrees-Tac.zip'"
 Expand-Archive -Path $assets/51Degrees-Tac.zip -DestinationPath $RepoName/fiftyone_devicedetection_cloud/tests/
 Rename-Item -Path $RepoName/fiftyone_devicedetection_cloud/tests/51Degrees-Tac-All.csv -NewName 51Degrees.csv
