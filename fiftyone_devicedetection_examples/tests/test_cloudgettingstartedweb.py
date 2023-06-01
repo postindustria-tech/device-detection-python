@@ -32,7 +32,6 @@ class CloudGettingStartedWebTests(flask_unittest.ClientTestCase):
     logger = Logger()
     app = GettingStartedWeb().build(resource_key, logger).app
 
-    @unittest.skip("TODO: fix the test")
     def test_cloud_getting_started_web(self, client):
         response = client.get('/')
         self.assertEqual(200, response.status_code)
