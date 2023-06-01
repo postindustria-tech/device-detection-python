@@ -80,6 +80,7 @@ if __name__ == "__main__":
         user_agents_list = [ua.rstrip() for ua in f]
     user_agents = iter(user_agents_list)
 
+    print(f"Benchmarking with {len(user_agents_list)} user agents", file=sys.stderr)
     time = timeit("benchmark(app, pipeline, user_agents)", globals=locals(), number=len(user_agents_list))
 
     json.dump({
