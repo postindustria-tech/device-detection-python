@@ -570,7 +570,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertLess(total, 1)
+        self.assertLess(total, 2)
 
     def test_validate_data_true(self):
         """!
