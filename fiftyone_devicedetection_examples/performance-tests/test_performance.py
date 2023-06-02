@@ -22,7 +22,9 @@
 
 import sys
 import json
+import unittest
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.web import webevidence
 from flask import Flask, request
 from timeit import timeit
@@ -40,7 +42,7 @@ def getValueHelper(flowdata, engine, propertyKey):
     except:
         return "Not found in datafile"
 
-def benchmark(app, pipeline, user_agents):
+def detect(app, pipeline, user_agents):
     with app.test_request_context("/process", headers=(("User-Agent", next(user_agents)),)):
         # Without remote_addr in request object we'd get:
         # ValueError: invalid null reference in method 'MapStringStringSwig___setitem__', argument 3 of type 'std::map< std::string,std::string >::mapped_type const &'
@@ -58,14 +60,7 @@ def benchmark(app, pipeline, user_agents):
 
         return getValueHelper(flowdata, "device", "ismobile")
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} /path/to/data.file /path/to/user_agents.file", file=sys.stderr)
-        raise SystemExit(1)
-
-    data_file = sys.argv[1]
-    user_agents_file = sys.argv[2]
-
+def benchmark(data_file, user_agents_file):
     app = Flask(__name__)
 
     # Create Device Detection pipeline using datafile
@@ -81,15 +76,34 @@ if __name__ == "__main__":
     user_agents = iter(user_agents_list)
 
     print(f"Benchmarking with {len(user_agents_list)} user agents", file=sys.stderr)
-    time = timeit("benchmark(app, pipeline, user_agents)", globals=locals(), number=len(user_agents_list))
+    environment = {"detect": detect, "app": app, "pipeline": pipeline, "user_agents": user_agents}
+    time = timeit("detect(app, pipeline, user_agents)", globals=environment, number=len(user_agents_list))
 
-    json.dump({
-        "HigherIsBetter": {
-            "Detections": len(user_agents_list),
-            "DetectionsPerSecond": len(user_agents_list) / time,
-        },
-        "LowerIsBetter": {
-            "RuntimeSeconds": time,
-            "AvgMillisecsPerDetection": time / len(user_agents_list) * 1000,
-        }
-    }, sys.stdout, indent=4)
+    with open("performance_test_summary.json", "w") as summary:
+        json.dump({
+            "HigherIsBetter": {
+                "Detections": len(user_agents_list),
+                "DetectionsPerSecond": len(user_agents_list) / time,
+            },
+            "LowerIsBetter": {
+                "RuntimeSeconds": time,
+                "AvgMillisecsPerDetection": time / len(user_agents_list) * 1000,
+            }
+        }, summary, indent=4)
+
+class DeviceDetectionPerformanceTests(unittest.TestCase):
+    def setUp(self):
+        self.data_file = "/home/user/Src/Work/assets/51Degrees-LiteV4.1.hash"
+        self.user_agents_file = "/home/user/Src/Work/assets/20000 User Agents.csv"
+        print("Data:", self.data_file)
+        print("User Agents:", self.user_agents_file)
+
+    def test_onpremise_device_detection_performance(self):
+        benchmark(self.data_file, self.user_agents_file)
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print(f"Usage: {sys.argv[0]} /path/to/data.file /path/to/user_agents.file", file=sys.stderr)
+        raise SystemExit(1)
+
+    benchmark(sys.argv[1], sys.argv[2])
