@@ -25,4 +25,4 @@
 %rename(refreshDataFromFile) refreshData(const char *fileName);
 %rename(refreshDataFromMemory) refreshData(unsigned char data[], long length);
 
-%include "device-detection-cxx/src/hash/hash.i"
+%include "cxx/src/hash/hash.i"

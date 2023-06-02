@@ -14,7 +14,7 @@ if ($env:GITHUB_JOB -eq "PreBuild") {
 $ErrorActionPreference = 'Stop'
 
 $assets = New-Item -ItemType Directory -Path assets -Force
-$deviceDetectionData = "$RepoName/fiftyone_devicedetection_onpremise/fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data"
+$deviceDetectionData = "$RepoName/fiftyone_devicedetection_onpremise/fiftyone_devicedetection_onpremise/cxx/device-detection-data"
 
 $downloads = @{
     "TAC-HashV41.hash" = {

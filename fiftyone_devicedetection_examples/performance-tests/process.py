@@ -28,7 +28,7 @@ from fiftyone_pipeline_core.web import webevidence
 import json
 
 # First create the device detection pipeline with the desired settings.
-data_file = "../../fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = "../../fiftyone_devicedetection_onpremise/cxx/device-detection-data/51Degrees-LiteV4.1.hash"
 
 # Create Device Detection pipeline using datafile
 pipeline = DeviceDetectionOnPremisePipelineBuilder(

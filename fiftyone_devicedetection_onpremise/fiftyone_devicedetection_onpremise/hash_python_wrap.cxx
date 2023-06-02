@@ -2850,7 +2850,7 @@ namespace swig {
 }
 
 
-#include "device-detection-cxx/src/hash/EngineHash.hpp"
+#include "cxx/src/hash/EngineHash.hpp"
 
 using namespace FiftyoneDegrees::Common;
 using namespace FiftyoneDegrees::DeviceDetection;
