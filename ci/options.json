@@ -1,10 +1,10 @@
 [
   {
     "Name": "Ubuntu_Python_3.10",
-    "Image": "ubuntu-latest",
+    "Image": "ubuntu-20.04",
     "Language": "python",
     "LanguageVersion": "3.10",
-    "RunPerformance": false,
+    "RunPerformance": true,
     "PackageRequirement": true
   },
   {
@@ -24,10 +24,10 @@
   },
   {
     "Name": "Ubuntu_Python_3.9",
-    "Image": "ubuntu-latest",
+    "Image": "ubuntu-20.04",
     "Language": "python",
     "LanguageVersion": "3.9",
-    "RunPerformance": false,
+    "RunPerformance": true,
     "PackageRequirement": true
   },
   {
@@ -47,10 +47,10 @@
   },
   {
     "Name": "Ubuntu_Python_3.8",
-    "Image": "ubuntu-latest",
+    "Image": "ubuntu-20.04",
     "Language": "python",
     "LanguageVersion": "3.8",
-    "RunPerformance": false,
+    "RunPerformance": true,
     "PackageRequirement": true
   },
   {
@@ -70,10 +70,10 @@
   },
   {
     "Name": "Ubuntu_Python_3.7",
-    "Image": "ubuntu-latest",
+    "Image": "ubuntu-20.04",
     "Language": "python",
     "LanguageVersion": "3.7",
-    "RunPerformance": false,
+    "RunPerformance": true,
     "PackageRequirement": true
   },
   {
