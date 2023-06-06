@@ -14,7 +14,8 @@
     "LanguageVersion": "3.10",
     "RunPerformance": true,
     "PackageRequirement": true
-  },{
+  },
+  {
     "Name": "macOS_Python_3.10",
     "Image": "macos-latest",
     "Language": "python",
@@ -37,7 +38,8 @@
     "LanguageVersion": "3.9",
     "RunPerformance": true,
     "PackageRequirement": true
-  },{
+  },
+  {
     "Name": "macOS_Python_3.9",
     "Image": "macos-latest",
     "Language": "python",
@@ -83,7 +85,8 @@
     "LanguageVersion": "3.7",
     "RunPerformance": true,
     "PackageRequirement": true
-  },{
+  },
+  {
     "Name": "macOS_Python_3.7",
     "Image": "macos-latest",
     "Language": "python",

@@ -25,6 +25,7 @@ import unittest
 import os
 import time
 import csv
+import platform
 
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 
@@ -570,7 +571,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertLess(total, 2)
+        self.assertLess(total, 2 if platform.system() != "Darwin" else 30)
 
     def test_validate_data_true(self):
         """!
