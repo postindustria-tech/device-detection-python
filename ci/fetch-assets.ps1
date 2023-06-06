@@ -28,6 +28,7 @@ $downloads = @{
         Invoke-WebRequest -Uri "https://storage.googleapis.com/51degrees-assets/$DeviceDetection/51Degrees-Tac.zip" -OutFile 51Degrees-Tac.zip
         Expand-Archive -Path 51Degrees-Tac.zip
         Get-Content -TotalCount 1 51Degrees-Tac/51Degrees-Tac-All.csv | Out-File $assets/$file # We only need a header
+        Remove-Item -Path 51Degrees-Tac.zip, 51Degrees-Tac/51Degrees-Tac-All.csv
     }
 }
 
