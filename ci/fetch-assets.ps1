@@ -21,11 +21,11 @@ $downloads = @{
         ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
         Move-Item -Path $RepoName/$file -Destination $assets
     }
-    "51Degrees-LiteV4.1.hash" = {Invoke-WebRequest -Uri "https://storage.googleapis.com/51degrees-assets/$DeviceDetection/51Degrees-LiteV4.1.hash" -OutFile $assets/$file}
-    "20000 Evidence Records.yml" = {Invoke-WebRequest -Uri "https://storage.googleapis.com/51degrees-assets/$DeviceDetection/20000%20Evidence%20Records.yml" -OutFile $assets/$file}
-    "20000 User Agents.csv" = {Invoke-WebRequest -Uri "https://storage.googleapis.com/51degrees-assets/$DeviceDetection/20000%20User%20Agents.csv" -OutFile $assets/$file}
+    "51Degrees-LiteV4.1.hash" = {Invoke-WebRequest -Uri "https://github.com/51Degrees/device-detection-data/raw/main/51Degrees-LiteV4.1.hash" -OutFile $assets/$file}
+    "20000 Evidence Records.yml" = {Invoke-WebRequest -Uri "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20Evidence%20Records.yml" -OutFile $assets/$file}
+    "20000 User Agents.csv" = {Invoke-WebRequest -Uri "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20User%20Agents.csv" -OutFile $assets/$file}
     "51Degrees.csv" = {
-        Invoke-WebRequest -Uri "https://storage.googleapis.com/51degrees-assets/$DeviceDetection/51Degrees-Tac.zip" -OutFile 51Degrees-Tac.zip
+        Invoke-WebRequest -Uri "https://distributor.51degrees.com/api/v2/download?LicenseKeys=$DeviceDetection&Type=21&Download=True&Product=23" -OutFile 51Degrees-Tac.zip
         Expand-Archive -Path 51Degrees-Tac.zip
         Get-Content -TotalCount 1 51Degrees-Tac/51Degrees-Tac-All.csv | Out-File $assets/$file # We only need a header
         Remove-Item -Path 51Degrees-Tac.zip, 51Degrees-Tac/51Degrees-Tac-All.csv
