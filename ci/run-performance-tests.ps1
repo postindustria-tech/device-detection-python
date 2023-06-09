@@ -2,8 +2,14 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
     [Parameter(Mandatory=$true)]
-    [string]$Name
+    [string]$Name,
+    [boolean]$RunPerformance = $True
 )
+
+if (!$RunPerformance) {
+    Write-Output "Skipping performance tests"
+    exit 0
+}
 
 $perfSummary = New-Item -ItemType directory -Path $RepoName/test-results/performance-summary -Force
 
