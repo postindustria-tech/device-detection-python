@@ -68,7 +68,8 @@ def benchmark(data_file, user_agents_file):
         data_file_path = data_file, 
         licence_keys = "", 
         performance_profile = "MaxPerformance", 
-        update_on_start=False
+        update_on_start=False,
+        usage_sharing = False
     ).build()
 
     with open(user_agents_file) as f:
