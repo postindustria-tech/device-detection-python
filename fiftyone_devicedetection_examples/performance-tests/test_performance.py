@@ -22,7 +22,7 @@
 
 import sys
 import json
-import unittest
+import argparse
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.web import webevidence
@@ -48,7 +48,7 @@ def detect(app, pipeline, user_agents):
         # ValueError: invalid null reference in method 'MapStringStringSwig___setitem__', argument 3 of type 'std::map< std::string,std::string >::mapped_type const &'
         # in flowdata.process(). This mock-request doesn't set it, so we set it manually
         request.remote_addr = "127.0.0.1"
-        
+
         flowdata = pipeline.create_flowdata()
 
         # Add any information from the request (headers, cookies and additional 
@@ -60,7 +60,7 @@ def detect(app, pipeline, user_agents):
 
         return getValueHelper(flowdata, "device", "ismobile")
 
-def benchmark(data_file, user_agents_file):
+def benchmark(data_file, user_agents_file, output=False):
     app = Flask(__name__)
 
     # Create Device Detection pipeline using datafile
@@ -80,31 +80,19 @@ def benchmark(data_file, user_agents_file):
     environment = {"detect": detect, "app": app, "pipeline": pipeline, "user_agents": user_agents}
     time = timeit("detect(app, pipeline, user_agents)", globals=environment, number=len(user_agents_list))
 
-    with open("performance_test_summary.json", "w") as summary:
+    if output:
         json.dump({
-            "HigherIsBetter": {
-                "Detections": len(user_agents_list),
-                "DetectionsPerSecond": len(user_agents_list) / time,
-            },
-            "LowerIsBetter": {
-                "RuntimeSeconds": time,
-                "AvgMillisecsPerDetection": time / len(user_agents_list) * 1000,
-            }
-        }, summary, indent=4)
-
-class DeviceDetectionPerformanceTests(unittest.TestCase):
-    def setUp(self):
-        self.data_file = "/home/user/Src/Work/assets/51Degrees-LiteV4.1.hash"
-        self.user_agents_file = "/home/user/Src/Work/assets/20000 User Agents.csv"
-        print("Data:", self.data_file)
-        print("User Agents:", self.user_agents_file)
-
-    def test_onpremise_device_detection_performance(self):
-        benchmark(self.data_file, self.user_agents_file)
+            "Detections": len(user_agents_list),
+            "DetectionsPerSecond": len(user_agents_list) / time,
+            "RuntimeSeconds": time,
+            "AvgMillisecsPerDetection": time / len(user_agents_list) * 1000,
+        }, sys.stdout, indent=4)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} /path/to/data.file /path/to/user_agents.file", file=sys.stderr)
-        raise SystemExit(1)
+    ap = argparse.ArgumentParser(description='Run detection benchmark.')
+    ap.add_argument('data_file', help='Path to data file')
+    ap.add_argument('user_agents_file', help='Path to user agents evidence file')
+    ap.add_argument('-o', '--output', action='store_true', help='Output results in JSON format')
+    args = ap.parse_args()
 
-    benchmark(sys.argv[1], sys.argv[2])
+    benchmark(args.data_file, args.user_agents_file, args.output)

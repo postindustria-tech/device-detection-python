@@ -16,10 +16,18 @@ $perfSummary = New-Item -ItemType directory -Path $RepoName/test-results/perform
 Push-Location $RepoName
 try {
     Write-Output "Running performance tests"
-    python fiftyone_devicedetection_examples/performance-tests/test_performance.py ../assets/51Degrees-LiteV4.1.hash ../assets/"20000 User Agents.csv" || $(throw "benchmark failed with code: $LASTEXITCODE")
-    Get-Content -Path performance_test_summary.json
-    Move-Item -Path performance_test_summary.json -Destination $perfSummary/results_$Name.json || $(throw "failed to move summary")
-    Write-Output "OK"
+    $resultsRaw = python fiftyone_devicedetection_examples/performance-tests/test_performance.py ../assets/51Degrees-LiteV4.1.hash ../assets/"20000 User Agents.csv" --output || $(throw "benchmark failed with code: $LASTEXITCODE")
+    Write-Output $resultsRaw
+
+    $results = $resultsRaw | ConvertFrom-Json
+    @{
+        HigherIsBetter = @{
+            DetectionsPerSecond = $results.DetectionsPerSecond
+        };
+        LowerIsBetter = @{
+            AvgMillisecsPerDetection = $results.AvgMillisecsPerDetection
+        }
+    } | ConvertTo-Json | Out-File $perfSummary/results_$Name.json
 } finally {
     Pop-Location
 }
