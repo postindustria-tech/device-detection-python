@@ -5,6 +5,7 @@ param (
     [string]$LanguageVersion
 )
 
+# PreBuild is a job from the nightly-publish-main workflow
 if ($env:GITHUB_JOB -eq "PreBuild") {
     Write-Output "Skipping environment setup"
     exit 0

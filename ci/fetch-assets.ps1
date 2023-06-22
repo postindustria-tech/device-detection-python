@@ -6,6 +6,7 @@ param (
     [string]$DeviceDetectionUrl
 )
 
+# PreBuild is a job from the nightly-publish-main workflow
 if ($env:GITHUB_JOB -eq "PreBuild") {
     Write-Output "Skipping assets fetching"
     exit 0
