@@ -1,0 +1,121 @@
+[
+  {
+    "Name": "Ubuntu_Python_3.11",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.11",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Windows_Python_3.11",
+    "Image": "windows-latest",
+    "Language": "python",
+    "LanguageVersion": "3.11",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "macOS_Python_3.11",
+    "Image": "macos-latest",
+    "Language": "python",
+    "LanguageVersion": "3.11",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Ubuntu_Python_3.10",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.10",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Windows_Python_3.10",
+    "Image": "windows-latest",
+    "Language": "python",
+    "LanguageVersion": "3.10",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "macOS_Python_3.10",
+    "Image": "macos-latest",
+    "Language": "python",
+    "LanguageVersion": "3.10",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Ubuntu_Python_3.9",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.9",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Windows_Python_3.9",
+    "Image": "windows-latest",
+    "Language": "python",
+    "LanguageVersion": "3.9",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "macOS_Python_3.9",
+    "Image": "macos-latest",
+    "Language": "python",
+    "LanguageVersion": "3.9",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Ubuntu_Python_3.8",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.8",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Windows_Python_3.8",
+    "Image": "windows-latest",
+    "Language": "python",
+    "LanguageVersion": "3.8",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },{
+    "Name": "macOS_Python_3.8",
+    "Image": "macos-latest",
+    "Language": "python",
+    "LanguageVersion": "3.8",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Ubuntu_Python_3.7",
+    "Image": "ubuntu-latest",
+    "Language": "python",
+    "LanguageVersion": "3.7",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "Windows_Python_3.7",
+    "Image": "windows-latest",
+    "Language": "python",
+    "LanguageVersion": "3.7",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Name": "macOS_Python_3.7",
+    "Image": "macos-latest",
+    "Language": "python",
+    "LanguageVersion": "3.7",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  }
+]

@@ -21,6 +21,7 @@
 # ********************************************************************* 
 
 import flask_unittest
+import unittest
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_examples.cloud.gettingstarted_web.app import GettingStartedWeb

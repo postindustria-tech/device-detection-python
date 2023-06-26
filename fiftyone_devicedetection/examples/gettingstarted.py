@@ -40,7 +40,7 @@ from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetec
 
 # First create the device detection pipeline with the desired settings.
 
-data_file = "../fiftyone_devicedetection_onpremise/fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = "../fiftyone_devicedetection_onpremise/fiftyone_devicedetection_onpremise/cxx/device-detection-data/51Degrees-LiteV4.1.hash"
 resource_key = "!!YOUR_RESOURCE_KEY!!"
 
 # Uncommment the line below 'On-Premise' and comment the line below 'Cloud' to 

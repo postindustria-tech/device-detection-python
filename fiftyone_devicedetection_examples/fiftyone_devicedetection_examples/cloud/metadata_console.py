@@ -51,6 +51,7 @@ import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_pipeline_core.basiclist_evidence_keyfilter import BasicListEvidenceKeyFilter
+# pylint: disable=E0402
 from ..example_utils import ExampleUtils
 
 bgRed = "\u001b[41m"

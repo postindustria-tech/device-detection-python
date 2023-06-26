@@ -112,6 +112,7 @@ class GettingStartedWeb():
     # First we make a JSON route that will be called from the client side and will return
     # a JSON encoded property database using any additional evidence provided by the client 
 
+    @staticmethod
     @app.route('/json', methods=['POST'])
     def jsonroute():
 
@@ -134,6 +135,7 @@ class GettingStartedWeb():
     # In the main route we dynamically update the screen's device property display
     # using the above JSON route
 
+    @staticmethod
     @app.route('/')
     def server():
 

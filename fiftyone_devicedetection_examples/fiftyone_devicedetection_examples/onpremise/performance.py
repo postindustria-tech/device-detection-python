@@ -124,7 +124,7 @@ def run(skip = False):
 if __name__ == "__main__":
 
     # First we read the contents of the 20000 user agents file as a list
-    with open('fiftyone_devicedetection_onpremise/device-detection-cxx/device-detection-data/20000 User Agents.csv', newline='') as file:
+    with open('fiftyone_devicedetection_onpremise/cxx/device-detection-data/20000 User Agents.csv', newline='') as file:
         reader = csv.reader(file)
         user_agents = list(reader)
 

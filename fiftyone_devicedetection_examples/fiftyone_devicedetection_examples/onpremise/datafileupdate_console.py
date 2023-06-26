@@ -259,7 +259,7 @@ class DataFileUpdateConsole():
 
 		logger.log("info",
 			"Creating pipeline and initiating update on start-up - please wait for that "
-			"to complete");
+			"to complete")
 
 		update_event = UpdateEvent()
 		update_service = DataFileUpdateService()
@@ -302,7 +302,7 @@ class DataFileUpdateConsole():
 		if update_event.status == UpdateStatus.AUTO_UPDATE_SUCCESS:
 
 			output("Modifying downloaded file to trigger reload - please wait for that"
-				" to complete");
+				" to complete")
 
 			# wait for the dataUpdateService to notify us that it has updated
 			update_event.clear()
@@ -315,7 +315,7 @@ class DataFileUpdateConsole():
 				os.utime(data_file, (now, now))
 			except:
 				raise Exception("Could not modify file time, abandoning "
-					"example");
+					"example")
 
 			if update_event.wait(120):
 				output(f"Update on file modification complete, status: {update_event.status}")
