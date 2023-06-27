@@ -106,7 +106,7 @@ class SwigTests(unittest.TestCase):
 
         # Check the values are returned and that they are correct
         self.assertIsNotNone(device[property.lower()].value())
-        self.assertEquals(value, device[property.lower()].value())
+        self.assertEqual(value, device[property.lower()].value())
 
         # Reset the properties in the enigne.
         engine.properties = realProperties
