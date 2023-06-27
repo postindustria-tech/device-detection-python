@@ -19,4 +19,4 @@ jobs:
       cache-assets: true
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
-      asset-keys: '{"DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}", "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}", "DeviceDetectionUrl": "${{ secrets.DEVICE_DETECTION_URL }}"}'
+      asset-keys: '{"DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}", "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}", "DeviceDetectionUrl": "${{ secrets.DEVICE_DETECTION_URL }}", "CsvUrl": "${{ secrets.CSV_URL }}"}'
