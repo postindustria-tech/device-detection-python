@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
     if args.json_output != "":
         results = {
-            "DetectionsPerSecond": 1000 / (real_time * 1000),
+            "DetectionsPerSecond": 1000 / real_time,
             "MsPerDetection": real_time * 1000
         }
         with open(args.json_output, "w") as file:
