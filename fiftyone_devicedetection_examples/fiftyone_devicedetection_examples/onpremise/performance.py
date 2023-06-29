@@ -130,7 +130,6 @@ if __name__ == "__main__":
 
     number_of_user_agents = len(user_agents)
 
-    global pipeline
     pipeline = DeviceDetectionOnPremisePipelineBuilder(
         data_file_path=args.data_file, 
         licence_keys="", 
