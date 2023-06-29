@@ -25,29 +25,20 @@
 # @include{doc} example-performance-hash.txt
 # 
 
+import argparse
 import csv
+import json
 import time
 import multiprocessing as mp
 
-# This example goes through a CSV of 20000 user agents and processes them, returning the time and information about the matches
+# This example goes through a CSV of 20000 user agents and processes the    m, returning the time and information about the matches
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
-
-data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
-
-pipeline = DeviceDetectionOnPremisePipelineBuilder(
-        data_file_path=data_file, 
-        licence_keys="", 
-        performance_profile='MaxPerformance', 
-        add_javascript_builder = False, 
-        restricted_properties = ["ismobile"], 
-        usage_sharing=False, 
-        auto_update=False).build()
 
 # Here we make a function that processes a user agent
 # And returns if it is a mobile device
 
-def process_user_agent(user_agent):
+def process_user_agent(pipeline, user_agent):
 
     # First we create the flowdata using the global pipeline
     flowdata = pipeline.create_flowdata()
@@ -68,7 +59,7 @@ def process_user_agent(user_agent):
     else:
         return None
 
-def process_user_agent_list(user_agent_list, list_number, output, skip=False):
+def process_user_agent_list(pipeline, user_agent_list, list_number, output, skip=False):
     results = {
         "mobile": 0,
         "notmobile": 0,
@@ -77,7 +68,7 @@ def process_user_agent_list(user_agent_list, list_number, output, skip=False):
     for user_agent in user_agent_list:
         if skip:
             break
-        result = process_user_agent(user_agent[0])
+        result = process_user_agent(pipeline, user_agent[0])
         if(result == None):
             results["unknown"] += 1
         if(result == True):
@@ -88,7 +79,7 @@ def process_user_agent_list(user_agent_list, list_number, output, skip=False):
     output.put(results, list_number)
 
 # Run the process
-def run(skip = False):
+def run(pipeline, skip = False):
 
     # Make a queue to store the results in
 
@@ -99,7 +90,7 @@ def run(skip = False):
 
     for x in range(threads):
         processes.append(mp.Process(target=process_user_agent_list,
-                                    args=(split_lists[x], x, output, skip)))
+                                    args=(pipeline, split_lists[x], x, output, skip)))
 
     # Start timer
 
@@ -122,13 +113,33 @@ def run(skip = False):
     return {"time": total, "result": results}
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser(description='Run detection benchmark.')
+    ap.add_argument('-d', '--data_file', default='', help='Path to data file')
+    ap.add_argument('-u', '--user_agents_file', default='fiftyone_devicedetection_onpremise/cxx/device-detection-data/20000 User Agents.csv', help='Path to user agents evidence file')
+    ap.add_argument('-j', '--json_output', default='', help='Output results in JSON format')
+    args = ap.parse_args()
+    if args.data_file == "":
+        args.data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
+
+    print(args.data_file)
+    print(args.user_agents_file)
+    print(args.json_output)
 
     # First we read the contents of the 20000 user agents file as a list
-    with open('fiftyone_devicedetection_onpremise/cxx/device-detection-data/20000 User Agents.csv', newline='') as file:
+    with open(args.user_agents_file, newline='') as file:
         reader = csv.reader(file)
         user_agents = list(reader)
 
     number_of_user_agents = len(user_agents)
+
+    pipeline = DeviceDetectionOnPremisePipelineBuilder(
+        data_file_path=args.data_file, 
+        licence_keys="", 
+        performance_profile='MaxPerformance', 
+        add_javascript_builder = False, 
+        restricted_properties = ["ismobile"], 
+        usage_sharing=False, 
+        auto_update=False).build()
 
     print("Processing " + str(number_of_user_agents) + " user agents")
 
@@ -144,14 +155,22 @@ if __name__ == "__main__":
     split_lists = [user_agents[x:x+chunk_size]
                 for x in range(0, len(user_agents), chunk_size)]
     
-    calibration = run(skip=True)
+    calibration = run(pipeline=pipeline, skip=True)
 
-    real = run(skip=False)
+    real = run(pipeline=pipeline, skip=False)
 
     real_time = real["time"] - calibration["time"]
 
     print("Total time (seconds): " + str(real_time) + " seconds")
-    print ("Time per user agent (ms): " + str((real_time / number_of_user_agents) * 1000))
+    print("Time per user agent (ms): " + str((real_time / number_of_user_agents) * 1000))
+
+    if args.json_output != "":
+        results = {
+            "DetectionsPerSecond": 1000 / (real_time * 1000),
+            "MsPerDetection": real_time * 1000
+        }
+        print(json.dumps(results), file = file)
+        file.close()
 
     final_result = {
         "mobile": 0,
