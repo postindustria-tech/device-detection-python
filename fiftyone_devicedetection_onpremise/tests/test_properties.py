@@ -43,7 +43,6 @@ pipeline = PipelineBuilder() \
             .build()
 
 class PropertyTests(unittest.TestCase):
-
     def test_available_properties(self):
 
         """!
@@ -64,7 +63,7 @@ class PropertyTests(unittest.TestCase):
             dd_property_value = device[property]
             self.assertIsNotNone("Property: " + property +" is not present in the results.", dd_property_value)
             if(dd_property_value.has_value()):
-                self.assertNotEquals(property + ".value should not be null", dd_property_value.value(), "noValue")
+                self.assertNotEqual(property + ".value should not be null", dd_property_value.value(), "noValue")
                 self.assertIsNotNone(property + ".value should not be null", dd_property_value.value())
             else:
                 self.assertIsNotNone(property + ".noValueMessage should not be null", dd_property_value.no_value_message())
@@ -85,22 +84,22 @@ class PropertyTests(unittest.TestCase):
         self.assertEqual(
             properties_list['deviceid']['description'], constants.DEVICE_ID_DESCRIPTION,
             properties_list['deviceid']['name'] + '.description does not match "' + constants.DEVICE_ID_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['useragents']['description'], constants.USER_AGENTS_DESCRIPTION,
             properties_list['useragents']['name'] + '.description does not match "' + constants.USER_AGENTS_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['difference']['description'], constants.DIFFERENCE_DESCRIPTION,
             properties_list['difference']['name'] + '.description does not match "' + constants.DIFFERENCE_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['drift']['description'], constants.DRIFT_DESCRIPTION,
             properties_list['drift']['name'] + '.description does not match "' + constants.DRIFT_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['matchednodes']['description'], constants.MATCHED_NODES_DESCRIPTION,
             properties_list['matchednodes']['name'] + '.description does not match "' + constants.MATCHED_NODES_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['iterations']['description'], constants.ITERATIONS_DESCRIPTION,
             properties_list['iterations']['name'] + '.description does not match "' + constants.ITERATIONS_DESCRIPTION + '"')
-        self.assertEquals(
+        self.assertEqual(
             properties_list['method']['description'], constants.METHOD_DESCRIPTION,
             properties_list['method']['name'] + '.description does not match "' + constants.METHOD_DESCRIPTION + '"')
 
@@ -126,6 +125,9 @@ class PropertyTests(unittest.TestCase):
 
             # Flowdata properties
             dd_property_value = device[property]
+            if property.lower() == 'javascriptgethighentropyvalues':
+                self.assertFalse(dd_property_value.has_value())
+                continue
             value = dd_property_value.value()
             self.assertIsNotNone("Property: " + property +" is not present in the results.", dd_property_value)
             self.assertTrue("Expected type for " + property + " is " + expected_type + 

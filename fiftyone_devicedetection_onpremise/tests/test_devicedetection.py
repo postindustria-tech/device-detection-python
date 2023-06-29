@@ -595,6 +595,8 @@ class DeviceDetectionTests(unittest.TestCase):
                 self.assertEqual(data_property.has_value(), True)
             elif engine_property == "deviceid":
                 self.assertEqual(fd.device.deviceid.value(), "0-0-0-0")
+            elif engine_property == "javascriptgethighentropyvalues":
+                self.assertFalse(data_property.has_value())
             else:
                 self.assertEqual(data_property.has_value(), True)
 
