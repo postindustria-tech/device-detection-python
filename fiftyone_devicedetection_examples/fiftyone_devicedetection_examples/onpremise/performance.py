@@ -80,6 +80,7 @@ def process_user_agent_list(user_agent_list, list_number, output, skip=False):
 
 # Run the process
 def run(skip = False):
+    mp.freeze_support()  # needed for Windows
 
     # Make a queue to store the results in
 
