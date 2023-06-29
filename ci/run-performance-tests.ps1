@@ -19,7 +19,7 @@ try {
     python fiftyone_devicedetection_examples/performance-tests/test_performance.py ../assets/51Degrees-LiteV4.1.hash ../assets/"20000 User Agents.csv" --output || $(throw "benchmark failed with code: $LASTEXITCODE")
     
     Write-Output "Running Console performance tests"
-    python fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/performance.py --data_file ../assets/TAC-HashV41.hash --user_agents_file ../assets/"20000 User Agents.csv" --json_output $pwd/results.json
+    python fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/performance.py --data_file ../assets/TAC-HashV41.hash --user_agents_file ../assets/"20000 User Agents.csv" --json_output $pwd/summary.json
 
     $Results = Get-Content $pwd/summary.json | ConvertFrom-Json
     @{
