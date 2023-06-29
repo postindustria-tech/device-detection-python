@@ -35,8 +35,6 @@ import multiprocessing as mp
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
-pipeline = None
-
 # Here we make a function that processes a user agent
 # And returns if it is a mobile device
 
@@ -130,6 +128,7 @@ if __name__ == "__main__":
 
     number_of_user_agents = len(user_agents)
 
+    global pipeline
     pipeline = DeviceDetectionOnPremisePipelineBuilder(
         data_file_path=args.data_file, 
         licence_keys="", 
