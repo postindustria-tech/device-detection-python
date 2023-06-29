@@ -35,10 +35,12 @@ import multiprocessing as mp
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
+pipeline = None
+
 # Here we make a function that processes a user agent
 # And returns if it is a mobile device
 
-def process_user_agent(pipeline, user_agent):
+def process_user_agent(user_agent):
 
     # First we create the flowdata using the global pipeline
     flowdata = pipeline.create_flowdata()
@@ -59,7 +61,7 @@ def process_user_agent(pipeline, user_agent):
     else:
         return None
 
-def process_user_agent_list(pipeline, user_agent_list, list_number, output, skip=False):
+def process_user_agent_list(user_agent_list, list_number, output, skip=False):
     results = {
         "mobile": 0,
         "notmobile": 0,
@@ -68,7 +70,7 @@ def process_user_agent_list(pipeline, user_agent_list, list_number, output, skip
     for user_agent in user_agent_list:
         if skip:
             break
-        result = process_user_agent(pipeline, user_agent[0])
+        result = process_user_agent(user_agent[0])
         if(result == None):
             results["unknown"] += 1
         if(result == True):
@@ -79,7 +81,7 @@ def process_user_agent_list(pipeline, user_agent_list, list_number, output, skip
     output.put(results, list_number)
 
 # Run the process
-def run(pipeline, skip = False):
+def run(skip = False):
 
     # Make a queue to store the results in
 
@@ -90,7 +92,7 @@ def run(pipeline, skip = False):
 
     for x in range(threads):
         processes.append(mp.Process(target=process_user_agent_list,
-                                    args=(pipeline, split_lists[x], x, output, skip)))
+                                    args=(split_lists[x], x, output, skip)))
 
     # Start timer
 
@@ -151,9 +153,9 @@ if __name__ == "__main__":
     split_lists = [user_agents[x:x+chunk_size]
                 for x in range(0, len(user_agents), chunk_size)]
     
-    calibration = run(pipeline=pipeline, skip=True)
+    calibration = run(skip=True)
 
-    real = run(pipeline=pipeline, skip=False)
+    real = run(skip=False)
 
     real_time = real["time"] - calibration["time"]
 
