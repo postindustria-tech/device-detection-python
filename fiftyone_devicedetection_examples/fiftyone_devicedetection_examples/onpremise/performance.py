@@ -121,10 +121,6 @@ if __name__ == "__main__":
     if args.data_file == "":
         args.data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
-    print(args.data_file)
-    print(args.user_agents_file)
-    print(args.json_output)
-
     # First we read the contents of the 20000 user agents file as a list
     with open(args.user_agents_file, newline='') as file:
         reader = csv.reader(file)
@@ -169,8 +165,8 @@ if __name__ == "__main__":
             "DetectionsPerSecond": 1000 / (real_time * 1000),
             "MsPerDetection": real_time * 1000
         }
-        print(json.dumps(results), file = file)
-        file.close()
+        with open(args.json_output, "w") as file:
+            print(json.dumps(results), file = file)
 
     final_result = {
         "mobile": 0,
