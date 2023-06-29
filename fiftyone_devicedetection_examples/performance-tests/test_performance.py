@@ -70,6 +70,7 @@ def benchmark(data_file, user_agents_file, output=False):
         performance_profile = "MaxPerformance", 
         update_on_start = False,
         usage_sharing = False,
+        restricted_properties = [ "IsMobile" ], 
         settings = { "add_javascript_builder": False },
     ).build()
 
