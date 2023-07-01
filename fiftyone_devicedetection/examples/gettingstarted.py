@@ -1,6 +1,6 @@
 # *********************************************************************
 # This Original Work is copyright of 51 Degrees Mobile Experts Limited.
-# Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+# Copyright 2023 51 Degrees Mobile Experts Limited, Davidson House,
 # Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
 #
 # This Original Work is licensed under the European Union Public Licence
@@ -13,28 +13,12 @@
 # amended by the European Commission) shall be deemed incompatible for
 # the purposes of the Work and the provisions of the compatibility
 # clause in Article 5 of the EUPL shall not apply.
-# 
-# If using the Work as, or as part of, a network application, by 
+#
+# If using the Work as, or as part of, a network application, by
 # including the attribution notice(s) required under Article 5 of the EUPL
-# in the end user terms of the application under an appropriate heading, 
+# in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
-
-## @example cloud/gettingstarted.py
-# 
-# @include{doc} example-getting-started-cloud.txt
-# 
-# @include{doc} example-require-resourcekey.txt
-# 
-# Expected output:
-# 
-# ```
-# Is user agent 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114' a mobile?
-# true
-# 
-# Is user agent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36' a mobile?
-# false
-# ```
 
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 

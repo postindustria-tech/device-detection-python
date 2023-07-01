@@ -1,6 +1,6 @@
 # *********************************************************************
 # This Original Work is copyright of 51 Degrees Mobile Experts Limited.
-# Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+# Copyright 2023 51 Degrees Mobile Experts Limited, Davidson House,
 # Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
 #
 # This Original Work is licensed under the European Union Public Licence
@@ -13,24 +13,12 @@
 # amended by the European Commission) shall be deemed incompatible for
 # the purposes of the Work and the provisions of the compatibility
 # clause in Article 5 of the EUPL shall not apply.
-# 
-# If using the Work as, or as part of, a network application, by 
+#
+# If using the Work as, or as part of, a network application, by
 # including the attribution notice(s) required under Article 5 of the EUPL
-# in the end user terms of the application under an appropriate heading, 
+# in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
-
-## @example onpremise/gettingstarted_console.py
-# 
-# @include{doc} example-getting-started-onpremise.txt
-# 
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/gettingstarted_console.py). 
-# 
-# @include{doc} example-require-datafile.txt
-# 
-# Required PyPi Dependencies:
-# - fiftyone_devicedetection
-# 
 
 import sys
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
