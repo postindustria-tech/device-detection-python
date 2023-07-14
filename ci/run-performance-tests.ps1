@@ -27,7 +27,7 @@ try {
             DetectionsPerSecond = $Results.DetectionsPerSecond
         };
         LowerIsBetter = @{
-            AvgMillisecsPerDetection = $Results.AvgMillisecsPerDetection
+            AvgMillisecsPerDetection = $Results.MsPerDetection
         }
     } | ConvertTo-Json | Out-File $perfSummary/results_$Name.json
 } finally {
