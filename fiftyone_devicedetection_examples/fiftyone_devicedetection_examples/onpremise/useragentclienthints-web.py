@@ -21,7 +21,7 @@
 # ********************************************************************* 
 
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
-from fiftyone_pipeline_core.web import *
+from fiftyone_pipeline_core.web import webevidence, set_response_header
 from flask.helpers import make_response
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 

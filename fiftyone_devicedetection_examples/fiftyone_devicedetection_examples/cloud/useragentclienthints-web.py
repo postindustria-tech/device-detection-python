@@ -22,7 +22,7 @@
 
 from flask.helpers import make_response
 from fiftyone_devicedetection_cloud.devicedetection_cloud_pipelinebuilder import DeviceDetectionCloudPipelineBuilder
-from fiftyone_pipeline_core.web import *
+from fiftyone_pipeline_core.web import webevidence, set_response_header
 
 # You need to create a resource key at https://configure.51degrees.com
 # and paste it into the code, replacing !!YOUR_RESOURCE_KEY!! below.

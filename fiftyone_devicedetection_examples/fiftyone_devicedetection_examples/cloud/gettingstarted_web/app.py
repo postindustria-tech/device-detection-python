@@ -79,7 +79,7 @@ from flask import Flask, request, render_template
 from flask.helpers import make_response
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_pipeline_core.logger import Logger
-from fiftyone_pipeline_core.web import *
+from fiftyone_pipeline_core.web import webevidence, set_response_header
 import json
 import sys
 

@@ -82,7 +82,7 @@ from flask.helpers import make_response
 from flask import Flask, request, render_template
 from fiftyone_pipeline_core.logger import Logger
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
-from fiftyone_pipeline_core.web import *
+from fiftyone_pipeline_core.web import webevidence, set_response_header
 import json
 
 class GettingStartedWeb():
