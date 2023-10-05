@@ -168,16 +168,6 @@ enable=F,
        bad-string-format-type,
        bad-str-strip-call,
        invalid-envvar-value,
-       print-statement,
-       parameter-unpacking,
-       unpacking-in-except,
-       old-raise-syntax,
-       backtick,
-       long-suffix,
-       old-ne-operator,
-       old-octal-literal,
-       import-star-module-level,
-       non-ascii-bytes-literal,
        yield-inside-async-function,
        not-async-context-manager,
        fatal,
@@ -635,5 +625,5 @@ preferred-modules=
 
 # Exceptions that will emit a warning when being caught. Defaults to
 # "BaseException, Exception".
-overgeneral-exceptions=BaseException,
-                       Exception
+overgeneral-exceptions=builtins.BaseException,
+                       builtins.Exception
