@@ -36,7 +36,7 @@ from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 def process_user_agent(user_agent):
 
     # First we create the flowdata using the global pipeline
-    flowdata = pipeline.create_flowdata()
+    flowdata = pipeline.create_flowdata()  # pylint: disable=used-before-assignment
 
     # Here we add the user agent as evidence
     flowdata.evidence.add("header.user-agent", user_agent)
@@ -82,9 +82,9 @@ def run(skip = False):
     # Create processes
     processes = []
 
-    for x in range(threads):
+    for x in range(threads):  # pylint: disable=used-before-assignment
         processes.append(mp.Process(target=process_user_agent_list,
-                                    args=(split_lists[x], x, output, skip)))
+                                    args=(split_lists[x], x, output, skip)))  # pylint: disable=used-before-assignment
 
     # Start timer
 
