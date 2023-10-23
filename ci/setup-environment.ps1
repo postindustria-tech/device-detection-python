@@ -12,7 +12,8 @@ if ($env:GITHUB_JOB -eq "PreBuild") {
 }
 
 $dependencies = "-r", "$RepoName/requirements.txt", "wheel", `
-                "pylint", "unittest-xml-reporting", "coverage", "certifi", "requests", "cachetools", "chevron", "jsmin", `
+                "tox", "pylint", "unittest-xml-reporting", "coverage", "certifi", `
+                "requests", "cachetools", "chevron", "jsmin", `
                 "fiftyone_pipeline_cloudrequestengine", `
                 "fiftyone_pipeline_core", `
                 "fiftyone_pipeline_engines", `
