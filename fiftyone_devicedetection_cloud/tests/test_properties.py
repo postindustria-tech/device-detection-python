@@ -26,7 +26,11 @@ import unittest
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionCloud
-from fiftyone_devicedetection_shared.utils import *
+from fiftyone_devicedetection_shared.utils import (
+    get_properties_from_header_file,
+    get_value_type,
+    is_same_type,
+)
 
 header_file_path = "./tests/51Degrees.csv"
 mobile_ua = ("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) "
