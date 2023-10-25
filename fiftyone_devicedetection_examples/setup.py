@@ -46,7 +46,7 @@ setuptools.setup(
     "This project contains examples of using 51Degrees Device Detection engines with the Pipeline API"),
     long_description=read("readme.md"),
     long_description_content_type='text/markdown',
-    python_requires='>=3.5',
+    python_requires=">=3.8",
     packages=["fiftyone_devicedetection_examples"],
     install_requires=["fiftyone_devicedetection", "flask", "flask-unittest", "json5", "ruamel.yaml"],
     license="EUPL-1.2",

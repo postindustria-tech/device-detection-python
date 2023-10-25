@@ -46,7 +46,7 @@ setuptools.setup(
     "This project contains 51Degrees Device Detection engines that can be used with the Pipeline API"),
     long_description=read("readme.md"),
     long_description_content_type='text/markdown',
-    python_requires='>=3.5',
+    python_requires=">=3.8",
     packages=["fiftyone_devicedetection_shared"],
     install_requires=["fiftyone_pipeline_core", "fiftyone_pipeline_engines", "fiftyone_pipeline_cloudrequestengine", "fiftyone_pipeline_engines_fiftyone"],
     license="EUPL-1.2",
