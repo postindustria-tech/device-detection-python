@@ -120,7 +120,7 @@ if sys.platform == "win32":
         '/D_UNICODE',
         '/DUNICODE',
         '/W4',
-        '/WX',
+        # '/WX',
         '/wd4127',
         '/wd4456',
         '/wd4701',
@@ -132,7 +132,7 @@ if sys.platform == "win32":
         '/D_UNICODE',
         '/DUNICODE',
         '/W4',
-        '/WX'
+        # '/WX'
     ])
     extra_link_args.extend([
         '/WX'
