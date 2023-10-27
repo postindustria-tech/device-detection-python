@@ -38,8 +38,8 @@ $downloads = @{
             return
         }
         ./steps/fetch-csv-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $CsvUrl
-        Get-Content -TotalCount 1 $RepoName/51Degrees-TacV3.4.trie/51Degrees-Tac-All.csv | Out-File $assets/$file # We only need a header
-        Remove-Item -Path $RepoName/51Degrees-TacV3.4.trie.zip, $RepoName/51Degrees-TacV3.4.trie/51Degrees-Tac-All.csv
+        Get-Content -TotalCount 1 $RepoName/51Degrees-Tac/51Degrees-Tac-All.csv | Out-File $assets/$file # We only need a header
+        Remove-Item -Path $RepoName/51Degrees-Tac.zip, $RepoName/51Degrees-Tac/51Degrees-Tac-All.csv
         # Symlink the file
         New-Item -ItemType SymbolicLink -Force -Target "$assets/$file" -Path "$RepoName/fiftyone_devicedetection_cloud/tests/51Degrees.csv"
     }
