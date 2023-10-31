@@ -36,7 +36,7 @@
 # [https://51degrees.com/documentation/_device_detection__features__performance_options.html]
 # page.
 # # Location
-# This example is available in full on (GitHub)[https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/match_metrics.py].
+# This example is available in full on (GitHub)[https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/match_metrics.py].
 
 from itertools import groupby
 from pathlib import Path

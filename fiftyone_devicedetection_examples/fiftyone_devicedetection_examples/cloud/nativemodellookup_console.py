@@ -117,7 +117,7 @@
 # [Android devices](https://developer.android.com/reference/android/os/Build#MODEL) and 
 # [iOS devices](https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift)
 # 
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/cloud/nativemodellookup-console.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/cloud/nativemodellookup_console.py). 
 # 
 # @include{doc} example-require-resourcekey.txt
 #
@@ -150,7 +150,7 @@ class NativeModelLookupConsole():
         # This example creates the pipeline and engines in code. For a demonstration
         # of how to do this using a configuration file instead, see the TacLookup example.
         # For more information about builders in general see the documentation at
-        # http://51degrees.com/documentation/_concepts__configuration__builders__index.html
+        # https://51degrees.com/documentation/_concepts__configuration__builders__index.html
         cloudRequestEngineSettings = { "resource_key": resource_key }
 
         # If a cloud endpoint has been provided then set the
@@ -211,10 +211,10 @@ def main(argv):
             f"environment variable '{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. " +
             "The 51Degrees cloud service is accessed using a 'ResourceKey'. " +
             "For more information " +
-            "see http://51degrees.com/documentation/_info__resource_keys.html. " +
+            "see https://51degrees.com/documentation/_info__resource_keys.html. " +
             "Native model lookup is not available as a free service. This means that " +
             "you will first need a license key, which can be purchased from our " +
-            "pricing page: http://51degrees.com/pricing. Once this is done, a resource " +
+            "pricing page: https://51degrees.com/pricing. Once this is done, a resource " +
             "key with the properties required by this example can be created at " +
             "https://configure.51degrees.com/QKyYH5XT. You can now populate the " +
             "environment variable mentioned at the start of this message with the " +

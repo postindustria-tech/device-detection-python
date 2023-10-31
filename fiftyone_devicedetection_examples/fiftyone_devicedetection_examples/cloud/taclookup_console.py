@@ -43,7 +43,7 @@ class TacLookupConsole():
         # For a demonstration of how to do this in code instead, see the
         # NativeModelLookup example.
         # For more information about builders in general see the documentation at
-        # http://51degrees.com/documentation/_concepts__configuration__builders__index.html
+        # https://51degrees.com/documentation/_concepts__configuration__builders__index.html
 
         # Create the pipeline using the service provider and the configured options.
         pipeline = PipelineBuilder().add_logger(logger).build_from_configuration(config)
@@ -104,10 +104,10 @@ def main(argv):
             f"the environment variable '{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. " +
             "The 51Degrees cloud service is accessed using a 'ResourceKey'. " +
             "For more information see " +
-            "http://51degrees.com/documentation/_info__resource_keys.html. " +
+            "https://51degrees.com/documentation/_info__resource_keys.html. " +
             "TAC lookup is not available as a free service. This means " +
             "that you will first need a license key, which can be purchased " +
-            "from our pricing page: http://51degrees.com/pricing. Once this is " +
+            "from our pricing page: https://51degrees.com/pricing. Once this is " +
             "done, a resource key with the properties required by this example " +
             "can be created at https://configure.51degrees.com/QKyYH5XT. You " +
             "can now populate the environment variable mentioned at the start " +
