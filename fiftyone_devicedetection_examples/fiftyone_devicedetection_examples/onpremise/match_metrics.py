@@ -31,12 +31,12 @@
 # process - reducing the number of components required to return the properties requested reduces
 # the overall time taken.
 # 
-# There is a (discussion)[https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance]
+# There is a [discussion](https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance)
 # of metrics and controlling performance on our web site. See also the (performance options)
 # [https://51degrees.com/documentation/_device_detection__features__performance_options.html]
 # page.
 # # Location
-# This example is available in full on (GitHub)[https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/match_metrics.py].
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/match_metrics.py].
 
 from itertools import groupby
 from pathlib import Path
