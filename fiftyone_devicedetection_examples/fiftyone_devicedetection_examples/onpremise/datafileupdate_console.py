@@ -125,7 +125,7 @@
 # "Biggest" options.
 #
 # # Data Files
-# You can find out more about data files, licenses etc. at our (FAQ page)[//51degrees.com/resources/faqs]
+# You can find out more about data files, licenses etc. at our [FAQ page](//51degrees.com/resources/faqs)
 #
 # ## Enterprise Data File
 # Enterprise (fully-featured) data files are typically released by 51Degrees four days a week
