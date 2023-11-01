@@ -12,7 +12,7 @@ The Pipeline is a generic web request intelligence and data processing solution 
 
 ## Requirements
 
-* Python 3.5+
+* Python 3.8+
 
 ### From PyPi
 

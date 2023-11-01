@@ -120,7 +120,7 @@ if sys.platform == "win32":
         '/D_UNICODE',
         '/DUNICODE',
         '/W4',
-        '/WX',
+        # '/WX',
         '/wd4127',
         '/wd4456',
         '/wd4701',
@@ -132,7 +132,7 @@ if sys.platform == "win32":
         '/D_UNICODE',
         '/DUNICODE',
         '/W4',
-        '/WX'
+        # '/WX'
     ])
     extra_link_args.extend([
         '/WX'
@@ -252,19 +252,21 @@ clib = ('clib', {
         'cflags': cflags
     })
 
-setup (cmdclass={'build_ext': NoSuffixBuilder},
-        name = 'fiftyone_devicedetection_onpremise',
-        version = read("version.txt"),
-        author      = '51Degrees.com',
-        author_email='support@51degrees.com',
-        description = """This project contains 51Degrees Device Detection OnPremise engine that can be used with the Pipeline API.The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)""",
-        long_description=read("readme.md"),
-        long_description_content_type='text/markdown',
-        license='EUPL-1.2',
-        libraries=[cpplib, clib],
-        ext_package = 'fiftyone_devicedetection_onpremise',
-        ext_modules = [DeviceDetectionHashEngineModule],
-        py_modules = ['fiftyone_devicedetection_onpremise'],
-        packages=["fiftyone_devicedetection_onpremise"],
-        install_requires=["fiftyone_devicedetection_shared", "fiftyone_pipeline_engines_fiftyone"],
-    )
+setup(
+    cmdclass={"build_ext": NoSuffixBuilder},
+    name="fiftyone_devicedetection_onpremise",
+    version=read("version.txt"),
+    author="51Degrees.com",
+    author_email="support@51degrees.com",
+    description = """This project contains 51Degrees Device Detection OnPremise engine that can be used with the Pipeline API.The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)""",
+    long_description=read("readme.md"),
+    long_description_content_type="text/markdown",
+    python_requires=">=3.8",
+    license="EUPL-1.2",
+    libraries=[cpplib, clib],
+    ext_package="fiftyone_devicedetection_onpremise",
+    ext_modules=[DeviceDetectionHashEngineModule],
+    py_modules=["fiftyone_devicedetection_onpremise"],
+    packages=["fiftyone_devicedetection_onpremise"],
+    install_requires=["fiftyone_devicedetection_shared", "fiftyone_pipeline_engines_fiftyone"],
+)
