@@ -80,7 +80,7 @@ class DeviceDetectionDataFile(DataFile):
         if self.flow_element.engine:
             return self.swig_date_to_date(self.flow_element.engine.getPublishedTime())
         else:
-            return datetime.date.now()
+            return datetime.datetime.now()
 
     def get_next_update(self):
 
@@ -92,7 +92,7 @@ class DeviceDetectionDataFile(DataFile):
         if self.flow_element.engine:
             return self.swig_date_to_date(self.flow_element.engine.getUpdateAvailableTime())
         else:
-            return datetime.date.now()
+            return datetime.datetime.now()
 
     def refresh(self):
 

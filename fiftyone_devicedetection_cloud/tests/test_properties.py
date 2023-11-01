@@ -25,7 +25,7 @@ import unittest
 
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine
-from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionCloud
+from fiftyone_devicedetection_cloud.devicedetection_cloud import DeviceDetectionCloud
 from fiftyone_devicedetection_shared.utils import (
     get_properties_from_header_file,
     get_value_type,

@@ -14,7 +14,7 @@ This engine is a C++ library with a Python wrapper built using [SWIG](http://www
 
 ## Requirements
 
-* Python 3.5+
+* Python 3.8+
 * One of the following supported platforms:
   * Windows Server 2019 / Windows 10
   * Ubuntu 18.04
