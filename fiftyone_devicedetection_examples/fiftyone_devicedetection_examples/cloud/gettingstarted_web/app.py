@@ -25,7 +25,7 @@
 #
 # @include{doc} example-getting-started-web.txt
 # 
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/cloud/gettingstarted-web/app.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/cloud/gettingstarted_web/app.py). 
 # 
 # @include{doc} example-require-resourcekey.txt
 # 

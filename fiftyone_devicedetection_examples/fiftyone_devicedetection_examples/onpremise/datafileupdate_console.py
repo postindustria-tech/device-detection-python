@@ -37,7 +37,7 @@
 # "Biggest" options.
 #
 # # Data Files
-# You can find out more about data files, licenses etc. at our (FAQ page)[//51degrees.com/resources/faqs]
+# You can find out more about data files, licenses etc. at our [FAQ page](//51degrees.com/resources/faqs)
 #
 # ## Enterprise Data File
 # Enterprise (fully-featured) data files are typically released by 51Degrees four days a week
@@ -54,7 +54,7 @@
 # ## Lite Data File
 # Lite data files (free-to-use, limited capabilities, no license key required) are created roughly
 # once a month and cannot be updated using auto-update, they may be downloaded from
-# (Github)[href=https://github.com/51Degrees/device-detection-data] and are included with
+# [Github](href=https://github.com/51Degrees/device-detection-data) and are included with
 # source distributions of this software.
 #
 # # Update on Start-Up
@@ -148,7 +148,7 @@
 # ```
 #
 # # Location
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/master/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/datafileupdate_console.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/datafileupdate_console.py). 
 #
 # @include{doc} example-require-licensekey.txt
 #
