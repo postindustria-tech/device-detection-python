@@ -19,6 +19,29 @@
 # in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
+#
+## @example onpremise/performance.py
+# 
+# Provides an example of processing a CSV file containing evidence for device detection. 
+# There are 20,000 examples in the supplied file of evidence representing HTTP Headers.
+# For example:
+# 
+# We create a device detection pipeline to read the data and output the time taken and information about about the detection.
+# 
+# Requesting properties from a single component
+# reduces detection time compared with requesting properties from multiple components. If you
+# don't specify any properties to detect, then all properties are detected.
+#
+# Please review [performance options](https://51degrees.com/documentation/_device_detection__features__performance_options.html)
+# and [hash dataset options](https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance)
+# for more information about adjusting performance.
+# 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/performance.py). 
+# 
+# @include{doc} example-require-datafile.txt
+# 
+# Required PyPi Dependencies:
+# - fiftyone_devicedetection
 
 import argparse
 import csv
@@ -26,7 +49,7 @@ import json
 import time
 import multiprocessing as mp
 
-# This example goes through a CSV of 20000 user agents and processes the    m, returning the time and information about the matches
+# This example goes through a CSV of 20000 user agents and processes them, returning the time and information about the matches
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
