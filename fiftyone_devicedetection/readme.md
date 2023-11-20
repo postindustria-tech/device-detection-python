@@ -1,4 +1,4 @@
-# 51Degrees Device Detection Engines
+# 51Degrees Device Detection Engines - Device Detection
 
 ![51Degrees](https://51degrees.com/DesktopModules/FiftyOne/Distributor/Logo.ashx?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=python-open-source "THE Fastest and Most Accurate Device Detection") **v4 Device Detection Python**
 
