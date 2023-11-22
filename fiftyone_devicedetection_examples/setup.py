@@ -32,9 +32,9 @@ def read(file_name):
         with io.open(
             os.path.join(os.path.dirname(__file__), file_name), encoding="utf-8"
         ) as f:
-            return f.read()
+            return f.read().strip()
     except:
-        return ""
+        return "0.0.0"
         
 setuptools.setup(
     name="fiftyone_devicedetection_examples",
@@ -47,7 +47,14 @@ setuptools.setup(
     long_description=read("readme.md"),
     long_description_content_type='text/markdown',
     python_requires=">=3.8",
-    packages=["fiftyone_devicedetection_examples"],
+    packages=[
+        "fiftyone_devicedetection_examples",
+        "fiftyone_devicedetection_examples.onpremise",
+        "fiftyone_devicedetection_examples.onpremise.gettingstarted_web",
+        "fiftyone_devicedetection_examples.cloud",
+        "fiftyone_devicedetection_examples.cloud.gettingstarted_web",
+    ],
+    package_dir={"": "src"},
     install_requires=["fiftyone_devicedetection", "flask", "flask-unittest", "json5", "ruamel.yaml"],
     license="EUPL-1.2",
     classifiers=[

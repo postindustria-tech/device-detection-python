@@ -21,13 +21,13 @@
 # ********************************************************************* 
 
 
-## @example cloud/gettingstarted_web/app.py
+## @example onpremise/gettingstarted_web/app.py
 #
 # @include{doc} example-getting-started-web.txt
 # 
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/cloud/gettingstarted_web/app.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/gettingstarted_web/app.py). 
 # 
-# @include{doc} example-require-resourcekey.txt
+# @include{doc} example-require-datafile.txt
 # 
 # Required PyPi Dependencies:
 # - fiftyone_devicedetection
@@ -74,39 +74,28 @@
 #
 # ## App
 
+import os
+from pathlib import Path
+import sys
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
-from flask import Flask, request, render_template
 from flask.helpers import make_response
-from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from flask import Flask, request, render_template
 from fiftyone_pipeline_core.logger import Logger
+from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_core.web import webevidence, set_response_header
 import json
-import sys
 
 class GettingStartedWeb():
     app = Flask(__name__)
 
-    def build(self, resource_key, logger):
+    def build(self, config, logger):
         # Here we add some callback settings for the page to make a request with extra evidence from the client side, in this case the Flask /json route we will make below
 
-        javascript_builder_settings = {
-            "endpoint": "/json",
-            "minify": True,
-            # The enable_cookies setting is needed if you want to work with results from client-side
-            # evidence on the server. For example, precise Apple models or screen dimensions.
-            # This will store the results of client-side detection scripts on the client as cookies.
-            # On subsequent requests, these cookies will be included in the payload and will be 
-            # used by the device detection API when it runs.
-            "enable_cookies": True
-        }
-        GettingStartedWeb.pipeline = DeviceDetectionPipelineBuilder(
-            resource_key = resource_key, 
-            javascript_builder_settings = javascript_builder_settings).add_logger(logger).build()
-        
+        GettingStartedWeb.pipeline = PipelineBuilder().add_logger(logger).build_from_configuration(config)
         return self
 
     def run(self):
-
+        
         GettingStartedWeb.app.run()
 
     # First we make a JSON route that will be called from the client side and will return
@@ -170,29 +159,57 @@ class GettingStartedWeb():
 
         return response
 
+        
+    # Typically, something like this will not be necessary.
+    # The device detection API will accept an absolute or relative path for the data file.
+    # However, if a relative path is specified, it will only look in the current working 
+    # directory.
+    # In our examples, we have many different projects and we don't want to have a copy of 
+    # the data file for every single one.
+    # In order to handle this, we dynamically search the project directories for the data 
+    # file location and then override the configured setting with the absolute path if 
+    # necessary.
+    # In a real-world scenario, you can just put the data file in your working directory
+    # or use an absolute path in the configuration file.
+    @staticmethod
+    def build_config():
+
+        # Load the configuration file
+        configFile = Path(__file__).resolve().parent.joinpath("config.json").read_text()
+        config = json.loads(configFile)
+
+        dataFile = ExampleUtils.get_data_file_from_config(config)
+        foundDataFile = False
+        if not dataFile:
+            raise Exception("A data file must be specified in the config.json file.")
+        # The data file location provided in the configuration may be using an absolute or
+        # relative path. If it is relative then search for a matching file using the 
+        # ExampleUtils.find_file function.
+        elif os.path.isabs(dataFile) == False:
+            newPath = ExampleUtils.find_file(dataFile)
+            if newPath:
+                # Add an override for the absolute path to the data file.
+                ExampleUtils.set_data_file_in_config(config, newPath)
+                foundDataFile = True
+        else:
+            foundDataFile = os.path.exists(dataFile)
+
+        if foundDataFile == False:
+            raise Exception("Failed to find a device detection data file matching " +
+                f"'{dataFile}'. If using the lite file, then make sure the " +
+                "device-detection-data submodule has been updated by running " +
+                "`git submodule update --recursive`. Otherwise, ensure that the filename " +
+                "is correct in config.json.")
+
+        return config
+
 def main(argv):
-    # Use the command line args to get the resource key if present.
-    # Otherwise, get it from the environment variable.
-    resource_key = argv[0] if len(argv) > 0 else ExampleUtils.get_resource_key() 
-    
     # Configure a logger to output to the console.
     logger = Logger(min_level="info")
 
-    if (resource_key):
-        GettingStartedWeb().build(resource_key, logger).run()
+    config = GettingStartedWeb.build_config()
 
-    else:
-        logger.log("error",
-            "No resource key specified in environment variable " +
-            f"'{ExampleUtils.RESOURCE_KEY_ENV_VAR}'. The 51Degrees " +
-            "cloud service is accessed using a 'ResourceKey'. " +
-            "For more detail see " +
-            "http://51degrees.com/documentation/4.3/_info__resource_keys.html. " +
-            "A resource key with the properties required by this " +
-            "example can be created for free at " +
-            "https://configure.51degrees.com/g3gMZdPY. " +
-            "Once complete, populated the environment variable " +
-            "mentioned at the start of this message with the key.")
+    GettingStartedWeb().build(config, logger).run()
 
 if __name__ == "__main__":
     main(sys.argv[1:])

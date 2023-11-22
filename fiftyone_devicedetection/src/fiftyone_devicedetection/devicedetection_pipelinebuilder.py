@@ -20,13 +20,15 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
 
-from __future__ import absolute_import
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine
-from .devicedetection_cloud import DeviceDetectionCloud
+from fiftyone_devicedetection_cloud.devicedetection_cloud import DeviceDetectionCloud
+from fiftyone_devicedetection_onpremise.devicedetection_onpremise import DeviceDetectionOnPremise
 from fiftyone_devicedetection_shared.utils import merge_two_dicts
 
-class DeviceDetectionCloudPipelineBuilder(PipelineBuilder):
+from fiftyone_pipeline_engines_fiftyone.share_usage import ShareUsage
+
+class DeviceDetectionPipelineBuilder(PipelineBuilder):
     """!
     The Device Detection Pipeline Builder allows you to easily
     Construct a pipeline containing the device detection cloud engine
@@ -65,7 +67,7 @@ class DeviceDetectionCloudPipelineBuilder(PipelineBuilder):
         @type resource_key: string
         @param resource_key: the 51Degrees cloud resource key
         @type cloud_request_origin: string
-        @param cloud_request_origin: The value to set the Origin header to when making requests to the cloud service
+        @param cloud_request_origin: the value to use for the Origin header when making requests to the cloud service
 
         On Premise Engine Settings
 
@@ -122,12 +124,22 @@ class DeviceDetectionCloudPipelineBuilder(PipelineBuilder):
 
         del settings["self"]
 
-        super(DeviceDetectionCloudPipelineBuilder, self).__init__(settings)
+        super(DeviceDetectionPipelineBuilder, self).__init__(settings)
 
         # Add specific engines
 
-        self.add(CloudRequestEngine(settings))
-        device = DeviceDetectionCloud()
+        if "data_file_path" in settings:
+            del settings["settings"]
+            device = DeviceDetectionOnPremise(**settings)
+            
+            # If usage sharing enabled, add usage sharing engine
+
+            if usage_sharing:
+                self.add(ShareUsage())
+
+        else :
+            self.add(CloudRequestEngine(settings))
+            device = DeviceDetectionCloud()
 
         if "cache" in settings:
             device.set_cache(settings["cache"])

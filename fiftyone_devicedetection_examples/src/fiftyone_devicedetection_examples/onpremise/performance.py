@@ -132,7 +132,7 @@ def run(skip = False):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description='Run detection benchmark.')
     ap.add_argument('-d', '--data_file', default='', help='Path to data file')
-    ap.add_argument('-u', '--user_agents_file', default='fiftyone_devicedetection_onpremise/cxx/device-detection-data/20000 User Agents.csv', help='Path to user agents evidence file')
+    ap.add_argument('-u', '--user_agents_file', default='src/fiftyone_devicedetection_onpremise/cxx/device-detection-data/20000 User Agents.csv', help='Path to user agents evidence file')
     ap.add_argument('-j', '--json_output', default='', help='Output results in JSON format')
     args = ap.parse_args()
     if args.data_file == "":
