@@ -53,7 +53,7 @@ sudo apt-get install git-lfs
 git lfs install
 ```
 
-Then, navigate to 'fiftyone.devicedetection.onpremise/cxx/device-detection-data' and execute:
+Then, navigate to 'src/fiftyone_devicedetection_onpremise/cxx/device-detection-data' and execute:
 
 ```
 git lfs pull

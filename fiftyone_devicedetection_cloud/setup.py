@@ -32,9 +32,9 @@ def read(file_name):
         with io.open(
             os.path.join(os.path.dirname(__file__), file_name), encoding="utf-8"
         ) as f:
-            return f.read()
+            return f.read().strip()
     except:
-        return ""
+        return "0.0.0"
 
 setuptools.setup(
     name="fiftyone_devicedetection_cloud",
@@ -48,6 +48,7 @@ setuptools.setup(
     long_description_content_type='text/markdown',
     python_requires=">=3.8",
     packages=["fiftyone_devicedetection_cloud"],
+    package_dir={"": "src"},
     install_requires=["fiftyone_devicedetection_shared"],
     license="EUPL-1.2",
     classifiers=[

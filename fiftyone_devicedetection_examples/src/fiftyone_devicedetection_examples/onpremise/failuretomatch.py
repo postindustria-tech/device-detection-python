@@ -20,31 +20,29 @@
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
 
-from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
+from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
 # First create the device detection pipeline with the desired settings.
 
-data_file = "../fiftyone_devicedetection_onpremise/src/fiftyone_devicedetection_onpremise/cxx/device-detection-data/51Degrees-LiteV4.1.hash"
-resource_key = "!!YOUR_RESOURCE_KEY!!"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 
-# Uncommment the line below 'On-Premise' and comment the line below 'Cloud' to 
-# switch to an On-Premise installation
-# On-Premise
-pipeline = DeviceDetectionPipelineBuilder(data_file_path = data_file, licence_keys = "", performance_profile = 'MaxPerformance', auto_update=False).build()
-
-# Cloud
-#pipeline = DeviceDetectionPipelineBuilder({"resource_key": resource_key}).build()
+pipeline = DeviceDetectionOnPremisePipelineBuilder(
+    data_file_path = data_file, 
+    licence_keys = "", 
+    performance_profile = 'MaxPerformance', 
+    auto_update=False).build()
 
 # We create a FlowData object from the pipeline
 # this is used to add evidence to and then process
 
 flowdata1 = pipeline.create_flowdata()
 
-# Here we add a User-Agent of a desktop as evidence
+# Here we add a User-Agent of an iphone as evidence
 
-desktop_ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
+iphone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
 
-flowdata1.evidence.add("header.user-agent", desktop_ua)
+flowdata1.evidence.add("header.user-agent", iphone_ua)
 
 # Now we process the FlowData
 
@@ -55,24 +53,24 @@ flowdata1.process()
 
 # first we check if this has a meaningful result
 
-print("Is User-Agent " + desktop_ua + " a mobile? ") 
+print("Is User-Agent " + iphone_ua + " a mobile device?: ") 
 if flowdata1.device.ismobile.has_value():
     print(flowdata1.device.ismobile.value())
 else:
     # Output why the value isn't meaningful
     print(flowdata1.device.ismobile.no_value_message())
 
-# Now we do the same with a new User-Agent, this time from an iphone
+# Now we do the same with a new User-Agent, this time a corrupted one
+
+badUA = "--"
 
 flowdata2 = pipeline.create_flowdata()
 
-iphone_ua = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_2 like Mac OS X) AppleWebKit/604.4.7 (KHTML, like Gecko) Mobile/15C114"
-
-flowdata2.evidence.add("header.user-agent", iphone_ua)
+flowdata2.evidence.add("header.user-agent", badUA)
 
 flowdata2.process()
 
-print("Is User-Agent " + iphone_ua + " a mobile device?: ") 
+print("Is User-Agent " + badUA + " a mobile device?: ") 
 if flowdata2.device.ismobile.has_value():
     print(flowdata2.device.ismobile.value())
 else:
