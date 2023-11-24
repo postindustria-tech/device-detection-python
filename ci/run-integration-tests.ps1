@@ -5,6 +5,12 @@ param (
     [Hashtable]$Keys
 )
 
+if ($IsWindows) {
+    # Shorten the temporary directory path to work around MSVC path lenght limit
+    $env:TEMP = New-Item -ItemType Directory -Force -Path "C:\tmp"
+    Write-Output $env:TEMP
+}
+
 $packages = "fiftyone_devicedetection_cloud", "fiftyone_devicedetection_examples"
 
 if (!$Keys.TestResourceKey) {
