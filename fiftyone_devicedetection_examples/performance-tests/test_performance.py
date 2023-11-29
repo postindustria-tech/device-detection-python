@@ -24,7 +24,6 @@ import sys
 import json
 import argparse
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
-from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_pipeline_core.web import webevidence
 from flask import Flask, request
 from timeit import timeit
