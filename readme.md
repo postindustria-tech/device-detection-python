@@ -164,17 +164,31 @@ python -m pip install -e fiftyone_devicedetection/
 
 ## Examples
 
-To run an example, navigate into the example module directory.
-
+### Prerequisites
+Please install the pre-requisites listed above as well as the examples themselves as a package:
 ```bash
-cd fiftyone_devicedetection_examples/
+python -m pip install -e fiftyone_devicedetection_examples/
+python -m pip install -e fiftyone_devicedetection_shared/
 ```
 
-Then run an example:
+### Running examples
+To run an example - run a corresponding Python module specifying its full namespace.  
+For cloud examples please provide a `resource_key` as an environment variable, f.e.:
+
+```bash
+resource_key=<your_resource_key> python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
+```
+
+For some of the onpremise examples you might need to provide a `license_key` as an environment variable, f.e.:
+```bash
+license_key=<your_license_key> python -m fiftyone_devicedetection_examples.onpremise.datafileupdate_console
+```
 
 ```bash
 python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 ```
+
+Please see a full list of provided cloud and onpremise examples below.
 
 ### Cloud
 
@@ -182,10 +196,10 @@ python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 |----------------------------------------|-------------|
 | gettingstarted_console                 | How to use the 51Degrees Cloud service to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
 | gettingstarted_web                     | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
-| taclookup                              | How to get device details from a TAC (Type Allocation Code) using the 51Degrees cloud service. |
-| nativemodellookup                      | How to get device details from a native model name using the 51Degrees cloud service. |
+| taclookup_console                              | How to get device details from a TAC (Type Allocation Code) using the 51Degrees cloud service. |
+| nativemodellookup_console                      | How to get device details from a native model name using the 51Degrees cloud service. |
 | failuretomatch                         | Demonstrate the features that are available when a match cannot be found. |
-| metadata                               | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
+| metadata_console                       | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
 | useragentclienthints-web               | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
 
 ### On-Premise
@@ -196,8 +210,9 @@ python -m fiftyone_devicedetection_examples.cloud.gettingstarted_console
 | gettingstarted_web                     | How to use the 51Degrees Cloud service to determine details about a device as part of a simple ASP.NET website. |
 | failuretomatch                         | Demonstrate the features that are available when a match cannot be found. |
 | match_metrics                          | How to access the metrics that relate to the device detection algorithm. |
-| metadata                               | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
-| offline_processing                    | Example showing how to ingest a file containing data from web requests and perform detection against the entries. |
+| metadata_console                       | How to access the meta-data for the device detection data model. For example, information about the  available properties. |
+| offlineprocessing                    | Example showing how to ingest a file containing data from web requests and perform detection against the entries. |
 | performance                           | How to configure the various performance options and run a simple performance test. |
 | useragentclienthints-web              | Legacy example. Retained for the associated automated tests. See GettingStarted-Web instead. |
+| datafileupdate_console                | How to automatically update data file |
 
