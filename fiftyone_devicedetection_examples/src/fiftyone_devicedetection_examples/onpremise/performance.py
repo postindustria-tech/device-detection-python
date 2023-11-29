@@ -49,6 +49,7 @@ import json
 import time
 import multiprocessing as mp
 
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 # This example goes through a CSV of 20000 user agents and processes them, returning the time and information about the matches
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 
