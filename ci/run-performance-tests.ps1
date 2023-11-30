@@ -9,7 +9,7 @@ param (
 if (!$RunPerformance) {
     Write-Output "Skipping performance tests"
     return
-} elseif (!(Test-Path ../assets/TAC-HashV41.hash)) {
+} elseif (!(Test-Path assets/TAC-HashV41.hash)) {
     Write-Output "::warning file=$($MyInvocation.ScriptName),line=$($MyInvocation.ScriptLineNumber),title=No On-Premise Data File::On-Premise Data File wasn't found, so performance tests will not run."
     return
 }
