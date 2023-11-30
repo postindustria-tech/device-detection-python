@@ -14,7 +14,7 @@ if (!$RunPerformance) {
     return
 }
 
-$perfSummary = New-Item -ItemType directory -Path $RepoName/test-results/performance/performance-summary -Force
+$perfSummary = New-Item -ItemType directory -Path $RepoName/test-results/performance-summary -Force
 
 Push-Location $RepoName
 try {
