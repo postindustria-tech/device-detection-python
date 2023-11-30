@@ -34,6 +34,7 @@ try {
         }
     } | ConvertTo-Json | Out-File $perfSummary/results_$Name.json
 
+    Write-Output $perfSummary/results_$Name.json
     Get-Content $perfSummary/results_$Name.json
 } finally {
     Pop-Location
