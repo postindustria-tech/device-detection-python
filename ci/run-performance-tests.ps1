@@ -35,7 +35,7 @@ try {
         }
     } | ConvertTo-Json | Out-File $perfSummary/results_$Name.json
 
-    Copy-Item -Path $perfSummary -Destination $sharedPerfSummary
+    Copy-Item -Path $perfSummary/results_$Name.json -Destination $sharedPerfSummary/results_$Name.json
 
     Write-Output $perfSummary/results_$Name.json
     Get-Content $perfSummary/results_$Name.json
