@@ -15,7 +15,6 @@ if (!$RunPerformance) {
 }
 
 $perfSummary = New-Item -ItemType directory -Path $RepoName/test-results/performance-summary -Force
-$sharedPerfSummary = New-Item -ItemType directory -Path $RepoName/test-results/performance/shared-perf-summary -Force
 
 Push-Location $RepoName
 try {
@@ -34,8 +33,6 @@ try {
             AvgMillisecsPerDetection = $Results.MsPerDetection
         }
     } | ConvertTo-Json | Out-File $perfSummary/results_$Name.json
-
-    Copy-Item -Path $perfSummary/results_$Name.json -Destination $sharedPerfSummary/results_$Name.json
 
     Write-Output $perfSummary/results_$Name.json
     Get-Content $perfSummary/results_$Name.json
