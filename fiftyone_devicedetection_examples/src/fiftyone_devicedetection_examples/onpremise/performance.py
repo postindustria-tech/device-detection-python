@@ -19,7 +19,6 @@
 # in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
 # ********************************************************************* 
-#
 ## @example onpremise/performance.py
 # 
 # Provides an example of processing a CSV file containing evidence for device detection. 
