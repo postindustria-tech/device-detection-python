@@ -48,9 +48,9 @@ import json
 import time
 import multiprocessing as mp
 
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 # This example goes through a CSV of 20000 user agents and processes them, returning the time and information about the matches
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
-from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 
 # Here we make a function that processes a user agent
 # And returns if it is a mobile device
@@ -76,7 +76,17 @@ def process_user_agent(user_agent):
     else:
         return None
 
-def process_user_agent_list(user_agent_list, list_number, output, skip=False):
+def process_user_agent_list(data_file, user_agent_list, list_number, output, skip=False):
+    global pipeline
+    pipeline = DeviceDetectionOnPremisePipelineBuilder(
+        data_file_path=data_file,
+        licence_keys="",
+        performance_profile='MaxPerformance',
+        add_javascript_builder=False,
+        restricted_properties=["ismobile"],
+        usage_sharing=False,
+        auto_update=False).build()
+
     results = {
         "mobile": 0,
         "notmobile": 0,
@@ -96,7 +106,7 @@ def process_user_agent_list(user_agent_list, list_number, output, skip=False):
     output.put(results, list_number)
 
 # Run the process
-def run(skip = False):
+def run(data_file, skip = False):
     # Make a queue to store the results in
 
     output = mp.Queue()
@@ -106,7 +116,7 @@ def run(skip = False):
 
     for x in range(threads):  # pylint: disable=used-before-assignment
         processes.append(mp.Process(target=process_user_agent_list,
-                                    args=(split_lists[x], x, output, skip)))  # pylint: disable=used-before-assignment
+                                    args=(data_file, split_lists[x], x, output, skip)))  # pylint: disable=used-before-assignment
 
     # Start timer
 
@@ -123,7 +133,6 @@ def run(skip = False):
     results = [output.get() for p in processes]
 
     t1 = time.time()
-    
     total = t1-t0
 
     return {"time": total, "result": results}
@@ -144,16 +153,6 @@ if __name__ == "__main__":
 
     number_of_user_agents = len(user_agents)
 
-    global pipeline
-    pipeline = DeviceDetectionOnPremisePipelineBuilder(
-        data_file_path=args.data_file, 
-        licence_keys="", 
-        performance_profile='MaxPerformance', 
-        add_javascript_builder = False, 
-        restricted_properties = ["ismobile"], 
-        usage_sharing=False, 
-        auto_update=False).build()
-
     print("Processing " + str(number_of_user_agents) + " user agents")
 
     # Now we make a function that returns results of the user agent matching
@@ -167,12 +166,12 @@ if __name__ == "__main__":
     # Split lists by number of threads
     split_lists = [user_agents[x:x+chunk_size]
                 for x in range(0, len(user_agents), chunk_size)]
-    
-    calibration = run(skip=True)
 
-    real = run(skip=False)
+    calibration = run(args.data_file, skip=True)
 
-    real_time = real["time"] - calibration["time"]
+    real = run(args.data_file, skip=False)
+
+    real_time = real["time"]
 
     print("Total time (seconds): " + str(real_time) + " seconds")
     print("Time per user agent (ms): " + str((real_time / number_of_user_agents) * 1000))

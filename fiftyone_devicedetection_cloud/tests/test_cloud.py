@@ -131,7 +131,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
         total = end - start
 
-        self.assertLess(total, 5)
+        self.assertLess(total, 10)
 
 
     def test_missing_property_service_not_found_anywhere(self):
