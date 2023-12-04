@@ -26,14 +26,14 @@ from fiftyone_pipeline_engines.datafile import DataFile
 import datetime
 
 try:
-    #python2
+    # python2
     from urllib import urlencode
 except ImportError:
-    #python3
+    # python3
     from urllib.parse import urlencode
 
-class DeviceDetectionDataFile(DataFile):
 
+class DeviceDetectionDataFile(DataFile):
     """!
     Extension of the DataFile class for DeviceDetection
     This helps construct the update url based on url parameters provided
@@ -41,6 +41,10 @@ class DeviceDetectionDataFile(DataFile):
     update date of the datafile and refreshes the on premise 
     engine when the datafile is updated. 
     """
+
+    def __init__(self, data_update_use_url_formatter=True, *args, **kwargs):
+        self._data_update_use_url_formatter = data_update_use_url_formatter
+        super(DeviceDetectionDataFile, self).__init__(*args, **kwargs)
 
     def get_url_formatter(self):
 
@@ -50,6 +54,9 @@ class DeviceDetectionDataFile(DataFile):
         Device Detection On Premise engine
         @returns string : URL
         """
+
+        if not self._data_update_use_url_formatter:
+            return self.update_url_params["base_url"]
 
         query_params = {
             "Type": self.update_url_params["type"]
@@ -68,15 +75,16 @@ class DeviceDetectionDataFile(DataFile):
         @returns date
         """
 
-        return datetime.datetime.strptime(str(swig_date.getYear()) + "-" + str(swig_date.getMonth()) + "-" + str(swig_date.getDay()), "%Y-%m-%d")
-    
+        return datetime.datetime.strptime(
+            str(swig_date.getYear()) + "-" + str(swig_date.getMonth()) + "-" + str(swig_date.getDay()), "%Y-%m-%d")
+
     def get_date_published(self):
 
         """!
         Get the date the datafile was published
         @returns date
         """
-        
+
         if self.flow_element.engine:
             return self.swig_date_to_date(self.flow_element.engine.getPublishedTime())
         else:
@@ -102,7 +110,7 @@ class DeviceDetectionDataFile(DataFile):
 
         if not hasattr(self.flow_element, "engine"):
             self.flow_element.init_engine()
-        
+
         if self.download == False:
             self.flow_element.engine.refreshDataFromMemory(self.data)
         else:

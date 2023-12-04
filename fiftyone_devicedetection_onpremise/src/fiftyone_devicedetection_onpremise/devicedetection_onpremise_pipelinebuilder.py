@@ -105,13 +105,15 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
         @type update_time_maximum_randomisation : int
         @param update_time_maximum_randomisation :
         Maximum randomisation offset in seconds to polling time interval
-        @type verify_md5 : bool
+        @type data_update_verify_md5 : bool
         @type create_temp_copy: bool
         @param create_temp_copy: whether to copy datafile to temporary location when updating
-        @type data_file_update_base_url: string
-        @param data_file_update_base_url: base url for the datafile update service
+        @type data_update_url: string
+        @param data_update_url: base url for the datafile update service
         @param data_file_update_service: service for the pipeline to use for auto updates instead of the default
         @type data_file_update_service: DataFileUpdateService
+        @param data_update_use_url_formatter: This must be set to false to prevent the API from appending the query string parameters that are required when calling the 51Degrees Distributor service.
+        @type data_update_use_url_formatter: bool
         """
         if settings is None:
             settings = {}
