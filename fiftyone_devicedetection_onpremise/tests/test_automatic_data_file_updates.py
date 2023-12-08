@@ -29,11 +29,12 @@ import requests
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from flask import Flask, send_from_directory, make_response, request
 
+from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_onpremise.devicedetection_datafile import DeviceDetectionDataFile
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import \
     DeviceDetectionOnPremisePipelineBuilder
 
-data_file = "src/fiftyone_devicedetection_onpremise/cxx/device-detection-data/51Degrees-LiteV4.1.hash"
+data_file = ExampleUtils.find_file("51Degrees-LiteV4.1.hash")
 hash_file_path = data_file
 fixtures_path="tests/fixtures"
 archive_file_path = f"{fixtures_path}/51Degrees-LiteV4.1.gz"
@@ -66,11 +67,11 @@ class DeviceDetectionTests(unittest.TestCase):
 
         pipeline.create_flowdata().process()
 
-        self.assertTrue(isinstance(
-            pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertTrue(isinstance(pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertEqual(pipeline.flow_elements[0].data_file.verify_md5, False)
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['type'])
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['license_keys'])
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
 
     def test_on_premise_data_update_url_config(self):
         config = self._build_pipeline_config(
@@ -90,8 +91,9 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertTrue(isinstance(
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertEqual(pipeline.flow_elements[0].data_file.verify_md5, False)
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['type'])
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['license_keys'])
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
 
     def test_on_premise_data_update_verify_md5(self):
         pipeline = DeviceDetectionOnPremisePipelineBuilder(
@@ -108,8 +110,9 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertTrue(isinstance(
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['type'])
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['license_keys'])
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
 
     def test_on_premise_data_update_verify_md5_config(self):
         config = self._build_pipeline_config(
@@ -129,8 +132,9 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertTrue(isinstance(
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['type'])
-        self.assertIsNotNone(pipeline.flow_elements[0].data_file.update_url_params['license_keys'])
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
 
     def test_on_premise_data_update_use_url_formatter(self):
         pipeline = DeviceDetectionOnPremisePipelineBuilder(
@@ -147,8 +151,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         self.assertTrue(isinstance(
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
-        self.assertFalse(hasattr(pipeline.flow_elements[0].data_file.update_url_params, "type"))
-        self.assertFalse(hasattr(pipeline.flow_elements[0].data_file.update_url_params, "license_keys"))
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertFalse("Type" in update_url)
+        self.assertFalse("licenseKeys" in update_url)
 
     def test_on_premise_data_update_use_url_formatter_config(self):
         config = self._build_pipeline_config(
@@ -168,8 +173,9 @@ class DeviceDetectionTests(unittest.TestCase):
 
         self.assertTrue(isinstance(
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
-        self.assertFalse(hasattr(pipeline.flow_elements[0].data_file.update_url_params, "type"))
-        self.assertFalse(hasattr(pipeline.flow_elements[0].data_file.update_url_params, "license_keys"))
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertFalse("Type" in update_url)
+        self.assertFalse("licenseKeys" in update_url)
 
     def _build_pipeline_config(self, parameters):
         return {
@@ -215,7 +221,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
     @staticmethod
     def _init_hash_file_archive():
-        os.mkdir(fixtures_path)
+        os.makedirs(fixtures_path)
         with open(hash_file_path, 'rb') as f_in:
             with gzip.open(archive_file_path, 'wb', compresslevel=1) as f_out:
                 shutil.copyfileobj(f_in, f_out)
