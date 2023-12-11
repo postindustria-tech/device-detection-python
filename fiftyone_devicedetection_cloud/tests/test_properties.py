@@ -113,10 +113,14 @@ class PropertyTests(unittest.TestCase):
             expected_type = propertymeta["type"]
             if(property in dd_property_dict and property not in exclude_properties):
                 dd_property_value = dd_property_dict[property]
-                try:
-                    value = dd_property_value.value()
-                    self.assertIsNotNone(dd_property_value, "Property: " + property + " is not present in the results.")
-                    self.assertTrue(is_same_type(value, expected_type), "Expected type for " + property + " is " + expected_type +
-                                    " but actual type is " + get_value_type(value))
-                except Exception as e:
-                    print(e)
+
+                if property.lower() == 'javascriptgethighentropyvalues':
+                    self.assertFalse(dd_property_value.has_value())
+                    continue
+
+                value = dd_property_value.value()
+
+                self.assertIsNotNone(dd_property_value, "Property: " + property + " is not present in the results.")
+                self.assertTrue(is_same_type(value, expected_type),
+                                "Expected type for " + property + " is " + expected_type +
+                                " but actual type is " + get_value_type(value))
