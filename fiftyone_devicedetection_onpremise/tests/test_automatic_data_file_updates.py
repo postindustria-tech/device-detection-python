@@ -27,6 +27,7 @@ import gzip
 import shutil
 import requests
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
+from fiftyone_pipeline_engines.datafile_update_service import DataFileUpdateService
 from flask import Flask, send_from_directory, make_response, request
 
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
@@ -70,6 +71,26 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertTrue(isinstance(pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertEqual(pipeline.flow_elements[0].data_file.verify_md5, False)
         update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
+
+    def test_on_premise_data_old_property_data_file_update_base_url(self):
+        pipeline = DeviceDetectionOnPremisePipelineBuilder(
+            data_file_path=data_file,
+            usage_sharing=False,
+            licence_keys="test",
+            update_on_start=True,
+            data_update_verify_md5=False,
+            data_file_update_base_url=f"http://127.0.0.1:{self.port}"
+        ).build()
+
+        pipeline.create_flowdata().process()
+
+        self.assertTrue(isinstance(pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertEqual(pipeline.flow_elements[0].data_file.verify_md5, False)
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
         self.assertTrue("Type" in update_url)
         self.assertTrue("licenseKeys" in update_url)
 
@@ -95,6 +116,28 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertTrue("Type" in update_url)
         self.assertTrue("licenseKeys" in update_url)
 
+    def test_on_premise_data_config_old_property_data_file_update_base_url(self):
+        config = self._build_pipeline_config(
+            {
+                "data_file_path": f"{data_file}",
+                "usage_sharing": False,
+                "licence_keys": "test",
+                "update_on_start": True,
+                "data_update_verify_md5": False,
+                "data_file_update_base_url": f"http://127.0.0.1:{self.port}"
+            }
+        )
+
+        pipeline = PipelineBuilder().build_from_configuration(config)
+        pipeline.create_flowdata().process()
+
+        self.assertTrue(isinstance(pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertEqual(pipeline.flow_elements[0].data_file.verify_md5, False)
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
+
     def test_on_premise_data_update_verify_md5(self):
         pipeline = DeviceDetectionOnPremisePipelineBuilder(
             data_file_path=data_file,
@@ -111,6 +154,26 @@ class DeviceDetectionTests(unittest.TestCase):
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
         update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
+
+    def test_on_premise_data_update_verify_md5_old_property(self):
+        pipeline = DeviceDetectionOnPremisePipelineBuilder(
+            data_file_path=data_file,
+            usage_sharing=False,
+            licence_keys="test",
+            update_on_start=True,
+            verify_md5=True,
+            data_update_url=f"http://127.0.0.1:{self.port}/md5"
+        ).build()
+
+        pipeline.create_flowdata().process()
+
+        self.assertTrue(isinstance(
+            pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
         self.assertTrue("Type" in update_url)
         self.assertTrue("licenseKeys" in update_url)
 
@@ -133,6 +196,29 @@ class DeviceDetectionTests(unittest.TestCase):
             pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
         self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
         update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
+
+    def test_on_premise_data_update_verify_md5_config_old_property(self):
+        config = self._build_pipeline_config(
+            {
+                "data_file_path": f"{data_file}",
+                "usage_sharing": False,
+                "licence_keys": "test",
+                "update_on_start": True,
+                "verify_md5": True,
+                "data_update_url": f"http://127.0.0.1:{self.port}/md5"
+            }
+        )
+
+        pipeline = PipelineBuilder().build_from_configuration(config)
+        pipeline.create_flowdata().process()
+
+        self.assertTrue(isinstance(
+            pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
         self.assertTrue("Type" in update_url)
         self.assertTrue("licenseKeys" in update_url)
 
@@ -177,6 +263,26 @@ class DeviceDetectionTests(unittest.TestCase):
         self.assertFalse("Type" in update_url)
         self.assertFalse("licenseKeys" in update_url)
 
+    def test_on_premise_data_update_status_rate_limit(self):
+        pipeline = DeviceDetectionOnPremisePipelineBuilder(
+            data_file_path=data_file,
+            usage_sharing=False,
+            licence_keys="test",
+            update_on_start=True,
+            verify_md5=True,
+            data_update_url=f"http://127.0.0.1:{self.port}/status/429"
+        ).build()
+
+        pipeline.create_flowdata().process()
+
+        self.assertTrue(isinstance(
+            pipeline.flow_elements[0].data_file, DeviceDetectionDataFile))
+        self.assertTrue(pipeline.flow_elements[0].data_file.verify_md5, True)
+        update_url = pipeline.flow_elements[0].data_file.get_update_url()
+        self.assertTrue(f"http://127.0.0.1:{self.port}" in update_url)
+        self.assertTrue("Type" in update_url)
+        self.assertTrue("licenseKeys" in update_url)
+
     def _build_pipeline_config(self, parameters):
         return {
             "PipelineOptions": {
@@ -207,6 +313,10 @@ class DeviceDetectionTests(unittest.TestCase):
                 response.headers['content-md5'] = file_md5
 
                 return response
+
+            @app.route("/status/<status>")
+            def response_status(status):
+                return "Record not found", status
 
             @app.route('/shutdown')
             def shutdown():

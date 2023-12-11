@@ -117,8 +117,16 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
         """
         if settings is None:
             settings = {}
-            
-        settings = merge_two_dicts(dict(**kwargs), locals())
+
+        arguments = self._map_properties_names(
+            {
+                "verify_md5": "data_update_verify_md5",
+                "data_file_update_base_url": "data_update_url"
+            },
+            **kwargs,
+        )
+
+        settings = merge_two_dicts(dict(**arguments), locals())
 
         settings = merge_two_dicts(settings, settings["settings"])
 
@@ -131,7 +139,7 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
 
         del settings["settings"]
         device = DeviceDetectionOnPremise(**settings)
-        
+
         # If usage sharing enabled, add usage sharing engine
 
         if usage_sharing:
@@ -139,5 +147,13 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
 
         if "cache" in settings:
             device.set_cache(settings["cache"])
-        
+
         self.add(device)
+
+    def _map_properties_names(self, mappings, **arguments):
+        return dict(
+            map(
+                lambda key: (mappings[key], arguments[key]) if key in mappings else (key, arguments[key]),
+                arguments
+            )
+        )
