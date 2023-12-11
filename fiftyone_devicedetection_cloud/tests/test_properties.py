@@ -89,7 +89,6 @@ class PropertyTests(unittest.TestCase):
             else:
                 print("Property: " + property + " excluded from tests.\n");
 
-    #@unittest.skip("TODO: fix the test")
     def test_value_types(self):
 
         """!
@@ -116,8 +115,8 @@ class PropertyTests(unittest.TestCase):
                 dd_property_value = dd_property_dict[property]
                 try:
                     value = dd_property_value.value()
-                    self.assertIsNotNone("Property: " + property + " is not present in the results.", dd_property_value)
-                    self.assertTrue("Expected type for " + property + " is " + expected_type +
-                                    " but actual type is " + get_value_type(value), is_same_type(value, expected_type))
+                    self.assertIsNotNone(dd_property_value, "Property: " + property + " is not present in the results.")
+                    self.assertTrue(is_same_type(value, expected_type), "Expected type for " + property + " is " + expected_type +
+                                    " but actual type is " + get_value_type(value))
                 except Exception as e:
                     print(e)
