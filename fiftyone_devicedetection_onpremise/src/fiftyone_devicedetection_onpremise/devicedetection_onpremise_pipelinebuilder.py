@@ -123,7 +123,7 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
                 "verify_md5": "data_update_verify_md5",
                 "data_file_update_base_url": "data_update_url"
             },
-            **kwargs,
+            kwargs,
         )
 
         settings = merge_two_dicts(dict(**arguments), locals())
@@ -150,7 +150,10 @@ class DeviceDetectionOnPremisePipelineBuilder(PipelineBuilder):
 
         self.add(device)
 
-    def _map_properties_names(self, mappings, **arguments):
+    def _map_properties_names(self, mappings, arguments):
+        if arguments is None:
+            return arguments
+
         return dict(
             map(
                 lambda key: (mappings[key], arguments[key]) if key in mappings else (key, arguments[key]),
