@@ -43,8 +43,7 @@ class DeviceDetectionDataFile(DataFile):
     """
 
     def __init__(self, *args, **kwargs):
-        self._data_update_use_url_formatter = kwargs.get('data_update_use_url_formatter', True)
-        kwargs.pop('data_update_use_url_formatter', None)
+        self._data_update_use_url_formatter = kwargs.pop("data_update_use_url_formatter", None)
         super(DeviceDetectionDataFile, self).__init__(*args, **kwargs)
 
     def get_url_formatter(self):
