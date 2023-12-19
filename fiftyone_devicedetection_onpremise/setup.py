@@ -257,7 +257,7 @@ setup(
     name="fiftyone_devicedetection_onpremise",
     version=read("version.txt"),
     author="51Degrees Engineering",
-    author_email="support@51degrees.com",
+    author_email="engineering@51degrees.com",
     description = """This project contains 51Degrees Device Detection OnPremise engine that can be used with the Pipeline API.The Pipeline is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines)""",
     long_description=read("readme.md"),
     long_description_content_type="text/markdown",
