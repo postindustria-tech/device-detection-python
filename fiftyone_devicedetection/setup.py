@@ -39,8 +39,8 @@ def read(file_name):
 setuptools.setup(
     name="fiftyone_devicedetection",
     version=read("version.txt"),
-    author="51Degrees",
-    author_email="support@51degrees.com",
+    author="51Degrees Engineering",
+    author_email="engineering@51degrees.com",
     url="https://51degrees.com/",
     description=("The 51Degrees Pipeline API is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines). "
     "This project contains 51Degrees Device Detection engines that can be used with the Pipeline API"),
