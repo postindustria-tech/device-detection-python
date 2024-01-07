@@ -43,7 +43,7 @@ class DeviceDetectionOnPremise(Engine):
     supplied to it
     """
 
-    def __init__(self, data_file_path = None, data= None, auto_update = None, cache = None, restricted_properties = None, licence_keys = None, download = True, max_matched_useragent_length = None, drift = None, difference = None, allow_unmatched = None, file_system_watcher = False, polling_interval = 30, update_time_maximum_randomisation = 10, create_temp_data_copy = True,  update_matched_useragent = False, performance_profile = 'LowMemory', reuse_temp_file = False, concurrency = multiprocessing.cpu_count(), update_on_start = False, data_file_update_base_url = 'https://distributor.51degrees.com/api/v2/download', use_predictive_graph = None, use_performance_graph = None, **kwargs):
+    def __init__(self, data_file_path = None, data= None, auto_update = None, cache = None, restricted_properties = None, licence_keys = None, download = True, max_matched_useragent_length = None, drift = None, difference = None, allow_unmatched = None, file_system_watcher = False, polling_interval = 30, update_time_maximum_randomisation = 10, create_temp_data_copy = True, update_matched_useragent = False, performance_profile = 'LowMemory', reuse_temp_file = False, concurrency = multiprocessing.cpu_count(), update_on_start = False, data_update_url ='https://distributor.51degrees.com/api/v2/download', use_predictive_graph = None, use_performance_graph = None, data_update_use_url_formatter = True, data_update_verify_md5 = True,  **kwargs):
 
         """!
             
@@ -86,16 +86,18 @@ class DeviceDetectionOnPremise(Engine):
         @type update_time_maximum_randomisation : int
         @param update_time_maximum_randomisation :
         Maximum randomisation offset in seconds to polling time interval
-        @type verify_md5 : bool
+        @type data_update_verify_md5 : bool
         @type create_temp_copy: bool
         @param create_temp_copy: whether to copy datafile to temporary location when updating
-        @type data_file_update_base_url: string
-        @param data_file_update_base_url: base url for the datafile update service
+        @type data_update_url: string
+        @param data_update_url: base url for the datafile update service
         @type use_performance_graph: bool
         @param use_performance_graph: True if the performance optimized graph should be used for processing 
         @type use_predictive_graph: bool
         @param use_predictive_graph: True if the predictive optimized graph should be used for processing
-            
+        @param data_update_use_url_formatter: This must be set to false to prevent the API from appending the query string parameters that are required when calling the 51Degrees Distributor service.
+        @type data_update_use_url_formatter: bool
+
         """
 
         super(DeviceDetectionOnPremise, self).__init__()
@@ -211,14 +213,16 @@ class DeviceDetectionOnPremise(Engine):
             # Construct DataFile
 
             update_url_params = {
-                "type": "HashV41",
-                "base_url": data_file_update_base_url
+                "base_url": data_update_url
             }
 
-            if licence_keys:
+            if data_update_use_url_formatter:
+                update_url_params["type"] = "HashV41"
+
+            if licence_keys and data_update_use_url_formatter:
                 update_url_params["license_keys"] = licence_keys
 
-            data_file = DeviceDetectionDataFile(flow_element=self,identifier="HashV41", verify_md5 = True, auto_update = auto_update, update_on_start = update_on_start, decompress= True, path = data_file_path, download=download, file_system_watcher=file_system_watcher, polling_interval=polling_interval, update_time_maximum_randomisation=update_time_maximum_randomisation, update_url_params = update_url_params)
+            data_file = DeviceDetectionDataFile(flow_element=self, identifier="HashV41", verify_md5=data_update_verify_md5, auto_update = auto_update, update_on_start = update_on_start, decompress= True, path = data_file_path, download=download, file_system_watcher=file_system_watcher, polling_interval=polling_interval, update_time_maximum_randomisation=update_time_maximum_randomisation, update_url_params = update_url_params, data_update_use_url_formatter = data_update_use_url_formatter)
 
             self.register_data_file(data_file)
 
