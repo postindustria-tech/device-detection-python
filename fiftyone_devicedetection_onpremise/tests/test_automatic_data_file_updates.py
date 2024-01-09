@@ -22,6 +22,7 @@
 import hashlib
 import os
 import threading
+import time
 import unittest
 import gzip
 import shutil
@@ -45,11 +46,13 @@ class DeviceDetectionTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.port = 5688
+        cls.port = 5689
         cls._run_web_server(
             cls.port,
             cls._init_hash_file_archive()
         )
+
+        time.sleep(2)
 
     @classmethod
     def tearDownClass(cls) -> None:
