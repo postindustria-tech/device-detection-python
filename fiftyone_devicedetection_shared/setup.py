@@ -42,8 +42,7 @@ setuptools.setup(
     author_email="engineering@51degrees.com",
     author="51Degrees Engineering",
     url="https://51degrees.com/",
-    description=("The 51Degrees Pipeline API is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines). "
-    "This project contains 51Degrees Device Detection engines that can be used with the Pipeline API"),
+    description=("The 51Degrees Pipeline API is a generic web request intelligence and data processing solution with the ability to add a range of 51Degrees and/or custom plug ins (Engines). This project contains 51Degrees Device Detection engines that can be used with the Pipeline API."),
     long_description=read("readme.md"),
     long_description_content_type='text/markdown',
     python_requires=">=3.8",
