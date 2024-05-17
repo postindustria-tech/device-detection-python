@@ -55,6 +55,11 @@ from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilde
 # Here we make a function that processes a user agent
 # And returns if it is a mobile device
 
+# global variables will be assigned later in the main block:
+threads = 0
+split_lists = None
+
+
 def process_user_agent(user_agent):
 
     # First we create the flowdata using the global pipeline
