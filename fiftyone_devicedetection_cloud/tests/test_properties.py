@@ -37,6 +37,9 @@ mobile_ua = ("Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) "
             "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile"
             "/11D167 Safari/9537.53")
 
+chrome_ua = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+
 # TODO remove setheader properties from this list once UACH datafile is released.
 exclude_properties = ["setheaderbrowseraccept-ch", "setheaderplatformaccept-ch", "setheaderhardwareaccept-ch"]
 
@@ -96,7 +99,7 @@ class PropertyTests(unittest.TestCase):
         """
         
         flowData = pipeline.create_flowdata()
-        flowData.evidence.add("header.user-agent", mobile_ua)
+        flowData.evidence.add("header.user-agent", chrome_ua)
         flowData.process()
         elementData = flowData.get(deviceDetectionCloudEngine.datakey)
 
@@ -113,10 +116,6 @@ class PropertyTests(unittest.TestCase):
             expected_type = propertymeta["type"]
             if(property in dd_property_dict and property not in exclude_properties):
                 dd_property_value = dd_property_dict[property]
-
-                if property.lower() == 'javascriptgethighentropyvalues':
-                    self.assertFalse(dd_property_value.has_value())
-                    continue
 
                 value = dd_property_value.value()
 
