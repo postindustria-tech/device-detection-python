@@ -25,16 +25,16 @@ from threading import Event, Thread
 import os
 from pathlib import Path
 
-class ExampleUtils():
 
+class ExampleUtils:
     # Timeout used when searching for files.
     FIND_FILES_TIMEOUT_S = 5
 
-    # If data file is older than this number of days then a warning will 
+    # If data file is older than this number of days then a warning will
     # be displayed.
     DATA_FILE_AGE_WARNING = 30
 
-    # The default environment variable used to get the resource key 
+    # The default environment variable used to get the resource key
     # to use when running examples.
     RESOURCE_KEY_ENV_VAR = "resource_key"
 
@@ -98,7 +98,7 @@ class ExampleUtils():
 
     # Find the specified filename within the specified directory.
     # If no directory is specified, the working directory is used.
-    # If the file cannot be found, the algorithm will move to the 
+    # If the file cannot be found, the algorithm will move to the
     # parent directory and repeat the process.
     @staticmethod
     def find_file(file_name):
@@ -116,18 +116,37 @@ class ExampleUtils():
         return result[0]
 
     @staticmethod
-    def __find_file(file_name, stop_event, result, dir = None):
-        if dir == None:
-            dir = Path(os.getcwd()).absolute()
-            
-        files = list(dir.rglob(file_name))
+    def __find_file(file_name, stop_event, result, search_dir=None):
+        # Get the absolute path of the file to search for
+        _file = Path(file_name).absolute().resolve()
 
-        if (len(files) == 0 and
-            dir.parent != None and
-            stop_event.is_set() == False):
-            ExampleUtils.__find_file(file_name, stop_event, result, dir.parent)
-        elif len(files) > 0:
+        # Check if the file exists
+        # If it does, set the result and return
+        if _file.is_file():
+            result[0] = str(_file)
+            return
+
+        # If this is the first iteration - then set
+        # the search directory to the current working directory
+        if search_dir is None:
+            search_dir = Path(os.getcwd()).absolute()
+
+        # Search for the file in the current directory
+        files = list(search_dir.rglob(_file.name))
+
+        # If the file is found in the current directory
+        # then set the result and return
+        if len(files):
             result[0] = str(files[0].absolute())
+            return
+
+        # If the file is not found in the current directory
+        # then move to the parent directory and repeat the process
+        # unless the stop event is set
+        # or the parent directory is the same as the current directory
+        # (i.e. the root directory)
+        if search_dir.parent != search_dir and not stop_event.is_set():
+            ExampleUtils.__find_file(file_name, stop_event, result, search_dir.parent)
 
     @staticmethod
     def get_data_file_date(engine):
@@ -147,7 +166,7 @@ class ExampleUtils():
     def check_data_file(pipeline, logger):
         # Get the 'engine' element within the pipeline that
         # performs device detection. We can use this to get
-        # details about the data file as well as meta-data 
+        # details about the data file as well as meta-data
         # describing things such as the available properties.
         engine = pipeline.get_element("device")
 

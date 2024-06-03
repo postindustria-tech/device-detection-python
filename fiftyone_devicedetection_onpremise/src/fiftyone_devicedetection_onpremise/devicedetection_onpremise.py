@@ -36,6 +36,7 @@ from .DeviceDetectionHashEngineModule import *
 from .swig_data import SwigData
 from .devicedetection_datafile import DeviceDetectionDataFile
 
+
 class DeviceDetectionOnPremise(Engine):
     """!
     The Device Detection On Premise engine uses a datafile to
@@ -43,8 +44,35 @@ class DeviceDetectionOnPremise(Engine):
     supplied to it
     """
 
-    def __init__(self, data_file_path = None, data= None, auto_update = None, cache = None, restricted_properties = None, licence_keys = None, download = True, max_matched_useragent_length = None, drift = None, difference = None, allow_unmatched = None, file_system_watcher = False, polling_interval = 30, update_time_maximum_randomisation = 10, create_temp_data_copy = True, update_matched_useragent = False, performance_profile = 'LowMemory', reuse_temp_file = False, concurrency = multiprocessing.cpu_count(), update_on_start = False, data_update_url ='https://distributor.51degrees.com/api/v2/download', use_predictive_graph = None, use_performance_graph = None, data_update_use_url_formatter = True, data_update_verify_md5 = True,  **kwargs):
-
+    def __init__(
+        self,
+        data_file_path=None,
+        data=None,
+        auto_update=None,
+        cache=None,
+        restricted_properties=None,
+        licence_keys=None,
+        download=True,
+        max_matched_useragent_length=None,
+        drift=None,
+        difference=None,
+        allow_unmatched=None,
+        file_system_watcher=False,
+        polling_interval=30,
+        update_time_maximum_randomisation=10,
+        create_temp_data_copy=True,
+        update_matched_useragent=False,
+        performance_profile="LowMemory",
+        reuse_temp_file=False,
+        concurrency=multiprocessing.cpu_count(),
+        update_on_start=False,
+        data_update_url="https://distributor.51degrees.com/api/v2/download",
+        use_predictive_graph=None,
+        use_performance_graph=None,
+        data_update_use_url_formatter=True,
+        data_update_verify_md5=True,
+        **kwargs
+    ):
         """!
             
         Constructor for the DeviceDetection On Premise Engine.
