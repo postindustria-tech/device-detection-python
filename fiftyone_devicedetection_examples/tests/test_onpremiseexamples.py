@@ -32,8 +32,8 @@ from fiftyone_devicedetection_examples.onpremise.match_metrics import MatchMetri
 from fiftyone_devicedetection_examples.onpremise.datafileupdate_console import DataFileUpdateConsole
 from fiftyone_devicedetection_examples.onpremise.datafileupdate_console import UPDATE_EXAMPLE_LICENSE_KEY_NAME
 
-class DeviceDetectionExampleTests(unittest.TestCase):
 
+class DeviceDetectionExampleTests(unittest.TestCase):
     # Init method - Set data file for hash examples and aditionally a
     # User-Agents file for the performance example.
     def setUp(self):
@@ -51,7 +51,6 @@ class DeviceDetectionExampleTests(unittest.TestCase):
         example.run(self.data_file, self.logger, print)
 
     def test_onpremise_failure_to_match(self):
-        
         import fiftyone_devicedetection_examples.onpremise.failuretomatch
 
     def test_onpremise_match_metrics(self):
@@ -61,14 +60,11 @@ class DeviceDetectionExampleTests(unittest.TestCase):
     def test_onpremise_datafileupdate_console(self):
         example = DataFileUpdateConsole()
         license_key = KeyUtils.get_named_key(UPDATE_EXAMPLE_LICENSE_KEY_NAME)
-        example.run(self.data_file, license_key, False, self.logger, print)
+        example.run("Enterprise-HashV41.hash", license_key, False, self.logger, print)
 
     def test_onpremise_offline_processing(self):
-
         # Only run if environment variable set
-
         if "run_performance_tests" in os.environ:
-
             example = OfflineProcessing()
             with open(self.evidence_file, "r") as input:
                 with open("./offlineprocessing-output.yml", "w") as output:
@@ -76,9 +72,6 @@ class DeviceDetectionExampleTests(unittest.TestCase):
             os.remove("./offlineprocessing-output.yml")
 
     def test_onpremise_performance(self):
-
         # Only run if environment variable set
-
         if "run_performance_tests" in os.environ:
-            
             import fiftyone_devicedetection_examples.onpremise.performance

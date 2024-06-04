@@ -255,7 +255,7 @@ class DataFileUpdateConsole():
 		logger.log("info", "Checking file exists")
 		if os.path.exists(data_file):
 			logger.log("info", f"Existing data file copied to {copy_data_file_name}")
-			shutil.move(data_file, copy_data_file_name)
+			shutil.copy(data_file, copy_data_file_name)
 
 		logger.log("info",
 			"Creating pipeline and initiating update on start-up - please wait for that "
