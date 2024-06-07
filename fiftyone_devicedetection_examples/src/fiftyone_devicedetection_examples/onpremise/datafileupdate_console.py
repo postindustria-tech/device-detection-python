@@ -21,7 +21,7 @@
 # ********************************************************************* 
 
 ## @example onpremise/datafileupdate_console.py
-# 
+#
 # This example illustrates various parameters that can be adjusted when using the on-premise
 # device detection engine, and controls when a new data file is sought and when it is loaded by
 # the device detection software.
@@ -148,19 +148,20 @@
 # ```
 #
 # # Location
-# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/datafileupdate_console.py). 
+# This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-python/blob/main/fiftyone_devicedetection_examples/fiftyone_devicedetection_examples/onpremise/datafileupdate_console.py).
 #
 # @include{doc} example-require-licensekey.txt
 #
 # # Required PyPi Dependencies:
 # - fiftyone_devicedetection
-# 
+#
 
-from datetime import datetime
 import os
 import shutil
 import sys
 import threading
+from datetime import datetime
+
 from fiftyone_devicedetection.devicedetection_pipelinebuilder import DeviceDetectionPipelineBuilder
 from fiftyone_devicedetection_examples.example_utils import ExampleUtils
 from fiftyone_devicedetection_shared.key_utils import KeyUtils
@@ -171,6 +172,7 @@ from fiftyone_pipeline_engines.datafile_update_service import UpdateStatus
 
 UPDATE_EXAMPLE_LICENSE_KEY_NAME = "license_key"
 DEFAULT_DATA_FILENAME = os.path.expanduser("~") + os.path.sep +  ENTERPRISE_DATAFILE_NAME
+
 
 class UpdateEvent(threading.Event):
 	def __init__(self):
@@ -215,7 +217,7 @@ class DataFileUpdateConsole():
 			logger.log("warning",
 				f"File {data_file} not found, a file will be downloaded to that location on "
 				"start-up")
-				
+
 		# no filename specified use the default
 		if (data_file == None):
 			data_file = os.path.realpath(DEFAULT_DATA_FILENAME)
@@ -232,7 +234,7 @@ class DataFileUpdateConsole():
 				usage_sharing = False,
 				auto_update = False,
 				licence_keys = "").add_logger(logger).build()
-				
+
 			# and output the results
 			ExampleUtils.check_data_file(pipeline, logger)
 			if (ExampleUtils.get_data_file_tier(pipeline.get_element("device")) == "Lite"):
@@ -247,7 +249,7 @@ class DataFileUpdateConsole():
 		if (interactive):
 			output("Please note - this example will use available downloads "
 				"in your licensed allocation.")
-			user_input = input("Do you wish to continue with this example (y)? ") 
+			user_input = input("Do you wish to continue with this example (y)? ")
 			if (user_input == None or user_input == "" or user_input.startswith("y") == False):
 				logger.log("info", "Stopping example without download")
 				return
@@ -323,7 +325,11 @@ class DataFileUpdateConsole():
 				output("Update on file modification timed out")
 		else:
 			logger.log("error", "Auto update was not successful, abandoning example")
-			raise Exception(f"Auto update failed: {update_event.status}")
+			error_message = f"Auto update failed: {update_event.status}"
+			if update_event.status == UpdateStatus.AUTO_UPDATE_ERR_429_TOO_MANY_ATTEMPTS:
+				output(error_message)
+			else:
+				raise Exception(error_message)
 
 		output("Finished Example")
 
