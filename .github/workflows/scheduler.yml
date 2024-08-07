@@ -1,0 +1,15 @@
+# Schedules nightly pipeline on non-main branches
+name: Nightly Pipeline Scheduler
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Schedule version/4.5
+        run: gh workflow run nightly-pipeline.yml --repo '${{ github.repository }}' --ref version/4.5
