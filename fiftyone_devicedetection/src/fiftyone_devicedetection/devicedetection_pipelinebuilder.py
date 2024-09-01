@@ -18,7 +18,7 @@
 # including the attribution notice(s) required under Article 5 of the EUPL
 # in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
-# ********************************************************************* 
+# *********************************************************************
 
 from fiftyone_pipeline_core.pipelinebuilder import PipelineBuilder
 from fiftyone_pipeline_cloudrequestengine.cloudrequestengine import CloudRequestEngine

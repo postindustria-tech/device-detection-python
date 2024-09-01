@@ -18,7 +18,7 @@
 # including the attribution notice(s) required under Article 5 of the EUPL
 # in the end user terms of the application under an appropriate heading,
 # such notice(s) shall fulfill the requirements of that article.
-# ********************************************************************* 
+# *********************************************************************
 
 from flask.helpers import make_response
 from fiftyone_devicedetection_cloud.devicedetection_cloud_pipelinebuilder import DeviceDetectionCloudPipelineBuilder
