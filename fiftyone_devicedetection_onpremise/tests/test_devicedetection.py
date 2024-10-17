@@ -422,7 +422,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
         fd.process()
 
-        self.assertEqual(fd.device.deviceid.value(), "12280-81243-82102-0")
+        self.assertEqual(fd.device.deviceid.value(), "12280-81243-82102-18092")
 
     def test_build_from_config(self):
 
