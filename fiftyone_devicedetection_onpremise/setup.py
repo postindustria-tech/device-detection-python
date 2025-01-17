@@ -43,11 +43,11 @@ def read(file_name):
             return f.read().strip()
     except:
         return "0.0.0"
-        
+
 def get_version():
 
     version = None
-    
+
     # Try to get the correct version from platform.
     is_64bits = sys.maxsize > 2**32
     if is_64bits:
@@ -79,10 +79,10 @@ class NoSuffixBuilder(build_ext):
 
         print("**" + filename + "**\r\n")
         print("**" + suffix + "**\r\n")
-        
+
         # Get the version from the suffix.
         version = get_version()
- 
+
         ext = os.path.splitext(filename)[1]
 
         if self.inplace:
@@ -101,16 +101,16 @@ if sys.platform != "win32":
         '-fPIC',
         '-std=gnu++11',
         '-Wall',
-        '-Werror'
+        # '-Werror'
     ])
     cflags.extend([
         '-std=gnu11',
         '-Wall',
-        '-Werror',
-        '-Wno-strict-prototypes',
-        '-Wno-unused-variable',
-        '-Wno-missing-braces',
-        '-Wno-strict-aliasing'
+        # '-Werror',
+        # '-Wno-strict-prototypes',
+        # '-Wno-unused-variable',
+        # '-Wno-missing-braces',
+        # '-Wno-strict-aliasing'
     ])
 
 
@@ -121,11 +121,11 @@ if sys.platform == "win32":
         '/DUNICODE',
         '/W4',
         # '/WX',
-        '/wd4127',
-        '/wd4456',
-        '/wd4701',
-        '/wd4703',
-        '/wd4706'
+        # '/wd4127',
+        # '/wd4456',
+        # '/wd4701',
+        # '/wd4703',
+        # '/wd4706'
     ])
     cflags.extend([
         '/D_CRT_SECURE_NO_WARNINGS',
@@ -189,6 +189,7 @@ cpplib = ('cpplib', {
             "src/fiftyone_devicedetection_onpremise/cxx/src/EngineDeviceDetection.cpp",
             "src/fiftyone_devicedetection_onpremise/cxx/src/EvidenceDeviceDetection.cpp",
             "src/fiftyone_devicedetection_onpremise/cxx/src/ResultsDeviceDetection.cpp",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/Transform.cpp",
             # Hash C++
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/ComponentMetaDataBuilderHash.cpp",
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/ComponentMetaDataCollectionHash.cpp",
@@ -214,9 +215,11 @@ cpplib = ('cpplib', {
 clib = ('clib', {
         'sources': [
             # Common C
+            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/bool.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/cache.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/collection.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/component.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/coordinate.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/data.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/dataset.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/evidence.c",
@@ -224,7 +227,9 @@ clib = ('clib', {
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/file.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/float.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/headers.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/indices.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/ip.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/json.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/list.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/memory.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/overrides.c",
@@ -233,7 +238,6 @@ clib = ('clib', {
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/profile.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/properties.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/property.c",
-            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/pseudoheader.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/resource.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/results.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/status.c",
@@ -242,9 +246,12 @@ clib = ('clib', {
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/threading.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/tree.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/value.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/common-cxx/yamlfile.c",
             # Device Detection C
             "src/fiftyone_devicedetection_onpremise/cxx/src/dataset-dd.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/results-dd.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/gethighentropyvalues.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/transform.c",
             # Hash C
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/graph.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/hash.c",
