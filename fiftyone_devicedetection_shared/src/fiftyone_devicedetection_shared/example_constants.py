@@ -74,7 +74,7 @@ EVIDENCE_VALUES = [
         # to obtain the below evidence we called this JavaScript snippet in the Chrome browser dev console:
         # `btoa(JSON.stringify(await navigator.userAgentData.getHighEntropyValues(
         # ['bitness', 'architecture','fullVersionList','model', 'platformVersion'])))`
-        {"query.51d_gethighentropyvalues",
+        { "query.51d_gethighentropyvalues":
             "eyJhcmNoaXRlY3R1cmUiOiJhcm0iLCJicmFuZHMiOlt7ImJyYW5kIjoiR29vZ2xlIENocm9tZSIsInZlcnNpb24iOiIxMzEifSx7ImJyY" +
             "W5kIjoiQ2hyb21pdW0iLCJ2ZXJzaW9uIjoiMTMxIn0seyJicmFuZCI6Ik5vdF9BIEJyYW5kIiwidmVyc2lvbiI6IjI0In1dLCJmdWxsVmV" +
             "yc2lvbkxpc3QiOlt7ImJyYW5kIjoiR29vZ2xlIENocm9tZSIsInZlcnNpb24iOiIxMzEuMC42Nzc4LjE0MCJ9LHsiYnJhbmQiOiJDaHJv" +
@@ -85,7 +85,7 @@ EVIDENCE_VALUES = [
         # `query.51D_structureduseragent` or `cookie.51D_structureduseragent` is a JSON-string representation of
         # User-Agent Client Hints used in the
         # [OpenRTB 2.6](https://github.com/InteractiveAdvertisingBureau/openrtb2.x/blob/main/2.6.md#objectuseragent)
-        {"query.51D_structureduseragent",
+        { "query.51D_structureduseragent":
             "{\"browsers\":[{\"brand\":\"Chromium\",\"version\":[\"124\",\"0\",\"6367\",\"91\"]},{\"brand\":" +
             "\"Google Chrome\",\"version\":[\"124\",\"0\",\"6367\",\"91\"]},{\"brand\":\"Not-A.Brand\",\"version\"" +
             ":[\"99\",\"0\",\"0\",\"0\"]}],\"platform\":{\"brand\":\"Windows\",\"version\":[\"14\",\"0\",\"0\"]}," +
