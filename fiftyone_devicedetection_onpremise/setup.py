@@ -101,16 +101,16 @@ if sys.platform != "win32":
         '-fPIC',
         '-std=gnu++11',
         '-Wall',
-        # '-Werror'
+        '-Werror'
     ])
     cflags.extend([
         '-std=gnu11',
         '-Wall',
-        # '-Werror',
-        # '-Wno-strict-prototypes',
-        # '-Wno-unused-variable',
-        # '-Wno-missing-braces',
-        # '-Wno-strict-aliasing'
+        '-Werror',
+        '-Wno-strict-prototypes',
+        '-Wno-unused-variable',
+        '-Wno-missing-braces',
+        '-Wno-strict-aliasing'
     ])
 
 
@@ -121,11 +121,11 @@ if sys.platform == "win32":
         '/DUNICODE',
         '/W4',
         # '/WX',
-        # '/wd4127',
-        # '/wd4456',
-        # '/wd4701',
-        # '/wd4703',
-        # '/wd4706'
+        '/wd4127',
+        '/wd4456',
+        '/wd4701',
+        '/wd4703',
+        '/wd4706'
     ])
     cflags.extend([
         '/D_CRT_SECURE_NO_WARNINGS',
