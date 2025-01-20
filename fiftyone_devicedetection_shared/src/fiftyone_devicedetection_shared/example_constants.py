@@ -41,7 +41,7 @@ EVIDENCE_VALUES = [
             "\" Not A; Brand\";v=\"99\", \"Chromium\";v=\"98\", "
             "\"Google Chrome\";v=\"98\"",
             "header.sec-ch-ua-platform": "\"Windows\"",
-            "header.sec-ch-ua-platform-version": "\"14.0.0\"" }
+            "header.sec-ch-ua-platform-version": "\"14.0.0\"" },
 
         # A note on User-Agent Client Hint representations:
         # There are 3 common ways to represent UACH:
