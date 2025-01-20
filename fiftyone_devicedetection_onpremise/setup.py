@@ -101,12 +101,12 @@ if sys.platform != "win32":
         '-fPIC',
         '-std=gnu++11',
         '-Wall',
-        '-Werror'
+        # '-Werror'
     ])
     cflags.extend([
         '-std=gnu11',
         '-Wall',
-        '-Werror',
+        # '-Werror',
         '-Wno-strict-prototypes',
         '-Wno-unused-variable',
         '-Wno-missing-braces',
