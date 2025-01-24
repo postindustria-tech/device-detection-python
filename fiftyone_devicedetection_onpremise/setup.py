@@ -251,7 +251,7 @@ clib = ('clib', {
             "src/fiftyone_devicedetection_onpremise/cxx/src/dataset-dd.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/results-dd.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/gethighentropyvalues.c",
-            "src/fiftyone_devicedetection_onpremise/cxx/src/transform.c",
+            "src/fiftyone_devicedetection_onpremise/cxx/src/transformc.c",
             # Hash C
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/graph.c",
             "src/fiftyone_devicedetection_onpremise/cxx/src/hash/hash.c",
