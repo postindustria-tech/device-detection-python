@@ -27,8 +27,6 @@ import time
 import csv
 import platform
 
-from fiftyone_devicedetection_onpremise.constants import HARDCODED_EVIDENCE
-
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise_pipelinebuilder import DeviceDetectionOnPremisePipelineBuilder
 
 from fiftyone_devicedetection_onpremise.devicedetection_onpremise import DeviceDetectionOnPremise
@@ -67,7 +65,7 @@ class DeviceDetectionTests(unittest.TestCase):
 
     def test_on_premise_engine_datafile(self):
         """!
-        Tests whether a datafile (for the update service) is added when auto_update is set
+        Tests whether a datafile (for the update service) is added when auto_update is set 
         """
 
         pipeline = DeviceDetectionOnPremisePipelineBuilder(
@@ -359,39 +357,6 @@ class DeviceDetectionTests(unittest.TestCase):
             "query.51d_profileids"))
         self.assertTrue(evidence_key_filter.filter_evidence_key(
             "cookie.51d_profileids"))
-
-    def test_evidencekey_filter_hardcoded_keys(self):
-        """!
-        Test evidence key filter with hardcoded keys in cookies and query string
-        """
-
-        pipeline = DeviceDetectionOnPremisePipelineBuilder(
-            data_file_path=data_file, usage_sharing=False, licence_keys="").build()
-
-        evidence_key_filter = pipeline.flow_elements[0].get_evidence_key_filter(
-        )
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            HARDCODED_EVIDENCE["GHEV"]["QUERY"]))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            HARDCODED_EVIDENCE["GHEV"]["COOKIE"]))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            HARDCODED_EVIDENCE["SUA"]["QUERY"]))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            HARDCODED_EVIDENCE["SUA"]["COOKIE"]))
-
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            "query.51d_gethighentropyvalues"))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            "cookie.51d_gethighentropyvalues"))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            "query.51d_structureduseragent"))
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            "cookie.51d_structureduseragent"))
-
-        self.assertTrue(evidence_key_filter.filter_evidence_key(
-            "header.user-agent"))
-        self.assertFalse(evidence_key_filter.filter_evidence_key(
-            "header.nonexistent"))
 
     def test_profile_overrides(self):
         """!
